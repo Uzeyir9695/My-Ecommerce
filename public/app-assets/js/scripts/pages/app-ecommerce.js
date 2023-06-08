@@ -109,7 +109,6 @@ $(function () {
       var $this = $(this),
         addToCart = $this.find('.add-to-cart');
       if (addToCart.length > 0) {
-          console.log('yes')
           e.preventDefault();
           addToCart.text('View In Cart').removeClass('add-to-cart').addClass('view-in-cart');
           // $this.attr('href', checkout);
