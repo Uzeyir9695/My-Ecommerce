@@ -1,6 +1,10 @@
 import './bootstrap';
 import { createApp} from "vue";
-const app = createApp(App)
+import ProductIndex from './products/ProductIndex.vue'
 
-// use router
-app.mount('#app')
+createApp({
+    components: {
+        ProductIndex
+    }
+}).mount('#app');
+
