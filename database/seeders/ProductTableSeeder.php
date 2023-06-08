@@ -18,15 +18,41 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-        $products = Product::factory()->count(50)->create();
-        foreach($products as $product){
-            if($product->id%2!=0) continue;
-            $product->addMedia(public_path('/seeder-media/my-product.png'))->preservingOriginal()->toMediaCollection('productImages');
-        }
-        foreach($products as $product){
-            if($product->id%2==0) continue;
-            $product->addMedia(public_path('/seeder-media/product.png'))->preservingOriginal()->toMediaCollection('productImages');
-        }
+        $subcategories = Subcategory::all();
+      // create 6 products for each subcategory
+        foreach ($subcategories as $subcategory) {
+            $products = Product::factory()->count(6)->create([
+                'subcategory_id' => $subcategory->id,
+            ]);
 
+            // get attributes for each subcategory
+            $attributes = $subcategory->attributes()->get()->groupBy(function($data) {
+                return $data->name;
+            });
+
+            // attach attributes to each product
+            foreach($products as $product){
+
+                foreach ($attributes as $name => $values) {
+                    $attrName = $name;
+                    $randomValue = $values->random()->value;
+                    ProductAttribute::create([
+                        'product_id' => $product->id,
+                        'name' => $attrName,
+                        'value' => $randomValue
+                    ]);
+                }
+
+                // assign image to each productsssss
+                if($product->id%2!=0) continue;
+                $product->addMedia(public_path('/seeder-media/my-product.png'))->preservingOriginal()->toMediaCollection('productImages');
+            }
+
+            // assign image to each productsssss
+            foreach($products as $product){
+                if($product->id%2==0) continue;
+                $product->addMedia(public_path('/seeder-media/product.png'))->preservingOriginal()->toMediaCollection('productImages');
+            }
+        }
     }
 }
