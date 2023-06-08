@@ -48,10 +48,6 @@ Route::controller(\App\Http\Controllers\SocialController::class)->group(function
     Route::get('auth/{social}/callback', 'callback')->name('social.callback');
 });
 
-Route::get('test', function () {
-
-});
-
 Route::get('/', function () {
     return redirect()->route('login');
 });

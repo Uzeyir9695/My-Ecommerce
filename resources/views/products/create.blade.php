@@ -70,40 +70,40 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 offset-0">
-                                            <div class="form-group">
-                                                <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
-                                                <input type="number" name="price" id="price" value="{{ old('price') }}" class="form-control"  placeholder="some price..." />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="quantity">Quantity <span class="text-danger">*</span></label>
-                                                <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}" class="form-control"  placeholder="some quantity..." />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="d-block" for="description">Description <span class="text-danger">*</span></label>
-                                                <textarea class="form-control" name="description"  placeholder="Describe your product..." id="description" rows="3">{{ old('description') }}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="discount">Discount (optional - default is 0)</label>
-                                                <input type="number" min="0" max="100" name="discount" value="{{ old('discount') }}" class="form-control"  placeholder="Discount in percent..." id="discount" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="image">Product Image <span class="text-danger">*</span></label>
-                                                <div class="custom-file">
-                                                    <input type="file" name="images[]" class="custom-file-input"  id="images" multiple />
-                                                    <label class="custom-file-label" for="images">Choose store image</label>
+                                                <div class="form-group">
+                                                    <label class="form-label" for="price">Price <span class="text-danger">*</span></label>
+                                                    <input type="number" name="price" id="price" value="{{ old('price') }}" class="form-control"  placeholder="some price..." />
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" name="agreed" class="custom-control-input" id="agreed" />
-                                                    <label class="custom-control-label" for="agreed">Agree to our terms and conditions <span class="text-danger">*</span></label>
+                                                <div class="form-group">
+                                                    <label class="form-label" for="quantity">Quantity <span class="text-danger">*</span></label>
+                                                    <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}" class="form-control"  placeholder="some quantity..." />
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn btn-primary">Add Product</button>
+                                                <div class="form-group">
+                                                    <label class="d-block" for="description">Description <span class="text-danger">*</span></label>
+                                                    <textarea class="form-control" name="description"  placeholder="Describe your product..." id="description" rows="3">{{ old('description') }}</textarea>
                                                 </div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label for="discount">Discount (optional - default is 0)</label>
+                                                    <input type="number" min="0" max="100" name="discount" value="{{ old('discount') }}" class="form-control"  placeholder="Discount in percent..." id="discount" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="image">Product Image <span class="text-danger">*</span></label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="images[]" class="custom-file-input"  id="images" multiple />
+                                                        <label class="custom-file-label" for="images">Choose store image</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="agreed" class="custom-control-input" id="agreed" />
+                                                        <label class="custom-control-label" for="agreed">Agree to our terms and conditions <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary">Add Product</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
