@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Subcategory;
+use http\Client\Request;
 
 class EcommerceController extends Controller
 {
@@ -18,11 +19,11 @@ class EcommerceController extends Controller
             return view('error.404');
         }
 
-        $products = Product::where('subcategory_id', $subcategory->id)->paginate(21);
+        $products = Product::with('media')->where('subcategory_id', $subcategory->id)->paginate(21);
         $attributes = $subcategory->attributes()->get()->groupBy(function($data) {
             return $data->name;
         });
-
+        
         return view('ecommerce.index', compact( 'attributes', 'products'));
     }
 
