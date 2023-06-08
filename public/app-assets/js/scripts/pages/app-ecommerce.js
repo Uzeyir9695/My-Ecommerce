@@ -24,7 +24,7 @@ $(function () {
 
 
   var sidebarShop = $('.sidebar-shop'),
-    btnCart = $('.btn-cart'),
+    btnCart = $('.btn-cart-btn'),
     overlay = $('.body-content-overlay'),
     sidebarToggler = $('.shop-sidebar-toggler'),
     gridViewBtn = $('.grid-view-btn'),
@@ -109,15 +109,16 @@ $(function () {
       var $this = $(this),
         addToCart = $this.find('.add-to-cart');
       if (addToCart.length > 0) {
-        e.preventDefault();
+          console.log('yes')
+          e.preventDefault();
+          addToCart.text('View In Cart').removeClass('add-to-cart').addClass('view-in-cart');
+          // $this.attr('href', checkout);
+          toastr['success']('', 'Added Item In Your Cart 🛒', {
+              closeButton: true,
+              tapToDismiss: false,
+              rtl: isRTL
+          });
       }
-      addToCart.text('View In Cart').removeClass('add-to-cart').addClass('view-in-cart');
-      $this.attr('href', checkout);
-      toastr['success']('', 'Added Item In Your Cart 🛒', {
-        closeButton: true,
-        tapToDismiss: false,
-        rtl: isRTL
-      });
     });
   }
 
