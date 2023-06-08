@@ -128,7 +128,7 @@
                                         <span>Wishlist</span>
                                     </form>
                                 </a>
-                                <a :href="cartLink" @click="addCart(product.id)" class="btn btn-primary btn-cart-btn">
+                                <a :href="cartLink" @click="addCart(product.id)" class="btn btn-primary btn-cart">
                                     <form action="" method="POST" id="add-item-to-cart">
                                         <input type="hidden" name="id" :value=" product.id">
                                         <input type="hidden" name="price" :value="price(product.price, product.discount)">

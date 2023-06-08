@@ -24,7 +24,7 @@ $(function () {
 
 
   var sidebarShop = $('.sidebar-shop'),
-    btnCart = $('.btn-cart-btn'),
+    btnCart = $('.btn-cart'),
     overlay = $('.body-content-overlay'),
     sidebarToggler = $('.shop-sidebar-toggler'),
     gridViewBtn = $('.grid-view-btn'),
