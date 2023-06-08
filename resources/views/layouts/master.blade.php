@@ -224,8 +224,11 @@
     </div>
 </div>
 <!-- END: Main Menu-->
+<div id="app">
+    @yield('content')
+</div>
 
-@yield('content')
+@vite('resources/js/app.js')
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
@@ -236,13 +239,10 @@
 {{--</footer>--}}
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->
-
 <!-- BEGIN: Vendor JS-->
 <script src="/app-assets/vendors/js/vendors.min.js"></script>
 <!-- BEGIN Vendor JS-->
 @yield('scripts')
-<script src="https://js.stripe.com/v3/"></script>
-
 <!-- BEGIN: Add product to cart adn remove JS-->
 <script type=text/javascript>
 
@@ -281,7 +281,6 @@
 <script src="{{ asset('js/cart.js') }}"></script>
 <script src="{{ asset('js/wishlist.js') }}"></script>
 <script src="{{ asset('js/checkout.js') }}"></script>
-<script src="{{ asset('js/payment.js') }}"></script>
 <script src="{{ asset('js/image.js') }}"></script>
 
 <!-- END: Add product to cart adn remove JS-->
@@ -329,6 +328,7 @@
         }
     })
 </script>
+
 </body>
 <!-- END: Body-->
 
