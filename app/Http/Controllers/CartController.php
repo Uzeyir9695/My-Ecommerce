@@ -16,22 +16,20 @@ class CartController extends Controller
     {
         $cart = Cart::create([
             'user_id' => auth()->id(),
-            'product_id' => $request->id,
+            'product_id' => $request->product_id,
             'price' => $request->price,
             'discount' => $request->discount
         ]);
 
-        $cart->products()->attach($request->id);
-        $cart = $cart->load('products');
+        $cart->products()->attach($request->product_id);
+        $cart = $cart->load('products.media');
 
-        $medias = $cart->products()->first()->getFirstMedia('productImages');
-
-        return response()->json(['message' => 'Product added to you cart!', 'cart' => $cart, 'medias' => $medias], 201);
+        return response()->json(['message' => 'Product added to you cart!', 'cart' => $cart], 201);
     }
 
     public function navbarCart()
     {
-        $carts = Cart::with(['user', 'products.media'])->where('user_id', auth()->id())->get();
+        $carts = Cart::with('products.media')->where('user_id', auth()->id())->get();
         return response()->json(['carts' => $carts]);
     }
 
