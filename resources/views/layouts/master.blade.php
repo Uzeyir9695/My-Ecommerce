@@ -14,7 +14,7 @@
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>Shop | {{ (request()->segment(1) == 'category'? collect(request()->segments())->last() : request()->segment(1))}}</title>
-{{--    <title>Shop | {{ request()->path() }}</title>--}}
+    {{--    <title>Shop | {{ request()->path() }}</title>--}}
     <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
@@ -66,7 +66,7 @@
 <!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
-
+<div id="app">
 <!-- BEGIN: Header-->
 <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
     <div class="navbar-container d-flex content">
@@ -103,43 +103,13 @@
                     <ul class="search-list search-list-main"></ul>
                 </div>
             </li>
-            <li class="nav-item dropdown dropdown-cart mr-25">
-                <a class="nav-link" href="javascript:void(0);" data-toggle="dropdown">
-                    <i class="ficon" data-feather="shopping-cart"></i>
-                    <span class="badge badge-pill badge-primary badge-up cart-item-count-badge"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right ">
-                    <li class="dropdown-menu-header" >
-                        <div class="dropdown-header d-flex">
-                            <h4 class="notification-title mb-0 mr-auto">Your Cart</h4>
-                            <div class="badge badge-pill badge-light-primary "><span class="cart-items-length"></span> Items</div>
-                        </div>
-                    </li>
-                    <li class="scrollable-container media-list cart-media-list" id="cart-media-list">
-                        {{-- Here goes cart items--}}
-                        <div class="row mb-2 default-cart-content">
-                            <div class="col-12 text-center">
-                                <img class=" rounded mr-1 d-block mx-auto" src="/cart-media/cart-is-empty.gif" alt="donuts" width="320px" height="230px">
-                            </div>
-                            <div class="col-12 text-center">
-                                <div class="mx-auto"><h5 class="mt-2 text-danger mx-auto">Your Shopping Cart is empty</h5></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="dropdown-menu-footer">
-                        <div class="d-flex justify-content-between mb-1">
-                            <h6 class="font-weight-bolder mb-0">Total:</h6>
-                            <h6>$<span class="total-price font-weight-bold">0</span></h6>
-                        </div><a class="btn btn-primary btn-block" href="{{ route('carts.checkout') }}">Checkout</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown dropdown-notification mr-25">
-                <a class="nav-link" href="{{ route('wishlists.index') }}">
-                    <i class="ficon" data-feather="heart"></i>
-                    <span class="badge badge-pill badge-danger badge-up wishlist-count-badge">0</span>
-                </a>
-            </li>
+            {{--   Vue component --}}
+            <cart-list
+                :product-show-route="'{{ route('products.show', "") }}'"
+                :checkout-route="'{{ route('carts.checkout') }}'"
+                :wishlist-route="'{{ route('wishlists.index') }}'"
+            ></cart-list>
+
             <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">{{ Auth::user()->name }}</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
@@ -224,10 +194,8 @@
     </div>
 </div>
 <!-- END: Main Menu-->
-<div id="app">
     @yield('content')
 </div>
-
 @vite('resources/js/app.js')
 
 <div class="sidenav-overlay"></div>
@@ -277,10 +245,8 @@
     },
     };
 </script>
-
-<script src="{{ asset('js/cart.js') }}"></script>
-<script src="{{ asset('js/wishlist.js') }}"></script>
-<script src="{{ asset('js/checkout.js') }}"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{{ asset('js/payment.js') }}"></script>
 <script src="{{ asset('js/image.js') }}"></script>
 
 <!-- END: Add product to cart adn remove JS-->
