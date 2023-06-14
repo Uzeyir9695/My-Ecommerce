@@ -8,7 +8,10 @@ let stripe = Stripe(config.routes.stripe)
 let elements = stripe.elements()
 let style = config.routes.style
 let card = elements.create('card', {style: style, hidePostalCode: true});
-card.mount('#card-element');
+let cardElement = $('#card-element');
+if (cardElement.length > 0) {
+    card.mount('#card-element');
+}
 let paymentMethod = null;
 $('.card-form').on('submit', function () {
     $(this).find('.pay-now').attr('disabled', true)
