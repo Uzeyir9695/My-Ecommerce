@@ -9,7 +9,11 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        $wishlists = Wishlist::where('user_id', auth()->id())->latest()->paginate(12);
+        $wishlists = Wishlist::with('product.media')->where('user_id', auth()->id())->latest()->paginate(21);
+
+        if (request()->ajax()) {
+            return response()->json(['wishlists' => $wishlists], 200);
+        }
         return view('ecommerce.wishlist', compact('wishlists'));
     }
 
@@ -20,18 +24,12 @@ class WishlistController extends Controller
            'product_id' => $request->id
         ]);
         $wishlist_id = $wishlist->id;
-        return response()->json(['message' => 'Product added to you wishlist!', 'wishlist_id' => $wishlist_id], 201);
-    }
-
-    public function navbarWishlistsCounter()
-    {
-        $wishlists = Wishlist::where('user_id', auth()->id())->count();
-        return response()->json(['wishlists' => $wishlists]);
+        return response()->json(['message' => 'Product added to your wishlist!', 'wishlist_id' => $wishlist_id], 201);
     }
 
     public function destroy(Wishlist $wishlist)
     {
         $wishlist->delete();
-        return response()->json(['message' => 'Product removed from wishlist'], 201);
+        return response()->json(['message' => 'Product removed from wishlist'], 200);
     }
 }
