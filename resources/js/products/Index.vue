@@ -128,11 +128,11 @@
                                         <span>Wishlist</span>
                                     </form>
                                 </a>
-                                <a :href="cartLink" @click="addCart(product.id)" class="btn btn-primary btn-cart">
-                                    <form action="" method="POST" id="add-item-to-cart">
-                                        <input type="hidden" name="id" :value=" product.id">
+                                <a :href="cartLink" @click="addToCart(product.id)" class="btn btn-primary btn-cart">
+                                    <form :id="'myForm-'+product.id">
+                                        <input type="hidden" name="id" :value="product.id">
                                         <input type="hidden" name="price" :value="price(product.price, product.discount)">
-                                        <input type="hidden" name="discount" :value=" product.discount">
+                                        <input type="hidden" name="discount" :value="product.discount">
                                         <i data-feather="shopping-cart"></i>
                                         <span class="add-to-cart">Add to cart</span>
                                     </form>
@@ -301,7 +301,7 @@ export default {
     data() {
         return {
             routes: {
-                paginateRoute: this.subCatRoute+'/1'+'/washing-machines',
+                paginateRoute: this.subCatRoute,
                 productShow: this.productShowRoute,
                 wishlistCreate: this.wishlistRoute,
             },
@@ -318,17 +318,41 @@ export default {
         }
     },
     mounted() {
-        // console.log(this.subCatRoute);
+       this.getNavbarCarts();
     },
     methods: {
+        addToCart(id) {
+            // Get the form element
+            const form = document.getElementById('myForm-'+id);
+            // Retrieve input field values from the form
+            const product_id = form.elements.id.value;
+            const price = form.elements.price.value;
+            const discount = form.elements.discount.value;
+
+            // AJAX request using Axios
+            axios.post('/carts', { product_id, price, discount })
+                .then(response => {
+                 this.cartLink = this.routes.productShow+'/'+id;
+                    console.log('Added cart');
+                })
+                .catch(error => {
+                    // Handle errors
+                });
+        },
+
+        getNavbarCarts() {
+            axios.get('/navbar-carts')
+                .then(response => {
+                    console.log(response)
+                    // Handle the response
+                })
+                .catch(error => {
+                    // Handle errors
+                });
+        },
         price(price, discount=0){
                 return price - (price*discount/100);
-            },
-        addCart(id) {
-            this.addedToCart = false;
-            console.log('Cart added');
-            this.cartLink = this.routes.productShow+'/'+id;
-        }
+        },
     }
 }
 </script>
