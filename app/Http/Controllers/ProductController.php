@@ -40,7 +40,6 @@ class ProductController extends Controller
         $attributes = Attribute::where('subcategory_id', $request->subcategory_id)->get()->groupBy(function($data) {
             return $data->name;
         });
-
         return response()->json([$subcategories, $attributes]);
     }
 
