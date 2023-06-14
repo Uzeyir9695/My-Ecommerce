@@ -217,10 +217,6 @@
     // global app configuration object
     var config = {
         routes: {
-            destroy: '{{ route('navbar.carts.destroy','') }}',
-            getCarts: '{{ route('navbar.carts') }}',
-            getWishlists: '{{ route('navbar.wishlists') }}',
-            details: '{{ route('products.show','') }}',
             orderDetails: '{{ route('orders.orderDetails') }}',
             validateOrderAddress: '{{ route('orders.validateOrderAddress') }}',
             orderAddress: '{{ route('orders.orderAddress') }}',
