@@ -46,7 +46,7 @@
         <li class="nav-item dropdown dropdown-notification mr-25">
             <a class="nav-link" :href="routes.wishlistRoute">
                 <i class="ficon" data-feather="heart"></i>
-                <span v-if="wishlistCounter && wishlistCounter > 0" class="badge badge-pill badge-danger badge-up wishlist-count-badge">{{ wishlistCounter }}</span>
+                <span v-if="wishlistCounter > 0" class="badge badge-pill badge-danger badge-up wishlist-count-badge">{{ wishlistCounter }}</span>
             </a>
         </li>
     </div>
@@ -68,7 +68,8 @@ export default {
 
     created(){
          this.$store.dispatch('cart/fetchCarts');
-         this.$store.dispatch('wishlist/fetchWishlist');
+        this.$store.dispatch('wishlist/fetchWishlist');
+
     },
 
     methods: {
@@ -81,7 +82,8 @@ export default {
         ...mapGetters({
             carts: 'cart/cartItems',
             totalPrice: 'cart/totalPrice',
-            wishlistCounter: 'wishlist/wishlistCounter'
+            wishlistCounter: 'wishlist/wishlistCounter',
+
         })
     }
 }
