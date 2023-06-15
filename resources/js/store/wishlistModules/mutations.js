@@ -1,6 +1,6 @@
 export default {
     addToWishlist(state) {
-        state.wishlist = state.wishlist+1; // increment wishlist's length on each add
+        state.wishlistCounter = state.wishlistCounter+1; // increment wishlist's length on each add
     },
 
    fetchWishlist(state, wishlists) {
@@ -16,6 +16,8 @@ export default {
         const index = state.wishlist.findIndex(item => item.id === id);
         if (index !== -1) {
             state.wishlist.splice(index, 1);
+            state.wishlistCounter = state.wishlistCounter-1;
         }
+
     }
 }
