@@ -114,6 +114,7 @@ export default {
     },
 
     created() {
+        this.$store.dispatch('wishlist/fetchWishlist');
     },
 
     computed: {
@@ -135,16 +136,7 @@ export default {
                 price: this.price(product.price, product.discount),
                 discount: product.discount
             }
-            this.$store.dispatch('cart/addToCart', item)
-                .then((response) => {
-                    toastr['success']('', 'Moved Item To Your Cart 🛒', {
-                        closeButton: true,
-                        tapToDismiss: false,
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            this.$store.dispatch('cart/addToCart', item);
         },
 
         removeFromWishlist(id){
