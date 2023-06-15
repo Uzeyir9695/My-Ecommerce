@@ -5,6 +5,10 @@ export default {
         try {
             const response = await axios.post('/wishlists', {'id': product_id});
             context.commit('addToWishlist');
+            toastr['success']('', response.data.message+' 🛒', {
+                closeButton: true,
+                tapToDismiss: false,
+            });
             return response;
         } catch (error) {
             console.error(error); // Log the error
@@ -27,7 +31,7 @@ export default {
         try {
             const response = await axios.delete('/wishlists/'+id);
             context.commit('removeFromWishlist', id);
-            toastr['error']('', 'Removed Item 🗑️', {
+            toastr['error']('', response.data.message+' 🗑️', {
                 closeButton: true,
                 tapToDismiss: false,
             });

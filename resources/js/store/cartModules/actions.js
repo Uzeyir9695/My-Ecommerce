@@ -5,6 +5,10 @@ export default {
         try {
             const response = await axios.post('/carts', product);
             context.commit('addToCart', response.data.cart);
+            toastr['success']('', response.data.message+' 🛒', {
+                closeButton: true,
+                tapToDismiss: false,
+            });
             return response;
         } catch (error) {
             console.error(error);
@@ -22,11 +26,15 @@ export default {
             throw error;
         }
     },
-    
+
     async removeFromCart(context, id) {
         try {
             const response = await axios.delete('/carts/'+id);
             context.commit('removeFromCart', id);
+            toastr['error']('', response.data.message+' 🛒', {
+                closeButton: true,
+                tapToDismiss: false,
+            });
             return response;
         } catch (error) {
             console.error(error);
