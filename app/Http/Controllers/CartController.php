@@ -18,13 +18,14 @@ class CartController extends Controller
             'user_id' => auth()->id(),
             'product_id' => $request->product_id,
             'price' => $request->price,
+            'quantity' => request('quantity', 1),
             'discount' => $request->discount
         ]);
 
         $cart->products()->attach($request->product_id);
         $cart = $cart->load('products.media');
 
-        return response()->json(['message' => 'Product added to you cart!', 'cart' => $cart], 201);
+        return response()->json(['message' => 'Product added to cart!', 'cart' => $cart], 201);
     }
 
     public function navbarCart()
@@ -35,15 +36,14 @@ class CartController extends Controller
 
     public function checkout()
     {
-        $carts = Cart::where('user_id', auth()->id())->paginate(10);
-        $totalPrice = $carts->sum('price');
-        return view('ecommerce.checkout', compact('carts', 'totalPrice'));
+//        $carts = Cart::with('products.media')->where('user_id', auth()->id())->paginate(10);
+        return view('ecommerce.checkout');
     }
 
     public function destroy(Cart $cart)
     {
         $cart->delete();
 //        $cart->products()->detach();
-        return response()->json(['message' => 'Item removed from your cart'], 201);
+        return response()->json(['message' => 'Product removed from cart'], 201);
     }
 }
