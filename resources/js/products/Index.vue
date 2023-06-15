@@ -307,6 +307,7 @@ export default {
             attributes: 'product/attributes',
             contentLoading: 'product/contentLoading',
             paginateProducts: 'product/paginateProducts',
+
         })
     },
 
@@ -409,12 +410,7 @@ export default {
         },
 
         addToWishlist(product_id) {
-            this.$store.dispatch('wishlist/addToWishlist', product_id)
-                .then(response => {
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            this.$store.dispatch('wishlist/addToWishlist', product_id);
         },
 
         // calculate product's discount
