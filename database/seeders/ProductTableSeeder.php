@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Attribute;
 use App\Models\Product;
+use App\Models\Store;
 use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,6 +23,7 @@ class ProductTableSeeder extends Seeder
       // create 6 products for each subcategory
         foreach ($subcategories as $subcategory) {
             $products = Product::factory()->count(6)->create([
+                'store_id' => Store::pluck('id')->random(),
                 'subcategory_id' => $subcategory->id,
             ]);
 

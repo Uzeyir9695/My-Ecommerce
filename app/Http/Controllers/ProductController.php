@@ -53,13 +53,10 @@ class ProductController extends Controller
     {
         $request->validated();
 
-        $staticData = $request->only(['category_id','subcategory_id', 'name', 'price', 'discount', 'description', 'quantity']);
+        $staticData = $request->only(['store_id', 'category_id','subcategory_id', 'name', 'price', 'discount', 'description', 'quantity']);
         $product = Product::create(array_merge(['user_id' => auth()->id()], $staticData));
-        //insert into product_store and product_user pivot tables
-        $product->stores()->attach(request('store_id'));
-        $product->users()->attach(auth()->id());
         // Insert product's attribute-values into product_attributes table
-        $dynamicData = $request->except(['_token', 'category_id', 'subcategory_id', 'hidden_subcategory_id', 'name', 'price', 'discount', 'description', 'quantity', 'images', 'store_id', 'agreed']);
+        $dynamicData = $request->except(['_token', 'store_id', 'category_id', 'subcategory_id', 'hidden_subcategory_id', 'name', 'price', 'discount', 'description', 'quantity', 'images', 'store_id', 'agreed']);
         foreach ($dynamicData as $key => $value) {
             ProductAttribute::create([
                 'product_id' => $product->id,

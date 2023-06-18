@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Subcategory;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class ProductFactory extends Factory
     {
         return [
             'user_id' => User::pluck('id')->random(),
+            'store_id' => Store::pluck('id')->random(),
             'subcategory_id' => null,
             'name' => $this->faker->word(),
             'price' => $this->faker->randomElement(['1000', '2000', '3000', '4000', '5000']),

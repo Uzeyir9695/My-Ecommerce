@@ -27,11 +27,12 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        $inputs =implode(',', ['category_id', 'subcategory_id', 'description', 'quantity', 'images']);
+        $inputs =implode(',', ['store_id', 'category_id', 'subcategory_id', 'description', 'quantity', 'images']);
 
         return [
-            'category_id' => 'required',
-            'subcategory_id' => 'required',
+            'store_id', 'required|integer',
+            'category_id' => 'required|integer',
+            'subcategory_id' => 'required|integer',
             'name' => 'bail|required|min:3|max:100',
             'price' => 'bail|required|max:255',
             'description' => 'required|min: 5|max: 500',
@@ -46,8 +47,9 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'category_id.required' => 'The category field is required!',
-            'subcategory_id.required' => 'The subcategory field is required!',
+            'store_id.required' => 'The store is required!',
+            'category_id.required' => 'The category is required!',
+            'subcategory_id.required' => 'The subcategory is required!',
             'agreed.required_with_all' => 'Almost done! Just agree to our terms and conditions and continue.',
         ];
     }
