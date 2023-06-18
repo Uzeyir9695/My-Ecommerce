@@ -22,28 +22,39 @@ class CartController extends Controller
             'discount' => $request->discount
         ]);
 
-        $cart->products()->attach($request->product_id);
-        $cart = $cart->load('products.media');
+        $cart = $cart->load('product.media');
 
         return response()->json(['message' => 'Product added to cart!', 'cart' => $cart], 201);
     }
 
+    public function updateCart(Cart $cart, Request $request)
+    {
+        $cart->update([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'price' => $request->price,
+            'quantity' => request('quantity', 1),
+            'discount' => $request->discount
+        ]);
+        $cart = $cart->load('product.media');
+
+        return response()->json(['cart' => $cart], 200);
+    }
+
     public function navbarCart()
     {
-        $carts = Cart::with('products.media')->where('user_id', auth()->id())->get();
+        $carts = Cart::with('product.media')->where('user_id', auth()->id())->get();
         return response()->json(['carts' => $carts]);
     }
 
     public function checkout()
     {
-//        $carts = Cart::with('products.media')->where('user_id', auth()->id())->paginate(10);
-        return view('ecommerce.checkout');
+        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
     }
 
     public function destroy(Cart $cart)
     {
         $cart->delete();
-//        $cart->products()->detach();
         return response()->json(['message' => 'Product removed from cart'], 201);
     }
 }
