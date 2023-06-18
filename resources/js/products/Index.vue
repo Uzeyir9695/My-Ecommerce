@@ -120,12 +120,12 @@
                             <div class="item-options">
                                 <a href="javascript:void(0)" @click="addToWishlist(product.id)" class="btn btn-light btn-wishlist">
                                     <i data-feather="heart" :class="{'text-danger': isProductInWishlist(product.id)}"></i>
-                                    <span>Wishlist</span>
+                                    <span>{{ isProductInWishlist(product.id) ?'Added to Wishlist' : 'Wishlist'  }}</span>
                                 </a>
                                 <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: '#'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
                                     <i data-feather="shopping-cart"></i>
-                                    <span v-if="!isProductInCart(product.id)" class="add-to-cart">Add to cart</span>
-                                    <span v-show="isProductInCart(product.id)" class="add-to-cart">View in details</span>
+<!--                                    <span v-if="!isProductInCart(product.id)" class="add-to-cart">Add to cart</span>-->
+                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View in details' : 'Add to cart' }}</span>
                                 </a>
                             </div>
                         </div>
@@ -310,16 +310,15 @@ export default {
             contentLoading: 'product/contentLoading',
             paginateProducts: 'product/paginateProducts',
             wishlist: 'wishlist/wishlists',
+            cartItems: 'cart/cartItems',
         }),
 
-        ...mapState('cart', ['cartItems']),
         isProductInCart() {
             return function(productId) {
                 return this.cartItems.some(cart => cart.product_id === productId); // Check if a product already exists in cart to avoid duplication
             }
         },
 
-        // ...mapState('wishlist', ['wishlist']),
         isProductInWishlist() {
             return function(productId) {
                 return this.wishlist.some(wishlist => wishlist.product_id === productId); // Check if a product already exists in wishlist to avoid duplication
