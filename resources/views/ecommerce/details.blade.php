@@ -48,90 +48,22 @@
                                     <h4>{{ $product->name }}</h4>
                                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
                                         <h4 class="item-price mr-1">${{ price($product->price, $product->discount) }}</h4>
-                                        <ul class="unstyled-list list-inline pl-1 border-left">
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                        </ul>
                                     </div>
                                     <p class="card-text">Available - <span class="text-success">In stock</span></p>
                                     <p class="card-text">{{ $product->description }}</p>
                                     <ul class="product-features list-unstyled">
                                         <li><i data-feather="shopping-cart"></i> <span>Free Shipping</span></li>
-                                        <li>
-                                            <i data-feather="dollar-sign"></i>
-                                            <span>EMI options available</span>
-                                        </li>
                                     </ul>
                                     <hr />
-                                    <div class="product-color-options">
-                                        <h6>Colors</h6>
-                                        <ul class="list-unstyled mb-0">
-                                            <li class="d-inline-block selected">
-                                                <div class="color-option b-primary">
-                                                    <div class="filloption bg-primary"></div>
-                                                </div>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <div class="color-option b-success">
-                                                    <div class="filloption bg-success"></div>
-                                                </div>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <div class="color-option b-danger">
-                                                    <div class="filloption bg-danger"></div>
-                                                </div>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <div class="color-option b-warning">
-                                                    <div class="filloption bg-warning"></div>
-                                                </div>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <div class="color-option b-info">
-                                                    <div class="filloption bg-info"></div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <hr />
                                     <div class="d-flex flex-column flex-sm-row pt-1">
-                                        <div class="mr-1">
-                                            <form action="{{ route('carts.store') }}" method="POST" id="add-item-to-cart" >
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                                <input type="hidden" name="price" value="{{ price($product->price, $product->discount) }}">
-                                                <input type="hidden" name="discount" value="{{ $product->discount }}">
-                                                <button type="submit" class="btn btn-primary add-first" id="shopping-cart"> <i  class="mr-1" data-feather="shopping-cart"></i>Add to cart</button>
-                                                <a href="{{ route('products.show', $product->id) }}" type="button" class="btn btn-primary add-second"> <i class="mr-1" data-feather="eye"></i>View Cart</a>
-                                            </form>
-                                        </div>
-                                        <form action="{{ route('wishlists.store') }}" method="POST" id="add-item-to-wishlist">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $product->id }}">
-                                            <button type="submit" class="btn btn-light" id="wishlist"> <i class="mr-1 wishlist-exists" data-feather="heart"></i>Add to wishlist</button>
-                                        </form>
-                                        <div class="btn-group dropdown-icon-wrapper btn-share">
-                                            <button type="button" class="btn btn-icon hide-arrow btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i data-feather="share-2"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="javascript:void(0)" class="dropdown-item">
-                                                    <i data-feather="facebook"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" class="dropdown-item">
-                                                    <i data-feather="twitter"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" class="dropdown-item">
-                                                    <i data-feather="youtube"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" class="dropdown-item">
-                                                    <i data-feather="instagram"></i>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                            <i data-feather="shopping-cart" class="mr-50"></i>
+                                            <span class="add-to-cart">Add to cart</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-outline-secondary btn-wishlist mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                            <i data-feather="heart" class="mr-50"></i>
+                                            <span>Wishlist</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
