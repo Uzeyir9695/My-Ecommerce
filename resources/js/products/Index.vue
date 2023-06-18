@@ -119,12 +119,13 @@
                             </div>
                             <div class="item-options">
                                 <a href="javascript:void(0)" @click="addToWishlist(product.id)" class="btn btn-light btn-wishlist">
-                                    <i data-feather="heart"></i>
+                                    <i data-feather="heart" :class="{'text-danger': isProductInWishlist(product.id)}"></i>
                                     <span>Wishlist</span>
                                 </a>
-                                <a :href="cartLink" @click="addToCart(product)" class="btn btn-primary btn-cart">
+                                <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: '#'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
                                     <i data-feather="shopping-cart"></i>
-                                    <span class="add-to-cart">Add to cart</span>
+                                    <span v-if="!isProductInCart(product.id)" class="add-to-cart">Add to cart</span>
+                                    <span v-show="isProductInCart(product.id)" class="add-to-cart">View in details</span>
                                 </a>
                             </div>
                         </div>
@@ -269,7 +270,7 @@
 
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
     props: {
         subCatRoute: {
@@ -301,14 +302,29 @@ export default {
         this.$store.dispatch('product/fetchProducts', this.routes.paginateRoute);
     },
 
+
     computed: {
         ...mapGetters({
             products: 'product/products',
             attributes: 'product/attributes',
             contentLoading: 'product/contentLoading',
             paginateProducts: 'product/paginateProducts',
+            wishlist: 'wishlist/wishlists',
+        }),
 
-        })
+        ...mapState('cart', ['cartItems']),
+        isProductInCart() {
+            return function(productId) {
+                return this.cartItems.some(cart => cart.product_id === productId); // Check if a product already exists in cart to avoid duplication
+            }
+        },
+
+        // ...mapState('wishlist', ['wishlist']),
+        isProductInWishlist() {
+            return function(productId) {
+                return this.wishlist.some(wishlist => wishlist.product_id === productId); // Check if a product already exists in wishlist to avoid duplication
+            }
+        }
     },
 
     methods: {
@@ -395,6 +411,10 @@ export default {
         },
 
         addToCart(product) {
+            if (this.isProductInCart(product.id)) {
+                return; // Exit the method if the product is already added
+            }
+
             const item = {
                 product_id: product.id,
                 price: this.price(product.price, product.discount),
@@ -402,7 +422,8 @@ export default {
             }
             this.$store.dispatch('cart/addToCart', item)
                 .then(response => {
-                    this.cartLink = this.routes.productShow+'/'+product.id;
+                    const refElement = this.$refs['pathToProduct-' + product.id]; // Access the ref element and manipulate it
+                    refElement[0].href = this.routes.productShow+'/'+product.id; // Modify the href attribute of the anchor element
                 })
                 .catch(error => {
                     console.log(error);
@@ -410,9 +431,12 @@ export default {
         },
 
         addToWishlist(product_id) {
+            if (this.isProductInWishlist(product_id)) {
+                return; // Exit the method if the product is already added
+            }
+
             this.$store.dispatch('wishlist/addToWishlist', product_id);
         },
-
         // calculate product's discount
         price(price, discount=0){
             return price - (price*discount/100);

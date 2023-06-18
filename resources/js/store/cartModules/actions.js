@@ -16,6 +16,17 @@ export default {
         }
     },
 
+    async updateCart(context, cart) {
+        try {
+            const response = await axios.put('/carts/'+cart.id, cart);
+            context.commit('updateCart', response.data.cart);
+            return response;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
     async fetchCarts(context) {
         try {
             const response = await axios.get('/navbar-carts');
