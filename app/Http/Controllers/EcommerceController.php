@@ -41,7 +41,7 @@ class EcommerceController extends Controller
             $products = Product::with('media')->whereIn('id', $filteredProductsIds)->paginate(21); // get filtered products
         }
         else {
-            $products = Product::with('media')->where('subcategory_id', $subcategory->id)->paginate(21);
+            $products = Product::with(['media', 'carts'])->where('subcategory_id', $subcategory->id)->paginate(21);
         }
 
 
