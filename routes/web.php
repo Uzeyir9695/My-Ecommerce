@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('subcategories', [\App\Http\Controllers\ProductController::class, 'getSubcategories'])->name('products.subcategories');
     Route::controller(\App\Http\Controllers\CartController::class)->group(function () {
         Route::get('/navbar-carts', 'navbarCart')->name('navbar.carts');
-        Route::get('carts/checkout', 'checkout')->name('carts.checkout');
+        Route::get('/carts/checkout', 'checkout')->name('carts.checkout');
         Route::delete('/carts/{cart}', 'destroy')->name('navbar.carts.destroy');
         Route::post('/carts', 'addToCart')->name('carts.store');
         Route::put('/carts/{cart}', 'updateCart')->name('carts.update');
