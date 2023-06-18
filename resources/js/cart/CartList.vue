@@ -36,7 +36,7 @@
                    <div class="d-flex justify-content-between mb-1">
                        <h6 class="font-weight-bolder mb-0">Total:</h6>
                        <h6 class="text-primary font-weight-bolder mb-0">${{ totalPrice }}</h6>
-                   </div><a class="btn btn-primary btn-block" :href="routes.cartCheckoutRoute">Checkout</a>
+                   </div><a v-if="carts.length > 0" class="btn btn-primary btn-block" :href="routes.cartCheckoutRoute">Checkout</a>
                </li>
            </ul>
        </li>
