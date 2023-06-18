@@ -65,7 +65,8 @@
                             </button>
                             <button @click="moveToCart(wishlist.product)" type="button" class="btn btn-primary btn-cart move-cart">
                                 <i data-feather="shopping-cart"></i>
-                                <span class="add-to-cart">Move to cart</span>
+                                <span v-if="!isProductInCart(wishlist.product.id)" class="add-to-cart">Move to cart</span>
+                                <span v-show="isProductInCart(wishlist.product.id)" class="add-to-cart">Already added</span>
                             </button>
                         </div>
                     </div>
@@ -100,7 +101,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     props: ['productShowRoute'],
@@ -122,6 +123,13 @@ export default {
             wishlists: 'wishlist/wishlists',
             paginateWishlist: 'wishlist/paginateWishlist',
         }),
+
+        ...mapState('cart', ['cartItems']),
+        isProductInCart() {
+            return function(productId) {
+                return this.cartItems.some(cart => cart.product_id === productId); // Check if a product already exists in cart to avoid duplication
+            }
+        }
     },
 
     methods: {
@@ -131,6 +139,10 @@ export default {
         },
 
         moveToCart(product){
+            if (this.isProductInCart(product.id)) {
+                return; // Exit the method if the product is already added
+            }
+
             const item = {
                 product_id: product.id,
                 price: this.price(product.price, product.discount),
