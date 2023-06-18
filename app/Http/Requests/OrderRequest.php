@@ -24,6 +24,7 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id' => 'required|integer',
             'fullname' => 'required|max:100',
             'email' => 'required|string|email|unique:orders',
             'mobile' => 'required|unique:orders|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
