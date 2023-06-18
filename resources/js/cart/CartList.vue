@@ -1,6 +1,6 @@
 <template>
    <div>
-       <li class="nav-item dropdown dropdown-cart mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="shopping-cart"></i><span class="badge badge-pill badge-primary badge-up cart-item-count">{{ carts.length }}</span></a>
+       <li class="nav-item dropdown dropdown-cart mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="shopping-cart"></i><span v-if="carts.length > 0" class="badge badge-pill badge-primary badge-up cart-item-count">{{ carts.length }}</span></a>
            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                <li class="dropdown-menu-header">
                    <div class="dropdown-header d-flex">
@@ -10,11 +10,11 @@
                </li>
                <li class="scrollable-container media-list">
                    <div class="media align-items-center" v-for="cart in carts" :key="cart.id">
-                           <img class="d-block rounded mr-1" :src="cart.products[0].media[0].original_url" alt="donuts" width="62">
+                           <img class="d-block rounded mr-1" :src="cart.product.media[0].original_url" alt="donuts" width="62">
                            <div class="media-body" >
                                <span class="remove-cart" @click="removeFromCart(cart.id)"><font-awesome-icon icon="trash" /></span>
                                <div class="media-heading">
-                                   <h6 class="cart-item-title"><a class="text-body" :href="productShowRoute+'/'+cart.products[0].id"> {{ cart.products[0].name }}</a></h6><small class="cart-item-by">By Apple</small>
+                                   <h6 class="cart-item-title"><a class="text-body" :href="productShowRoute+'/'+cart.product.id"> {{ cart.product.name }}</a></h6><small class="cart-item-by">By Apple</small>
                                </div>
                                <h5 class="cart-item-price">${{ cart.price }}</h5>
                            </div>
