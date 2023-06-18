@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::get('carts/checkout', 'checkout')->name('carts.checkout');
         Route::delete('/carts/{cart}', 'destroy')->name('navbar.carts.destroy');
         Route::post('/carts', 'addToCart')->name('carts.store');
+        Route::put('/carts/{cart}', 'updateCart')->name('carts.update');
     });
 
     Route::controller(\App\Http\Controllers\PaymentController::class)->group(function () {
