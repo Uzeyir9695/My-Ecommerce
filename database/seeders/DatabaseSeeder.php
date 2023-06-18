@@ -22,9 +22,8 @@ class DatabaseSeeder extends Seeder
             KitchenAppliancesSeeder::class,
             MenClothingSeeder::class,
             WomenClothingSeeder::class,
-            ProductTableSeeder::class,
             StoreTableSeeder::class,
-            ProductStorePivotSeeder::class
+            ProductTableSeeder::class,
         ]);
     }
 }
