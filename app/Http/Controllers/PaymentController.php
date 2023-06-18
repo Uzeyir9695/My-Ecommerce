@@ -6,22 +6,28 @@ use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use App\Models\Cart;
 
 class PaymentController extends Controller
 {
-    public static function orderDetails()
+    public static function orderDetails(Request $request)
     {
-        $results = array_map(null, request('product_ids'), request('quantity'), request('price'), request('discount'));
+        $orderedItems = $request->orderedItems;
 
-        foreach ($results as $array){
+        foreach ($orderedItems as $item){
             OrderDetail::create([
                 'user_id' => auth()->id(),
-                'product_id' => $array[0],
-                'quantity' => $array[1],
-                'price' => $array[2],
-                'discount' => $array[3],
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'discount' => $item['discount'],
             ]);
         }
+
+        // Convert an array to a Laravel collection
+        $collection = collect($orderedItems);
+        $cartIDs = $collection->pluck('id')->all();
+        Cart::where('user_id', auth()->id())->whereIn('id', $cartIDs)->delete(); // Delete all the ordered product from cart after payment
     }
 
     public static function validateOrderAddress(OrderRequest $request)
