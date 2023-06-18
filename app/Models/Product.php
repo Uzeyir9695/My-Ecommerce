@@ -12,16 +12,16 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['user_id', 'subcategory_id', 'name', 'price', 'quantity', 'description', 'discount'];
+    protected $fillable = ['user_id', 'store_id', 'subcategory_id', 'name', 'price', 'quantity', 'description', 'discount'];
 
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class);
     }
 
-    public function stores()
+    public function store()
     {
-        return $this->belongsToMany(Store::class)->withTimestamps();
+        return $this->belongsTo(Store::class);
     }
 
     public function productAttributes()
@@ -29,14 +29,14 @@ class Product extends Model implements HasMedia
         return $this->hasMany(ProductAttribute::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsTo(User::class);
     }
 
     public function carts()
     {
-        return $this->belongsToMany(Cart::class)->withTimestamps();
+        return $this->hasMany(Cart::class);
     }
 
     public function wishlists()

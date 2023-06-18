@@ -52,12 +52,12 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function wishlists()
@@ -68,5 +68,10 @@ class User extends Authenticatable
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

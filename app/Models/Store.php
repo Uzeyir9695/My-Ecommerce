@@ -16,7 +16,7 @@ class Store extends Model implements HasMedia
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withTimestamps();
+        return $this->hasMany(Product::class);
     }
 
     public function user()
