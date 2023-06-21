@@ -220,29 +220,9 @@
             orderDetails: '{{ route('orders.orderDetails') }}',
             validateOrderAddress: '{{ route('orders.validateOrderAddress') }}',
             orderAddress: '{{ route('orders.orderAddress') }}',
-            intent: '{{ auth()->user()->createSetupIntent()->client_secret }}',
-            stripe: '{{ env('STRIPE_KEY') }}',
-            style: {
-                base: {
-                    color: '#32325d',
-                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: '#aab7c4'
-                    }
-                },
-                invalid: {
-                    color: '#fa755a',
-                    iconColor: '#fa755a'
-                }
-            }
-
-    },
+        },
     };
 </script>
-<script src="https://js.stripe.com/v3/"></script>
-<script src="{{ asset('js/payment.js') }}"></script>
 <script src="{{ asset('js/image.js') }}"></script>
 
 <!-- END: Add product to cart adn remove JS-->
