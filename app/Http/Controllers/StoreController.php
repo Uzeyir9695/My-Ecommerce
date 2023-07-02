@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
+use function request;
+use function response;
 
 class StoreController extends Controller
 {
@@ -69,9 +71,19 @@ class StoreController extends Controller
      */
     public function edit(Store $store)
     {
+        $store->load('media');
+        if (request()->ajax()) {
+            return response()->json(['store' => $store], 200);
+        }
         return view('store.edit', compact('store'));
     }
 
+    // Method to fetch the store using Vue axios
+    public function storeEditor($id)
+    {
+        $store = Store::with('media')->findOrFail($id);
+        return response()->json(['store' => $store], 200);
+    }
     /**
      * Update the specified resource in storage.
      *

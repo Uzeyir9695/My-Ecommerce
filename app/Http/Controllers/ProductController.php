@@ -11,6 +11,11 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use function dd;
+use function json_decode;
+use function json_encode;
+use function request;
+use function response;
 
 class ProductController extends Controller
 {
@@ -31,16 +36,28 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::get();
+
+        if (request()->ajax()) {
+            return response()->json(['categories' => $categories], 200);
+        }
+
         return view('products.create', compact('categories'));
     }
+
 
     public function getSubcategories(Request $request)
     {
         $subcategories = Subcategory::where('category_id', $request->category_id)->get(['id', 'name']);
+        return response()->json(['subcategories' => $subcategories], 200);
+    }
+
+
+    public function getAttributesValues(Request $request)
+    {
         $attributes = Attribute::where('subcategory_id', $request->subcategory_id)->get()->groupBy(function($data) {
             return $data->name;
         });
-        return response()->json([$subcategories, $attributes]);
+        return response()->json(['attributes' => $attributes], 200);
     }
 
     /**
@@ -51,13 +68,14 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $request->validated();
+
+        $validatedData = $request->validated();
 
         $staticData = $request->only(['store_id', 'category_id','subcategory_id', 'name', 'price', 'discount', 'description', 'quantity']);
         $product = Product::create(array_merge(['user_id' => auth()->id()], $staticData));
         // Insert product's attribute-values into product_attributes table
-        $dynamicData = $request->except(['_token', 'store_id', 'category_id', 'subcategory_id', 'hidden_subcategory_id', 'name', 'price', 'discount', 'description', 'quantity', 'images', 'store_id', 'agreed']);
-        foreach ($dynamicData as $key => $value) {
+        $attributes = $request->only('attributes')['attributes'];
+        foreach (json_decode($attributes) as $key => $value) {
             ProductAttribute::create([
                 'product_id' => $product->id,
                 'name' => $key,
@@ -72,7 +90,7 @@ class ProductController extends Controller
             });
         }
 
-        return response()->json(['message' => 'Product added successfuly']);
+        return response()->json(['message' => 'Product added successfuly'], 201);
     }
 
     /**
@@ -92,9 +110,16 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      *
      */
-    public function edit(Product $product)
+    public function edit()
     {
-        return view('products.edit', compact('product'));
+        return view('products.edit');
+    }
+
+    // Method to fetch the product using Vue axios
+    public function productEditor($id)
+    {
+        $product = Product::with('media')->findOrFail($id);
+        return response()->json(['product' => $product], 200);
     }
 
     /**
@@ -108,7 +133,6 @@ class ProductController extends Controller
     {
         $request->validated();
         $data = $request->only(['name', 'price', 'description', 'quantity', 'discount']);
-
         $product->update($data);
 
         if($request->hasFile('images')){
@@ -130,6 +154,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product, Request $request)
     {
+        // Note: this deletes only product image(s) not product
         if($request->media_id) {
             $collection = collect($product->getMedia('productImages'));
             $collect = [];
@@ -137,6 +162,7 @@ class ProductController extends Controller
                 if(in_array($media->id, \request('media_id'))) continue;
                 $collect[] = $media;
             }
+
             $product->clearMediaCollectionExcept('productImages', $collect);
 
             return response()->json(['message' => 'Deleted Successfully!']);
