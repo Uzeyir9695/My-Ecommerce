@@ -113,19 +113,18 @@
                                 </div>
                                 <h6 class="item-name">
                                     <a class="text-body" :href="routes.productShow+'/'+product.id">{{ product.name }}</a>
-                                    <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">Apple</a></span>
+                                    <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">E-Commerce</a></span>
                                 </h6>
                                 <p class="card-text item-description">{{ product.description }}</p>
                             </div>
                             <div class="item-options">
                                 <a href="javascript:void(0)" @click="addToWishlist(product.id)" class="btn btn-light btn-wishlist">
-                                    <i data-feather="heart" :class="{'text-danger': isProductInWishlist(product.id)}"></i>
-                                    <span>{{ isProductInWishlist(product.id) ?'Added to Wishlist' : 'Wishlist'  }}</span>
+                                    <font-awesome-icon icon="heart"  :class="{ 'text-danger': isProductInWishlist(product.id), 'text-muted': !isProductInWishlist(product.id) }"/>
+                                    <span>Wishlist</span>
                                 </a>
                                 <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: '#'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
-                                    <i data-feather="shopping-cart"></i>
-<!--                                    <span v-if="!isProductInCart(product.id)" class="add-to-cart">Add to cart</span>-->
-                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View in details' : 'Add to cart' }}</span>
+                                    <font-awesome-icon icon="cart-shopping" />
+                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View' : 'Add to cart' }}</span>
                                 </a>
                             </div>
                         </div>
@@ -429,12 +428,16 @@ export default {
                 });
         },
 
-        addToWishlist(product_id) {
+        async addToWishlist(product_id) {
             if (this.isProductInWishlist(product_id)) {
+                toastr['error']('', 'Product is already added!', {
+                    closeButton: true,
+                    tapToDismiss: false,
+                });
                 return; // Exit the method if the product is already added
             }
-
-            this.$store.dispatch('wishlist/addToWishlist', product_id);
+            await this.$store.dispatch('wishlist/addToWishlist', product_id);
+            this.$store.dispatch('wishlist/fetchWishlist'); // Rfetch wishlist from DB after adding into wishlist
         },
         // calculate product's discount
         price(price, discount=0){
