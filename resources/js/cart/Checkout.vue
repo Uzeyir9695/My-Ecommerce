@@ -21,13 +21,8 @@
                     </div>
                 </div>
             </div>
-            <!--  display if product not found-->
-            <div class="row col-12 f-flex justify-content-center"  v-if="carts.length === 0">
-                <h3 class=" text-primary">You have no product in your cart!</h3>
-            </div>
-
             <!--  Start checkout steps          -->
-            <div class="content-body"  v-if="carts.length > 0">
+            <div class="content-body" v-show="carts.length > 0">
                 <div class="bs-stepper checkout-tab-steps">
                     <!-- Wizard starts -->
                     <div class="bs-stepper-header">
@@ -103,13 +98,11 @@
                                             <div class="item-quantity">
                                                 <span class="quantity-title">Qty:</span>
                                                 <div class="checkout-quantity-wrapper d-flex justify-content-center" style="width: 100px;">
-                                                    <span @click="minus(cart)" class="minus mr-1" style="font-size: 20px; cursor: pointer; font-weight: 600">-</span>
-                                                    <span class="quantity" style="font-size: 15px; margin-top: 4px; font-weight: 600">{{ cart.quantity }}</span>
-                                                    <span @click="plus(cart)" class="plus ml-1" style="font-size: 20px; cursor: pointer; font-weight: 600">+</span>
+                                                    <font-awesome-icon @click="minus(cart)" class="minus mr-1 text-primary" style="font-size: 20px; cursor: pointer; font-weight: 600" icon="circle-minus" />
+                                                    <span class="quantity" style="font-size: 15px; font-weight: 600">{{ cart.quantity }}</span>
+                                                    <font-awesome-icon @click="plus(cart)" class="plus ml-1 text-primary" style="font-size: 20px; cursor: pointer; font-weight: 600" icon="circle-plus" />
                                                 </div>
                                             </div>
-                                            <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
-                                            <span class="text-success">17% off 4 offers Available</span>
                                         </div>
                                         <div class="item-options text-center">
                                             <div class="item-wrapper">
@@ -126,7 +119,7 @@
                                             </button>
                                             <button type="button" class="btn btn-primary btn-cart" @click="addToWishlist(cart.product_id)">
                                                 <i data-feather="heart" class="align-middle mr-25"  :class="{'text-danger': isProductInWishlist(cart.product_id)}"></i>
-                                                <span class="text-truncate">{{ isProductInWishlist(cart.product_id) ?'Added to Wishlist' : 'Add to Wishlist'  }}</span>
+                                                <span class="text-truncate">Add to Wishlist</span>
                                             </button>
                                         </div>
                                     </div>
@@ -134,7 +127,7 @@
                                 <!-- Checkout Place Order Left ends -->
 
                                 <!-- Checkout Place Order Right starts -->
-                                <div v-if="carts.length > 0" class="checkout-options">
+                                <div class="checkout-options">
                                     <div class="card">
                                         <div class="card-body">
                                             <label class="section-label mb-1">Options</label>
@@ -148,11 +141,6 @@
                                             <div class="price-details">
                                                 <h6 class="price-title">Price Details</h6>
                                                 <ul class="list-unstyled">
-
-                                                    <li class="price-detail">
-                                                        <div class="detail-title">Bag Discount</div>
-                                                        <div class="detail-amt discount-amt text-success">-25$</div>
-                                                    </li>
                                                     <li class="price-detail">
                                                         <div class="detail-title">Delivery Charges</div>
                                                         <div class="detail-amt discount-amt text-success">Free</div>
@@ -270,20 +258,23 @@
                                         <p class="card-text text-muted mt-25">Be sure to click on correct payment option</p>
                                     </div>
                                     <div class="card-body">
-                                        <form class="card-form mt-3 mb-3">
-                                            <input type="hidden" name="payment_method" class="payment-method" />
-                                            <input type="hidden" id="payment_error" class="payment-error" value="yees" />
+<!--                                        <form class="card-form mt-3 mb-3">-->
+<!--                                            <input type="hidden" name="payment_method" class="payment-method" />-->
+<!--                                            <input type="hidden" id="payment_error" class="payment-error" value="yees" />-->
 
-                                            <input class="StripeElement mb-3" name="card_holder_name" id="holder_name" placeholder="Card holder name" />
+<!--                                            <input class="StripeElement mb-3" name="card_holder_name" id="holder_name" placeholder="Card holder name" />-->
                                             <div class="col-lg-4 col-md-6">
-                                                <div id="card-element" class=""></div>
+                                                <div id="card-element"></div>
                                             </div>
                                             <div id="card-errors" class="ml-1 text-danger mt-1" role="alert"></div>
                                             <div class="form-group mt-3">
                                                 <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: $<span id="checkout-total-price">{{ totalPrice }}</span></a>
-                                                <button @click.prevent="order" class="btn btn-primary pay-now">Pay now</button>
+                                                <button @click.prevent="processPayment" class="btn btn-primary pay-now ml-1" :disabled="isPaying">
+                                                    <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
+                                                    {{ isPaying ? 'Processing...' : 'Pay now'}}
+                                                </button>
                                             </div>
-                                        </form>
+<!--                                        </form>-->
                                     </div>
                                 </div>
                             </div>
@@ -315,8 +306,9 @@ export default {
                 productShow: this.productShowRoute,
                 paymentRoute: this.paymentRoute,
             },
-            isClicked: false,
+            isPaying: false,
             orderedItems: [],
+
             fullname: '',
             email: '',
             mobile: '',
@@ -325,13 +317,12 @@ export default {
             city: '',
             aptnumber: '',
             landmark: '',
+
+            stripe: '',
+            elements: '',
+            card: '',
         }
     },
-
-    create() {
-        //
-    },
-
 
     computed: {
         ...mapGetters({
@@ -347,11 +338,85 @@ export default {
         }
     },
 
-    methods: {
-        ordersValidate() {
+    mounted() {
+        // Load Stripe.js library
+        const script = document.createElement('script');
+        script.src = 'https://js.stripe.com/v3/';
+        script.onload = () => {
+            this.initializeStripe();
+        };
+        document.head.appendChild(script);
+    },
 
+    methods: {
+        initializeStripe() {
+            const stripe = Stripe('pk_test_51L8i7sFAuQKMVqwjwrxxPj38hR3oLMeQZhuGhR8u8FgqBW5Puw0Kh649BBKqJcp7f2OZefiV8TfH8nQmSMlVCLJK00DBG2sPnZ');
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                hidePostalCode: true
+            });
+            cardElement.mount('#card-element');
+
+            this.stripe = stripe;
+            this.cardElement = cardElement;
         },
-        async order() {
+
+        processPayment() {
+            // Handle the payment using Stripe.js
+            this.isPaying = true;
+
+            this.stripe
+                .createPaymentMethod({
+                    type: 'card',
+                    card: this.cardElement,
+                    billing_details: {
+                        name: this.fullname,
+                        email: this.email,
+                        address: {
+                            city: this.city,
+                            postal_code: this.zipcode,
+                            country: 'GE',
+                        },
+                    },
+                })
+                .then((result) => {
+                    if (result.error) {
+                        // Handle error
+                        console.error(result.error.message);
+                    } else {
+                        // Payment method created successfully
+                        const paymentMethod = result.paymentMethod.id;
+                        this.processPaymentOnServer(paymentMethod);
+                    }
+                });
+        },
+
+        processPaymentOnServer(paymentMethod) {
+            // Send the payment method to your server for processing
+            axios.post('/payment', {
+                    payment_method: paymentMethod,
+                    amount: this.totalPrice,
+                })
+                .then((response) => {
+                    this.orderDetails();
+
+                    // Set this.isPaying to false after 1-second delay
+                    setTimeout(() => {
+                        this.isPaying = false;
+                    }, 1000);
+
+                    // Redirect to the specified URL
+                    window.location.href = 'http://127.0.0.1:8000/payment-success';
+                })
+                .catch((error) => {
+                    // Handle error
+                    console.error(error.data.error);
+                });
+        },
+
+        // Note:
+        // Order Details input fields validation error messages come from path: public/app-assets/js/scripts/pages/app-ecommerce-checkout.js
+        async orderDetails() {
             const addressInfo = {
                 fullname: this.fullname,
                 email: this.email,
@@ -373,11 +438,7 @@ export default {
                 };
             });
 
-            this.pay(this.orderedItems, addressInfo);
-        },
-
-        async pay(orderedItems, addressInfo) {
-            await axios.post('/orders/detail', {'orderedItems': orderedItems})
+            await axios.post('/orders/detail', {'orderedItems': this.orderedItems})
                 .then((response) => {
                     return response;
                 }).catch((error) => {
@@ -398,6 +459,10 @@ export default {
 
         addToWishlist(product_id) {
             if (this.isProductInWishlist(product_id)) {
+                toastr['error']('', 'Product is already added!', {
+                    closeButton: true,
+                    tapToDismiss: false,
+                });
                 return; // Exit the method if the product is already added
             }
 
