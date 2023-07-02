@@ -53,15 +53,21 @@ class PaymentController extends Controller
     public function payment(Request $request)
     {
         $user = $request->user();
-        $paymentMethod = $request->payment_method;
+        $paymentMethod = $request->input('payment_method');
+        $amount = $request->input('amount');
 
         try {
             $user->createOrGetStripeCustomer();
             $user->updateDefaultPaymentMethod($paymentMethod);
-            $user->charge($request->total_price * 100, $paymentMethod);
+
+            // Perform the payment
+            $user->charge($amount *100, $paymentMethod);
+
+            // Payment succeeded
+            return response()->json(['message' => 'Thanks for your purchase!']);
         } catch (\Exception $exception) {
-            return back()->with('error', $exception->getMessage());
+            // Payment failed
+            return response()->json(['error' => $exception->getMessage()]);
         }
-        return back();
     }
 }
