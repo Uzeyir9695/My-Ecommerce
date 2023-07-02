@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
      */
     public function rules()
     {
-        $inputs =implode(',', ['name', 'type', 'org_name', 'identification', 'phone', 'country', 'city', 'street', 'website', 'description']);
+//        $inputs =implode(',', ['name', 'type', 'org_name', 'identification', 'phone', 'country', 'city', 'street', 'website', 'description']);
 
         return [
             'name' => 'required|min:2|max:255',
@@ -36,7 +36,7 @@ class StoreRequest extends FormRequest
             'street' => 'required|string|min:4|max:100',
             'website' => 'required|url|min:4|max:100',
             'description' => 'required|string|min:4|max:500',
-            'agreed' => 'required_with_all:'.$inputs,
+            'agreed' => 'required|in:true',
             ]+
             ($this->isMethod('POST') ? $this->store() : $this->update());
     }
@@ -44,7 +44,7 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'agreed.required_with_all' => 'Almost done! Just agree to our terms and conditions and continue.',
+            'agreed.required_with_all' => 'Almost done! Just agree to our terms and conditions and continue.', // Not used on front side
         ];
     }
     protected function store()
