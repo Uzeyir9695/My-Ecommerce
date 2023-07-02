@@ -15,14 +15,22 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\EcommerceController::class)->group(function () {
         Route::get('/dashboard', 'index');
-        Route::get('/category/subcategory/{subcategory}/{slug}', 'getAttributes')->name('subcategories.index');
+        Route::get('/category/subcategory/{subcategory}/{slug}', 'ecommerceIndex')->name('subcategories.index');
+        Route::get('/subcategory/products/{subcategory}/{slug}', 'getAttributes')->name('subcategories.products');
     });
+    Route::get('store-editor/{id}', [\App\Http\Controllers\StoreController::class, 'storeEditor']);
     Route::resource('stores', \App\Http\Controllers\StoreController::class);
+
+    Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
+        Route::get('/subcategories', 'getSubcategories')->name('products.subcategories');
+        Route::get('/attributes-values', 'getAttributesValues')->name('products.attributes');
+        Route::get('/product-editor/{id}', 'productEditor')->name('product.editor');
+    });
     Route::resource('products', \App\Http\Controllers\ProductController::class);
-    Route::get('subcategories', [\App\Http\Controllers\ProductController::class, 'getSubcategories'])->name('products.subcategories');
+
     Route::controller(\App\Http\Controllers\CartController::class)->group(function () {
-        Route::get('/navbar-carts', 'navbarCart')->name('navbar.carts');
         Route::get('/carts/checkout', 'checkout')->name('carts.checkout');
+        Route::get('/navbar-carts', 'navbarCart')->name('navbar.carts');
         Route::delete('/carts/{cart}', 'destroy')->name('navbar.carts.destroy');
         Route::post('/carts', 'addToCart')->name('carts.store');
         Route::put('/carts/{cart}', 'updateCart')->name('carts.update');
@@ -40,6 +48,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/wishlists', 'addToWishlist')->name('wishlists.store');
         Route::delete('/wishlists/{wishlist}', 'destroy')->name('wishlists.destroy');
     });
+
+    Route::view('/payment-success', 'success');
 });
 
 // Laravel socialite routes
