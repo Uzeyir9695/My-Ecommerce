@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use function redirect;
+use function view;
 
 class CartController extends Controller
 {
@@ -41,15 +43,15 @@ class CartController extends Controller
         return response()->json(['cart' => $cart], 200);
     }
 
+    public function checkout()
+    {
+        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
+    }
+
     public function navbarCart()
     {
         $carts = Cart::with('product.media')->where('user_id', auth()->id())->get();
         return response()->json(['carts' => $carts]);
-    }
-
-    public function checkout()
-    {
-        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
     }
 
     public function destroy(Cart $cart)
