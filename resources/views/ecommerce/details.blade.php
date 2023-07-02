@@ -47,24 +47,18 @@
                                 <div class="col-12 col-md-7">
                                     <h4>{{ $product->name }}</h4>
                                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                                        <h4 class="item-price mr-1">${{ price($product->price, $product->discount) }}</h4>
+                                        @if($product->price == 0)
+                                            <h4><del>$<span class="wishlist-price mr-1">{{ $product->price }}</span></del> </h4>
+                                        @else
+                                            <h4><del>$<span class="wishlist-price mr-1">{{ $product->price }}</span></del> </h4>
+                                            <h4 class="item-price mr-1">${{ price($product->price, $product->discount) }}</h4>
+                                        @endif
                                     </div>
-                                    <p class="card-text">Available - <span class="text-success">In stock</span></p>
                                     <p class="card-text">{{ $product->description }}</p>
                                     <ul class="product-features list-unstyled">
                                         <li><i data-feather="shopping-cart"></i> <span>Free Shipping</span></li>
                                     </ul>
                                     <hr />
-                                    <div class="d-flex flex-column flex-sm-row pt-1">
-                                        <a href="javascript:void(0)" class="btn btn-primary btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                            <i data-feather="shopping-cart" class="mr-50"></i>
-                                            <span class="add-to-cart">Add to cart</span>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-outline-secondary btn-wishlist mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                            <i data-feather="heart" class="mr-50"></i>
-                                            <span>Wishlist</span>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
