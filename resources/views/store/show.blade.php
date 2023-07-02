@@ -14,7 +14,7 @@
                 </div>
                 <div class="content-header-right text-md-right col-md-6 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
-                        <a href="{{ route('stores.index') }}" class="btn btn-primary" type="button">View store list</a>
+                        <a href="{{ route('stores.index') }}" class="btn btn-primary mr-1" type="button">View store list</a>
                         <a href="{{ route('products.create', ['store_id' => $store->id]) }}" class="btn btn-primary" type="button">Add a new product</a>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                                 <!-- edit button -->
 
                                                 <div>
-                                                    <a type="button" href="{{ route('stores.edit', $store->id) }}" class="btn btn-primary"><i data-feather="edit"></i>Edit</a>
+                                                    <a type="button" href="{{ route('stores.edit', $store->id) }}" class="btn btn-primary mr-1"><i data-feather="edit"></i>Edit</a>
                                                     <a type="button" data-toggle="modal" data-target="#delete" class=" btn btn-danger delete"><i data-feather="trash"></i>Delete</a>
                                                     <div class="modal fade text-start" id="delete" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
