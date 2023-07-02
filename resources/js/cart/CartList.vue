@@ -68,8 +68,7 @@ export default {
 
     created(){
          this.$store.dispatch('cart/fetchCarts');
-        this.$store.dispatch('wishlist/fetchWishlist');
-
+         this.$store.dispatch('wishlist/fetchWishlist');
     },
 
     methods: {
