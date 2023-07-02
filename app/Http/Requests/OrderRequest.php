@@ -25,8 +25,8 @@ class OrderRequest extends FormRequest
     {
         return [
             'fullname' => 'required|max:100',
-            'email' => 'required|string|email|unique:orders',
-            'mobile' => 'required|unique:orders|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'email' => 'required|email',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'country' => 'required|string|max:100',
             'city' => 'required|string|max:100',
             'zipcode' => 'required|integer',

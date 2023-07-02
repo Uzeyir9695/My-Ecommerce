@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('fullname');
-            $table->string('email')->unique();
-            $table->string('mobile')->unique();
+            $table->string('email');
+            $table->string('mobile');
             $table->string('country');
             $table->string('city');
             $table->string('aptnumber');
