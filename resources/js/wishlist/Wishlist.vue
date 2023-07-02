@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="content-body">
-                <div class="row empty-wishlist d-none" v-if="wishlists.length === 0">
+                <div class="row empty-wishlist d-none" >
 <!--                     Here goes default mepty wishlist image -->
                     <div class="col-8 offset-2 ">
                         <img class="rounded d-block mx-auto" src="/cart-media/wishlist.png" alt="donuts">
@@ -64,7 +64,7 @@
                                 <span>Remove</span>
                             </button>
                             <button @click="moveToCart(wishlist.product)" type="button" class="btn btn-primary btn-cart move-cart">
-                                <i data-feather="shopping-cart"></i>
+                                <font-awesome-icon icon="cart-shopping" />
                                 <span v-if="!isProductInCart(wishlist.product.id)" class="add-to-cart">Move to cart</span>
                                 <span v-show="isProductInCart(wishlist.product.id)" class="add-to-cart">Already added</span>
                             </button>
