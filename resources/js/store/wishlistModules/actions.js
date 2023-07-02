@@ -5,7 +5,7 @@ export default {
         try {
             const response = await axios.post('/wishlists', {'id': product_id});
             context.commit('addToWishlist');
-            toastr['success']('', response.data.message+' 🛒', {
+            toastr['success']('', response.data.message+' ❤', {
                 closeButton: true,
                 tapToDismiss: false,
             });
