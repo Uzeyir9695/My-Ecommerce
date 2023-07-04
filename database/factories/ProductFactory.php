@@ -21,7 +21,7 @@ class ProductFactory extends Factory
     {
         return [
             'user_id' => User::pluck('id')->random(),
-            'store_id' => Store::pluck('id')->random(),
+            'store_id' => null,
             'subcategory_id' => null,
             'name' => $this->faker->word(),
             'price' => $this->faker->randomElement(['1000', '2000', '3000', '4000', '5000']),
