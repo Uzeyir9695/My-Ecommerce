@@ -15,7 +15,7 @@ class StoreTableSeeder extends Seeder
      */
     public function run()
     {
-        $stores = Store::factory()->count(50)->create();
+        $stores = Store::factory()->count(3)->create();
         foreach($stores as $store){
             $store->addMedia(public_path('/seeder-media/store-cover.webp'))->preservingOriginal()->toMediaCollection('covers');
             $store->addMedia(public_path('/seeder-media/store-logo.jpg'))->preservingOriginal()->toMediaCollection('logos');
