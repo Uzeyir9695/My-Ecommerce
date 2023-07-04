@@ -85,40 +85,6 @@ $(function () {
         });
       });
 
-      $(checkoutWizard)
-          .find('.delivery-address')
-          .each(function () {
-              $(this).on('click', function (e) {
-                  // function orderAddress (){
-                  var fullname = $('input[name=fullname]').val();
-                  var email = $('input[name=email]').val();
-                  var mobile = $('input[name=mobile]').val();
-                  var country = $('input[name=country]').val();
-                  var city = $('input[name=city]').val();
-                  var zipcode = $('input[name=zipcode]').val();
-                  var aptnumber = $('input[name=aptnumber]').val();
-                  var landmark = $('input[name=landmark]').val();
-                  $.ajax({
-                      type: "POST",
-                      url: config.routes.validateOrderAddress,
-                      data: {fullname: fullname, email: email, mobile: mobile, country: country, city: city, zipcode: zipcode, aptnumber: aptnumber, landmark: landmark},
-                      success: function () {
-                          $(".errors").empty();
-                          $(".alert-danger").hide();
-                          wizard.next();
-                      },
-                      error: function(response) { // handle the error
-                          $(".errors").empty();
-                          $.each(response.responseJSON.errors, function (key, message) {
-                              $(".alert-danger").show();
-                              $(".errors").append('<li>'+message+'</li>');
-                          });
-                      },
-                  });
-                  // }
-              });
-          });
-
     $(checkoutWizard)
       .find('.btn-prev')
       .on('click', function () {
