@@ -173,14 +173,6 @@
                         <!-- Checkout Customer Address Starts -->
 
                         <div id="step-address" class="content">
-                            <div class="col-6 mt-2">
-                                <div class="messages"></div>
-                                <div class="alert alert-danger p-1" style="display: none">
-                                    <ul class="errors">
-
-                                    </ul>
-                                </div>
-                            </div>
                             <form id="checkout-address form2" class="list-view product-checkout">
                                 <!-- Checkout Customer Address Left starts -->
                                 <div class="card">
@@ -193,53 +185,53 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-name">Full Name <span class="text-danger">*</span>:</label>
-                                                    <input v-model="fullname" type="text" class="form-control" placeholder="John Doe" />
+                                                    <input v-model="fullname" name="fullname" type="text" class="form-control" placeholder="John Doe" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-email">E-Mail <span class="text-danger">*</span>:</label>
-                                                    <input v-model="email" type="email" class="form-control" placeholder="example@gmail.com" />
+                                                    <input v-model="email" name="email" type="email" class="form-control" placeholder="example@gmail.com" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-mobile">Mobile Number <span class="text-danger">*</span>:</label>
-                                                    <input v-model="mobile" type="text" class="form-control" placeholder="+995555444333" />
+                                                    <input v-model="mobile" name="mobile" type="text" class="form-control" placeholder="+995555444333" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-country">Country <span class="text-danger">*</span>:</label>
-                                                    <input v-model="country" type="text" class="form-control" placeholder="Georgia" />
+                                                    <input v-model="country" name="country" type="text" class="form-control" placeholder="Georgia" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-zipcode">ZIP-Code <span class="text-danger">*</span>:</label>
-                                                    <input v-model="zipcode" type="number" class="form-control" placeholder="201301" />
+                                                    <input v-model="zipcode" name="zipcode" type="number" class="form-control" placeholder="201301" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-city">City <span class="text-danger">*</span>:</label>
-                                                    <input v-model="city" type="text" class="form-control" placeholder="Tbilisi" />
+                                                    <input v-model="city" name="city" type="text" class="form-control" placeholder="Tbilisi" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-apt-number">Flat, House No <span class="text-danger">*</span>:</label>
-                                                    <input v-model="aptnumber" type="number" class="form-control" placeholder="9447 Glen Eagles Drive" />
+                                                    <input v-model="aptnumber" name="aptnumber" type="number" class="form-control" placeholder="9447 Glen Eagles Drive" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-landmark">Landmark e.g. near apollo hospital:</label>
-                                                    <input v-model="landmark" type="text" class="form-control" placeholder="Near Apollo Hospital" />
+                                                    <input v-model="landmark" name="landmark" type="text" class="form-control" placeholder="Near Apollo Hospital" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button @click="ordersValidate" type="button" class="btn btn-primary btn-next delivery-address">Save And Deliver Here</button>
+                                                <button type="button" class="btn btn-primary delivery-address">Save And Deliver Here</button>
                                             </div>
                                         </div>
                                     </div>
@@ -258,23 +250,19 @@
                                         <p class="card-text text-muted mt-25">Be sure to click on correct payment option</p>
                                     </div>
                                     <div class="card-body">
-<!--                                        <form class="card-form mt-3 mb-3">-->
-<!--                                            <input type="hidden" name="payment_method" class="payment-method" />-->
-<!--                                            <input type="hidden" id="payment_error" class="payment-error" value="yees" />-->
-
-<!--                                            <input class="StripeElement mb-3" name="card_holder_name" id="holder_name" placeholder="Card holder name" />-->
-                                            <div class="col-lg-4 col-md-6">
-                                                <div id="card-element"></div>
-                                            </div>
-                                            <div id="card-errors" class="ml-1 text-danger mt-1" role="alert"></div>
-                                            <div class="form-group mt-3">
-                                                <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: $<span id="checkout-total-price">{{ totalPrice }}</span></a>
-                                                <button @click.prevent="processPayment" class="btn btn-primary pay-now ml-1" :disabled="isPaying">
-                                                    <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
-                                                    {{ isPaying ? 'Processing...' : 'Pay now'}}
-                                                </button>
-                                            </div>
-<!--                                        </form>-->
+                                        <div class="col-lg-4 col-md-6">
+                                            <div id="card-element"></div>
+                                        </div>
+                                        <div id="card-errors" class="ml-1 text-danger mt-1" role="alert">
+                                            {{ cardError ? cardError: orderAddressError? 'Oops, in the previous step ' + orderAddressError + ' Please go back and fill all the necessery info as required.': '' }}
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: $<span id="checkout-total-price">{{ totalPrice }}</span></a>
+                                            <button @click.prevent="processPayment" class="btn btn-primary pay-now ml-1" :disabled="isPaying">
+                                                <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
+                                                {{ isPaying ? 'Processing...' : 'Pay now'}}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -307,6 +295,8 @@ export default {
                 paymentRoute: this.paymentRoute,
             },
             isPaying: false,
+            cardError: null,
+            orderAddressError: null,
             orderedItems: [],
 
             fullname: '',
@@ -362,32 +352,62 @@ export default {
         },
 
         processPayment() {
-            // Handle the payment using Stripe.js
-            this.isPaying = true;
-
-            this.stripe
-                .createPaymentMethod({
-                    type: 'card',
-                    card: this.cardElement,
-                    billing_details: {
-                        name: this.fullname,
-                        email: this.email,
-                        address: {
-                            city: this.city,
-                            postal_code: this.zipcode,
-                            country: 'GE',
-                        },
-                    },
+            // Before payment valdiate order address info and display the error messages
+            axios.post('/orders/address/validate',
+                {
+                    fullname: this.fullname,
+                    email: this.email,
+                    mobile: this.mobile,
+                    country: this.country,
+                    zipcode: this.zipcode,
+                    city: this.city,
+                    aptnumber: this.aptnumber,
+                    landmark: this.landmark,
                 })
-                .then((result) => {
-                    if (result.error) {
-                        // Handle error
-                        console.error(result.error.message);
-                    } else {
-                        // Payment method created successfully
-                        const paymentMethod = result.paymentMethod.id;
-                        this.processPaymentOnServer(paymentMethod);
+                .then((response) => {
+                    if(response.status === 200) {
+                        // Handle the payment using Stripe.js
+                        this.isPaying = true;
+
+                        this.stripe
+                            .createPaymentMethod({
+                                type: 'card',
+                                card: this.cardElement,
+                                billing_details: {
+                                    name: this.fullname,
+                                    email: this.email,
+                                    address: {
+                                        city: this.city,
+                                        postal_code: this.zipcode,
+                                        country: 'GE',
+                                    },
+                                },
+                            })
+                            .then((result) => {
+                                if (result.error) {
+                                    // Handle error
+                                    this.isPaying =  false;
+                                    this.cardError = result.error.message;
+                                } else {
+                                    // Payment method created successfully
+                                    const paymentMethod = result.paymentMethod.id;
+                                    this.processPaymentOnServer(paymentMethod);
+                                }
+                            });
                     }
+                })
+                .catch((error) => {
+                if (error.response && error.response.status === 422) {
+                    this.isPaying = false;
+                    // Validation failed, store the errors
+                    const errors = error.response.data.errors;
+                    for (let field in errors) {
+                        if (errors.hasOwnProperty(field)) {
+                            const errorMessage = errors[field][0];
+                            this.orderAddressError = errorMessage;
+                        }
+                    }
+                }
                 });
         },
 
@@ -414,8 +434,6 @@ export default {
                 });
         },
 
-        // Note:
-        // Order Details input fields validation error messages come from path: public/app-assets/js/scripts/pages/app-ecommerce-checkout.js
         async orderDetails() {
             const addressInfo = {
                 fullname: this.fullname,

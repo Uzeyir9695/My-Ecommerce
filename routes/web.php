@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/wishlists/{wishlist}', 'destroy')->name('wishlists.destroy');
     });
 
-    Route::view('/payment-success', 'success');
+    Route::view('/payment-success', 'payment-success');
 });
 
 // Laravel socialite routes
