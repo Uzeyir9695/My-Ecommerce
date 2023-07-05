@@ -17,6 +17,10 @@ class EcommerceController extends Controller
         return view('layouts.master'); // This view automatically gets and renders products from View Composer. path: Ecommerce/app/Views/Composers::class
     }
 
+    public function allProducts()
+    {
+
+    }
     public function ecommerceIndex(Subcategory $subcategory)
     {
         if(route('subcategories.index', [$subcategory->id, $subcategory->slug]) !== \request()->url()) {
@@ -47,10 +51,16 @@ class EcommerceController extends Controller
 
             $query =  ProductAttribute::whereIn('product_id', $products)->whereIn('name', $attrNames)->whereIn('value', $attrValues);
             $filteredProductsIds = $query->pluck('product_id')->unique(); // get filtered products' IDs
-            $products = Product::with('media')->whereIn('id', $filteredProductsIds)->paginate(21); // get filtered products
+            $products = Product::with('media')
+                ->whereIn('id', $filteredProductsIds)
+                ->select('id', 'price', 'discount', 'description')
+                ->paginate(21);
         }
         else {
-            $products = Product::with(['media', 'carts'])->where('subcategory_id', $subcategory->id)->paginate(21);
+            $products = Product::with(['media', 'carts'])
+                ->select('id', 'price', 'discount', 'quantity', 'description')
+                ->where('subcategory_id', $subcategory->id)
+                ->paginate(21);
         }
 
 
