@@ -30,7 +30,7 @@
                 <section class="bs-validation">
                     <div class="row">
                         <!-- Bootstrap Validation -->
-                        <div class="col-6 offset-3">
+                        <div class="col-md-6 offset-md-3 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Edit Your Product</h4>

@@ -26,7 +26,7 @@
                 <section class="bs-validation">
                     <div class="row">
                         <!-- Bootstrap Validation -->
-                        <div class="col-8 offset-2">
+                        <div class="col-md-8 offset-md-2 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Create Your Store</h4>
@@ -45,7 +45,7 @@
                                     </div>
                                     <form @submit.prevent="submit">
                                         <div class="row">
-                                            <div class="col-6 offset-0">
+                                            <div class="col-md-6 offset-md-0 col-sm-12">
                                                 <div class="form-group">
                                                     <label class="form-label" for="name">Name <span class="text-danger">*</span>
                                                         <small class="text-danger ml-1" v-if="errors && errors.name">{{ errors.name[0] }}</small>
@@ -96,7 +96,7 @@
                                                     <input type="text" v-model="formData.country"  class="form-control" :class="{ 'is-invalid': errors.country }" placeholder="Georgia" />
                                                 </div>
                                             </div>
-                                            <div class="col-6 offset-0">
+                                            <div class="col-md-6 offset-md-0 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="city">City <span class="text-danger">*</span>
                                                         <small class="text-danger ml-1" v-if="errors && errors.city">{{ errors.city[0] }}</small>

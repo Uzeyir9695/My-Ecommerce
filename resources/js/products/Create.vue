@@ -26,7 +26,7 @@
                 <section class="bs-validation">
                     <div class="row">
                         <!-- Bootstrap Validation -->
-                        <div class="col-8 offset-2">
+                        <div class="col-md-8 offset-md-2 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Create Your Product</h4>
@@ -35,7 +35,7 @@
                                 <div class="card-body">
                                     <form @submit.prevent="submit" ref="productForm">
                                         <div class="row">
-                                            <div class="col-6 offset-0">
+                                            <div class="col-md-6 offset-md-0 col-sm-12">
                                                 <div class="form-group">
                                                     <label class="form-label" for="name">Name <span class="text-danger">*</span>
                                                         <small class="text-danger ml-1" v-if="errors && errors.name">{{ errors.name[0] }}</small>
@@ -70,7 +70,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-6 offset-0">
+                                            <div class="col-md-6 offset-md-0 col-sm-12">
                                                 <div class="form-group">
                                                     <label class="form-label" for="price">Price <span class="text-danger">*</span>
                                                         <small class="text-danger ml-1" v-if="errors && errors.price">{{ errors.price[0] }}</small>
