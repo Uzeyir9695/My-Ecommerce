@@ -7,6 +7,8 @@ use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use http\Client\Request;
 use function compact;
+use function redirect;
+use function response;
 use function route;
 use function view;
 
@@ -14,13 +16,20 @@ class EcommerceController extends Controller
 {
     public function index()
     {
-        return view('layouts.master'); // This view automatically gets and renders products from View Composer. path: Ecommerce/app/Views/Composers::class
+        return redirect()->route('all-products-view');
+    }
+
+    public function allProductsView()
+    {
+        return view('ecommerce.all-products');
     }
 
     public function allProducts()
     {
-
+        $products = Product::with('media')->select('id', 'price', 'discount', 'quantity', 'description')->paginate(21);
+        return response()->json(['products' => $products], 200);
     }
+
     public function ecommerceIndex(Subcategory $subcategory)
     {
         if(route('subcategories.index', [$subcategory->id, $subcategory->slug]) !== \request()->url()) {
@@ -58,7 +67,7 @@ class EcommerceController extends Controller
         }
         else {
             $products = Product::with(['media', 'carts'])
-                ->select('id', 'price', 'discount', 'quantity', 'description')
+                ->select('id', 'price', 'discount', 'description')
                 ->where('subcategory_id', $subcategory->id)
                 ->paginate(21);
         }

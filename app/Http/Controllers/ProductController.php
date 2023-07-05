@@ -26,7 +26,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('user_id', auth()->id())->with('productAttributes')->paginate(21);
+        $products = Product::where('user_id', auth()->id())
+            ->with('productAttributes')
+            ->select('id', 'price', 'discount', 'description')
+            ->paginate(21);
         return view('products.index', compact('products'));
     }
 
@@ -101,7 +104,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('ecommerce.details', compact('product'));
+        return view('products.show', compact('product'));
     }
 
     /**
