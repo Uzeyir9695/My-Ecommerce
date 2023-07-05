@@ -18,6 +18,7 @@ class PaymentController extends Controller
             OrderDetail::create([
                 'user_id' => auth()->id(),
                 'product_id' => $item['product_id'],
+                'status' => 'paid',
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
                 'discount' => $item['discount'],

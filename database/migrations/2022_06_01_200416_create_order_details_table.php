@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('product_id');
+            $table->string('status');
             $table->integer('price');
             $table->integer('quantity')->nullable()->default(1);
             $table->integer('discount')->nullable()->default(0);
