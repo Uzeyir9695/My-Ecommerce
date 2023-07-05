@@ -223,7 +223,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button type="button" class="btn btn-primary delivery-address">Save And Deliver Here</button>
+                                                <button type="button" class="btn btn-primary btn-next delivery-address">Save And Deliver Here</button>
                                             </div>
                                         </div>
                                     </div>
