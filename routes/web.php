@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/subcategory/products/{subcategory}/{slug}', 'getAttributes')->name('subcategories.products');
         Route::get('/my-orders', 'myOrders')->name('my-orders');
     });
-    
+
     Route::get('store-editor/{id}', [\App\Http\Controllers\StoreController::class, 'storeEditor']);
     Route::resource('stores', \App\Http\Controllers\StoreController::class);
 
