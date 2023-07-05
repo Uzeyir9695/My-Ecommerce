@@ -9,7 +9,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 // Components
-import Index from './products/Index.vue';
+import CategoryProducts from './main/CategoryProducts.vue';
+import Index from './main/Index.vue';
 import ProductCreate from './products/Create.vue';
 import ProductEdit from './products/Edit.vue';
 import ShopCreate from './shops/Create.vue';
@@ -20,6 +21,7 @@ import Wishlist from './wishlist/Wishlist.vue';
 
 const app = createApp({
     components: {
+        CategoryProducts,
         Index,
         ProductCreate,
         ProductEdit,
