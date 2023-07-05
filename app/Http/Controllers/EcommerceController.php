@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\OrderDetail;
 use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use http\Client\Request;
-use function compact;
-use function redirect;
-use function response;
-use function route;
-use function view;
 
 class EcommerceController extends Controller
 {
@@ -78,6 +74,12 @@ class EcommerceController extends Controller
         });
 
         return response()->json(['products' => $products, 'attributes' => $attributes], 200); // Note: No need to check ajax request if we use api routes
+    }
+
+    public function myOrders()
+    {
+        $orders = OrderDetail::where('user_id', auth()->id())->get();
+        return view('ecommerce.orders', compact('orders'));
     }
 
 }

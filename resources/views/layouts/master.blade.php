@@ -80,7 +80,6 @@
                         <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
                         <ul class="search-list search-list-bookmark"></ul>
                     </div>
-                </li>
             </ul>
         </div>
         <ul class="nav navbar-nav align-items-center ml-auto">
@@ -110,6 +109,7 @@
                     <a class="dropdown-item" href="#"><i class="mr-50" data-feather="user"></i> Profile</a>
                     <a class="dropdown-item" href="{{ route('stores.index') }}"><i class="mr-50" data-feather="shopping-cart"></i>My Stores</a>
                     <a class="dropdown-item" href="{{ route('products.index') }}"><i class="mr-50" data-feather="box"></i> My Products</a>
+                    <a class="dropdown-item" href="{{ route('my-orders') }}"><i class="mr-50" data-feather="shopping-bag"></i> My Orders</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#"><i class="mr-50" data-feather="settings"></i> Settings</a>
 
@@ -161,7 +161,12 @@
                             </svg></span>
                     <h2 class="brand-text">Ecommerce</h2>
                 </a></li>
-            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+            <li class="nav-item nav-toggle">
+                <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
+                    <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
+                    <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="shadow-bottom"></div>
@@ -169,12 +174,25 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Categories</span><i data-feather="more-horizontal"></i>
             </li>
-
+            <li class="nav-item mb-2 @if(route('all-products-view') == \request()->url()) active @endif">
+                <a class="d-flex align-items-center" href="{{ route('all-products-view') }}">
+                    <i data-feather="grid"></i>
+                    <span class="menu-title text-truncate" data-i18n="Kanban">All Categories</span>
+                </a>
+            </li>
             @foreach($categories as $category)
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><img src="{{ asset($category->icon) }} " alt="" style="width: 25px; height: 25px; background-color: floralwhite; padding: 3px; border-radius: 50px; " class="mr-1"><span class="menu-title text-truncate" data-i18n="Invoice">{{ $category->name }}</span></a>
+            <li class=" nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <img src="{{ asset($category->icon) }} " alt="" style="width: 25px; height: 25px; background-color: floralwhite; padding: 3px; border-radius: 50px; " class="mr-1">
+                    <span class="menu-title text-truncate" data-i18n="Invoice">{{ $category->name }}</span>
+                </a>
                 <ul class="menu-content">
                     @foreach($category->subcategories as $subcategory)
-                        <li class="@if(route('subcategories.index', [$subcategory->id, $subcategory->slug] ) == \request()->url()) active @endif"><a class="d-flex align-items-center" href="{{ route('subcategories.index', [$subcategory->id, $subcategory->slug] ) }}"><img src="{{ asset($subcategory->icon) }} " alt="" style="width: 28px; height: 28px; border-radius: 50px; padding: 3px; background-color: floralwhite" class="mr-1"><span class="menu-item text-truncate" data-i18n="List">{{ $subcategory->name }}</span></a>
+                        <li class="@if(route('subcategories.index', [$subcategory->id, $subcategory->slug] ) == \request()->url()) active @endif">
+                            <a class="d-flex align-items-center" href="{{ route('subcategories.index', [$subcategory->id, $subcategory->slug] ) }}">
+                                <img src="{{ asset($subcategory->icon) }} " alt="" style="width: 28px; height: 28px; border-radius: 50px; padding: 3px; background-color: floralwhite" class="mr-1">
+                                <span class="menu-item text-truncate" data-i18n="List">{{ $subcategory->name }}</span>
+                            </a>
                         </li>
                     @endforeach
                 </ul>

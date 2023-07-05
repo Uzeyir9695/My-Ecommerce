@@ -19,8 +19,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/all-products', 'allProducts')->name('all-products');
         Route::get('/category/subcategory/{subcategory}/{slug}', 'ecommerceIndex')->name('subcategories.index');
         Route::get('/subcategory/products/{subcategory}/{slug}', 'getAttributes')->name('subcategories.products');
+        Route::get('/my-orders', 'myOrders')->name('my-orders');
     });
-    Route::view('/my-orders', 'ecommerce.orders');
+    
     Route::get('store-editor/{id}', [\App\Http\Controllers\StoreController::class, 'storeEditor']);
     Route::resource('stores', \App\Http\Controllers\StoreController::class);
 
