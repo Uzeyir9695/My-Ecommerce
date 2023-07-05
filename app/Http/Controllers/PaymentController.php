@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Models\Cart;
-use function response;
 
 class PaymentController extends Controller
 {

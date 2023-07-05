@@ -11,11 +11,6 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use function dd;
-use function json_decode;
-use function json_encode;
-use function request;
-use function response;
 
 class ProductController extends Controller
 {

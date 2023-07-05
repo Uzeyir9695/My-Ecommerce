@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
-use function request;
-use function response;
 
 class StoreController extends Controller
 {

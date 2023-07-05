@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
-use function redirect;
-use function view;
 
 class CartController extends Controller
 {
