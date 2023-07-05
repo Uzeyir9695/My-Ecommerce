@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\EcommerceController::class)->group(function () {
         Route::get('/dashboard', 'index');
+        Route::get('/all-categories-products', 'allProductsView')->name('all-products-view');
+        Route::get('/all-products', 'allProducts')->name('all-products');
         Route::get('/category/subcategory/{subcategory}/{slug}', 'ecommerceIndex')->name('subcategories.index');
         Route::get('/subcategory/products/{subcategory}/{slug}', 'getAttributes')->name('subcategories.products');
     });
+    Route::view('/my-orders', 'ecommerce.orders');
     Route::get('store-editor/{id}', [\App\Http\Controllers\StoreController::class, 'storeEditor']);
     Route::resource('stores', \App\Http\Controllers\StoreController::class);
 
