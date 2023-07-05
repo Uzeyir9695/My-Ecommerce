@@ -22,7 +22,6 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('quantity');
             $table->integer('discount')->nullable()->default(0);
-            $table->integer('actual_price')->nullable();
             $table->text('description');
             $table->timestamps();
 //            $table->softDeletes();
