@@ -98,7 +98,7 @@
                                             </ul>
                                         </div>
                                         <div>
-                                            <h6 class="item-price">${{ price($product->price, $product->discount) }}</h6>
+                                            <h6 class="item-price">{{ price($product->price, $product->discount) }} USD</h6>
                                         </div>
                                     </div>
                                     <h6 class="item-name">
@@ -111,7 +111,7 @@
                                 <div class="item-options text-center">
                                     <div class="item-wrapper">
                                         <div class="item-cost">
-                                            <h4 class="item-price">${{ price($product->price, $product->discount) }}</h4>
+                                            <h4 class="item-price">{{ price($product->price, $product->discount) }} USD</h4>
                                         </div>
                                     </div>
                                     <a href="{{ route('products.show', $product->id) }}" class="btn btn-light col-6">
@@ -144,14 +144,13 @@
                     <div class="sidebar-shop">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h6 class="filter-heading d-none d-lg-block">Filters</h6>
+                                <h6 class="filter-heading d-none d-lg-block">Raitings</h6>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
                                 <!-- Rating starts -->
                                 <div id="ratings">
-                                    <h6 class="filter-title">Ratings</h6>
                                     <div class="ratings-list">
                                         <a href="javascript:void(0)">
                                             <ul class="unstyled-list list-inline">
@@ -206,12 +205,6 @@
                                     </div>
                                 </div>
                                 <!-- Rating ends -->
-
-                                <!-- Clear Filters Starts -->
-                                <div id="clear-filters">
-                                    <button type="button" class="btn btn-block btn-primary">Clear All Filters</button>
-                                </div>
-                                <!-- Clear Filters Ends -->
                             </div>
                         </div>
                     </div>

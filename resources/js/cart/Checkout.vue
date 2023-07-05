@@ -12,14 +12,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-                    <div class="form-group breadcrumb-right">
-                        <div class="dropdown">
-                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="app-todo.html"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="mr-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="mr-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!--  Start checkout steps          -->
             <div class="content-body" v-show="carts.length > 0">
@@ -107,7 +99,7 @@
                                         <div class="item-options text-center">
                                             <div class="item-wrapper">
                                                 <div class="item-cost">
-                                                    <h4 class="item-price">$<span id="checkout-price-{{ cart.id }}">{{ cart.price }}</span></h4>
+                                                    <h4 class="item-price"><span id="checkout-price-{{ cart.id }}">{{ cart.price }} USD</span></h4>
                                                     <p class="card-text shipping">
                                                         <span class="badge badge-pill badge-light-success">Free Shipping</span>
                                                     </p>
@@ -150,7 +142,7 @@
                                                 <ul class="list-unstyled">
                                                     <li class="price-detail">
                                                         <div class="detail-title detail-total">Total</div>
-                                                        <div class="detail-amt font-weight-bolder">$<span >{{ totalPrice }}</span></div>
+                                                        <div class="detail-amt font-weight-bolder"><span >{{ totalPrice }} USD</span></div>
                                                     </li>
                                                 </ul>
                                                 <button type="submit" class="btn btn-primary btn-block btn-next place-order">Place Order</button>
@@ -257,7 +249,7 @@
                                             {{ cardError ? cardError: orderAddressError? 'Oops, in the previous step ' + orderAddressError + ' Please go back and fill all the necessery info as required.': '' }}
                                         </div>
                                         <div class="form-group mt-3">
-                                            <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: $<span id="checkout-total-price">{{ totalPrice }}</span></a>
+                                            <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: <span id="checkout-total-price">{{ totalPrice }} USD</span></a>
                                             <button @click.prevent="processPayment" class="btn btn-primary pay-now ml-1" :disabled="isPaying">
                                                 <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
                                                 {{ isPaying ? 'Processing...' : 'Pay now'}}
