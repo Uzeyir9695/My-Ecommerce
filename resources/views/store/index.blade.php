@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-detached content-left">
+            <div class="content-detached content-center">
                 <div class="content-body">
                     <!-- E-commerce Content Section Starts -->
                     <section id="ecommerce-header">
@@ -39,28 +39,6 @@
                                             <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
                                         </button>
                                         <div class="search-results">{{ $stores->total() }} results found</div>
-                                    </div>
-                                    <div class="view-options d-flex">
-                                        <div class="btn-group dropdown-sort">
-                                            <button type="button" class="btn btn-outline-primary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="active-sorting">Featured</span>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);">Featured</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Lowest</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Highest</a>
-                                            </div>
-                                        </div>
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn">
-                                                <input type="radio" name="radio_options" id="radio_option1" checked />
-                                                <i data-feather="grid" class="font-medium-3"></i>
-                                            </label>
-                                            <label class="btn btn-icon btn-outline-primary view-btn list-view-btn">
-                                                <input type="radio" name="radio_options" id="radio_option2" />
-                                                <i data-feather="list" class="font-medium-3"></i>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +71,7 @@
                             <div class="card ecommerce-card">
                             <div class="item-img text-center">
                                 <a href="javascript:void(0);">
-                                    <img class="img-fluid card-img-top" src="{{ $store->getFirstMediaUrl('logos') }}" style="width: 350px; height: 250px;" alt="img-placeholder" />
+                                    <img class="img-fluid card-img-top" src="{{ $store->getFirstMediaUrl('logos') }}" style="width: 450px; height: 290px;" alt="img-placeholder" />
                                 </a>
                             </div>
                             <div class="card-body">
@@ -134,87 +112,6 @@
                         </div>
                     </section>
                     <!-- E-commerce Pagination Ends -->
-
-                </div>
-            </div>
-            <div class="sidebar-detached sidebar-left">
-                <div class="sidebar">
-                    <!-- Ecommerce Sidebar Starts -->
-                    <div class="sidebar-shop">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h6 class="filter-heading d-none d-lg-block">Filters</h6>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                            <!-- Rating starts -->
-                                <div id="ratings">
-                                    <h6 class="filter-title">Ratings</h6>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">160</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">176</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">291</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">190</div>
-                                    </div>
-                                </div>
-                                <!-- Rating ends -->
-
-                                <!-- Clear Filters Starts -->
-                                <div id="clear-filters">
-                                    <button type="button" class="btn btn-block btn-primary">Clear All Filters</button>
-                                </div>
-                                <!-- Clear Filters Ends -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Ecommerce Sidebar Ends -->
 
                 </div>
             </div>

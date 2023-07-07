@@ -2,7 +2,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ecommerce-application">
         <div class="content-wrapper container-xxl p-0">
-            <div class="content-detached content-left">
+            <div class="content-detached content-center">
                 <div class="content-body">
                     <!-- E-commerce Content Section Starts -->
                     <section id="ecommerce-header">
@@ -57,7 +57,7 @@
                         <div class="card ecommerce-card" v-for="product in products.data">
                             <div class="item-img text-center">
                                 <a :href="routes.productShow+'/'+product.id">
-                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 500px; height: 250px;"  alt="img-placeholder" /></a>
+                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 450px; height: 290px;"  alt="img-placeholder" /></a>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">
@@ -122,80 +122,6 @@
                         </div>
                     </section>
                     <!-- E-commerce Pagination Ends -->
-                </div>
-            </div>
-            <div class="sidebar-detached sidebar-right">
-                <div class="sidebar">
-                    <!-- Ecommerce Sidebar Starts -->
-                    <div class="sidebar-shop">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h6 class="filter-heading d-none d-lg-block">Raitings</h6>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Rating starts -->
-                                <div id="ratings">
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">160</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">176</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">291</div>
-                                    </div>
-                                    <div class="ratings-list">
-                                        <a href="javascript:void(0)">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
-                                                <li>& up</li>
-                                            </ul>
-                                        </a>
-                                        <div class="stars-received">190</div>
-                                    </div>
-                                </div>
-                                <!-- Rating ends -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Ecommerce Sidebar Ends -->
-
                 </div>
             </div>
         </div>
