@@ -22,7 +22,7 @@ class EcommerceController extends Controller
 
     public function allProducts()
     {
-        $products = Product::with('media')->select('id', 'price', 'discount', 'quantity', 'description')->paginate(21);
+        $products = Product::whereNot('user_id', auth()->id())->with('media')->select('id', 'price', 'discount', 'quantity', 'description')->paginate(21);
         return response()->json(['products' => $products], 200);
     }
 
