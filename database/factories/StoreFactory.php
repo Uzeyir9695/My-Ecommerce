@@ -18,7 +18,7 @@ class StoreFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::pluck('id')->random(),
+            'user_id' => User::first()->id,
             'name' => 'Store Name',
             'type' => $this->faker->randomElement(['LLC', 'IE', 'SLS', 'LEPL', 'JSC']),
             'org_name' => 'ORG Name',
