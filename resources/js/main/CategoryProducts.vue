@@ -46,21 +46,6 @@
                     <div class="body-content-overlay"></div>
                     <!-- background Overlay when sidebar is shown  ends-->
 
-                    <!-- E-commerce Search Bar Starts -->
-                    <section id="ecommerce-searchbar" class="ecommerce-searchbar">
-                        <div class="row mt-1">
-                            <div class="col-sm-12">
-                                <div class="input-group input-group-merge">
-                                    <input type="text" class="form-control search-product" id="shop-search" placeholder="Search Product" aria-label="Search..." aria-describedby="shop-search" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i data-feather="search" class="text-muted"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- E-commerce Search Bar Ends -->
-
                     <!-- E-commerce Products Starts -->
                     <section id="ecommerce-products" class="grid-view" v-if="products && products.length > 0">
                         <div class="card ecommerce-card" v-for="product in products">
@@ -242,7 +227,7 @@
 
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     props: {
         subCatRoute: {
