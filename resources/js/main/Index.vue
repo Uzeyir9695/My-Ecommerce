@@ -42,7 +42,7 @@
                         <div class="row mt-1">
                             <div class="col-sm-12">
                                 <div class="input-group input-group-merge">
-                                    <input type="text" class="form-control search-product" id="shop-search" placeholder="Search Product" aria-label="Search..." aria-describedby="shop-search" />
+                                    <input type="text" class="form-control search-product" v-model="searchProduct" id="shop-search" placeholder="Search Product" aria-label="Search..." aria-describedby="shop-search" />
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i data-feather="search" class="text-muted"></i></span>
                                     </div>
@@ -155,6 +155,7 @@ export default {
             cartLink: '#',
             products: [],
             wishlistid: null,
+            searchProduct: '',
         }
     },
 
@@ -182,9 +183,20 @@ export default {
         }
     },
 
+    watch: {
+        async searchProduct(newQuery) {
+            await this.fetchProducts(1, newQuery); // Fetch products with the updated search query
+        }
+    },
+
     methods: {
-        async fetchProducts(page){
-            await axios.get('/all-products?page='+page)
+        async fetchProducts(page, searchQuery){
+            await axios.get('/all-products', {
+                params: {
+                    page: page,
+                    search: searchQuery
+                }
+            })
             .then((response) => {
                 this.products = response.data.products;
             })
