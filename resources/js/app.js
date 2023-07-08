@@ -16,6 +16,7 @@ import ProductEdit from './products/Edit.vue';
 import ShopCreate from './shops/Create.vue';
 import ShopEdit from './shops/Edit.vue';
 import CartList from './cart/CartList.vue';
+import CartWishlistButtons from './cart/CartWishlistButtons.vue';
 import Checkout from './cart/Checkout.vue';
 import Wishlist from './wishlist/Wishlist.vue';
 
@@ -26,6 +27,7 @@ const app = createApp({
         ProductCreate,
         ProductEdit,
         CartList,
+        CartWishlistButtons,
         Wishlist,
         Checkout,
         ShopCreate,

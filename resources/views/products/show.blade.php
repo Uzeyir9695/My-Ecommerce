@@ -39,8 +39,8 @@
                                 <div class="col-12 col-md-7">
                                     <h4>{{ $product->name }}</h4>
                                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                                        @if($product->price == 0)
-                                            <h4><del><span class="wishlist-price mr-1">{{ $product->price }} USD</span></del> </h4>
+                                        @if($product->discount == 0)
+                                            <h4><span class="wishlist-price mr-1">{{ $product->price }} USD</span></h4>
                                         @else
                                             <h4><del><span class="wishlist-price mr-1 text-danger">{{ $product->price }} USD</span></del> </h4>
                                             <h4 class="item-price mr-1">{{ price($product->price, $product->discount) }} USD</h4>
@@ -51,6 +51,7 @@
                                         <li><i data-feather="shopping-cart"></i> <span>Free Shipping</span></li>
                                     </ul>
                                     <hr />
+                                    <cart-wishlist-buttons :product="{{ $product }}"></cart-wishlist-buttons>
                                 </div>
                             </div>
                         </div>
