@@ -22,12 +22,15 @@ class EcommerceController extends Controller
 
     public function allProducts()
     {
+        $query = Product::whereNot('user_id', auth()->id())->with('media')->select('id', 'price', 'discount', 'quantity', 'description');
+
         $searchQuery = request('search');
-        if(!empty($searchQuery)) {
-            $products = Product::whereNot('user_id', auth()->id())->where('name', 'like', '%'.$searchQuery.'%')->with('media')->select('id', 'price', 'discount', 'quantity', 'description')->paginate(21);
-            return response()->json(['products' => $products], 200);
+        if (!empty($searchQuery)) {
+            $query->where('name', 'like', '%' . $searchQuery . '%');
         }
-        $products = Product::whereNot('user_id', auth()->id())->with('media')->select('id', 'price', 'discount', 'quantity', 'description')->paginate(21);
+
+        $products = $query->paginate(21);
+
         return response()->json(['products' => $products], 200);
     }
 
