@@ -110,7 +110,7 @@
                                         </a>
                                     </li>
                                     <li class="page-item" :class="{ 'active': page === products.current_page }" v-for="page in products.last_page" :key="page">
-                                        <a class="page-link" href="#" @click.prevent="paginate(page)">{{ page }}</a>
+                                        <a class="page-link" href="#" @click.prevent="fetchProducts(page)">{{ page }}</a>
                                     </li>
                                     <li class="page-item" :class="{ 'disabled': products.current_page === products.last_page }">
                                         <a class="page-link" href="#" @click.prevent="paginate(products.current_page + 1)" aria-label="Next">
@@ -154,6 +154,7 @@ export default {
             },
             cartLink: '#',
             products: [],
+            wishlistid: null,
         }
     },
 
@@ -182,24 +183,14 @@ export default {
     },
 
     methods: {
-        async fetchProducts(){
-            await axios.get('/all-products')
+        async fetchProducts(page){
+            await axios.get('/all-products?page='+page)
             .then((response) => {
                 this.products = response.data.products;
             })
              .catch((error) => {
                 console.log(error.response.data.errors)
              })
-        },
-
-        async paginate(page) {
-            await axios.get('/all-products?page='+page)
-                .then((response) => {
-                    this.products = response.data.products;
-                })
-                .catch((error) => {
-                    console.log(error.response.data.errors)
-                })
         },
 
         async addToCart(product) {
@@ -223,15 +214,22 @@ export default {
         },
 
         async addToWishlist(product_id) {
-            if (this.isProductInWishlist(product_id)) {
-                toastr['error']('', 'Product is already added!', {
-                    closeButton: true,
-                    tapToDismiss: false,
-                });
-                return; // Exit the method if the product is already added
+            const isProductInWishlist = this.isProductInWishlist(product_id);
+            if (isProductInWishlist) {
+                // Remove the product from the wishlist
+                await this.$store.dispatch('wishlist/removeFromWishlist', this.wishlistId);
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after removing from wishlist
+            } else {
+                // Add the product to the wishlist
+                await this.$store.dispatch('wishlist/addToWishlist', product_id)
+                    .then ((response) => {
+                        this.wishlistId = response.data.wishlist_id;
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.errors)
+                    })
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after adding to wishlist
             }
-            await this.$store.dispatch('wishlist/addToWishlist', product_id);
-            this.$store.dispatch('wishlist/fetchWishlist'); // Rfetch wishlist from DB after adding into wishlist
         },
         // calculate product's discount
         price(price, discount=0){

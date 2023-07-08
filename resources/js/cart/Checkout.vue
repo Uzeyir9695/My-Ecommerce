@@ -110,7 +110,7 @@
                                                 <span>Remove</span>
                                             </button>
                                             <button type="button" class="btn btn-primary btn-cart" @click="addToWishlist(cart.product_id)">
-                                                <i data-feather="heart" class="align-middle mr-25"  :class="{'text-danger': isProductInWishlist(cart.product_id)}"></i>
+                                                <font-awesome-icon icon="heart" class="align-middle mr-25"  :class="{ 'text-danger': isProductInWishlist(cart.product_id), 'text-muted': !isProductInWishlist(cart.product_id) }"/>
                                                 <span class="text-truncate">Add to Wishlist</span>
                                             </button>
                                         </div>
@@ -303,6 +303,7 @@ export default {
             stripe: '',
             elements: '',
             card: '',
+            wishlistId: null,
         }
     },
 
@@ -467,16 +468,23 @@ export default {
             this.$store.dispatch('cart/removeFromCart', id);
         },
 
-        addToWishlist(product_id) {
-            if (this.isProductInWishlist(product_id)) {
-                toastr['error']('', 'Product is already added!', {
-                    closeButton: true,
-                    tapToDismiss: false,
-                });
-                return; // Exit the method if the product is already added
+       async addToWishlist(product_id) {
+            const isProductInWishlist = this.isProductInWishlist(product_id);
+            if (isProductInWishlist) {
+                // Remove the product from the wishlist
+                await this.$store.dispatch('wishlist/removeFromWishlist', this.wishlistId);
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after removing from wishlist
+            } else {
+                // Add the product to the wishlist
+                await this.$store.dispatch('wishlist/addToWishlist', product_id)
+                    .then ((response) => {
+                        this.wishlistId = response.data.wishlist_id;
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.errors)
+                    })
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after adding to wishlist
             }
-
-            this.$store.dispatch('wishlist/addToWishlist', product_id);
         },
 
         minus(cart) {

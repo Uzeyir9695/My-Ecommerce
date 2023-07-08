@@ -16,7 +16,7 @@
                                <div class="media-heading">
                                    <h6 class="cart-item-title"><a class="text-body" :href="productShowRoute+'/'+cart.product.id"> {{ cart.product.name }}</a></h6><small class="cart-item-by">By E-commerce</small>
                                </div>
-                               <h5 class="cart-item-price">{{ cart.price }} USD</h5>
+                               <h5 class="cart-item-price">{{ cart.price }}$</h5>
                            </div>
                    </div>
                </li>

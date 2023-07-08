@@ -267,6 +267,7 @@ export default {
             },
             cartLink: '#',
             selectedFilters: {},
+            wishlistId: null,
         }
     },
 
@@ -402,15 +403,22 @@ export default {
         },
 
         async addToWishlist(product_id) {
-            if (this.isProductInWishlist(product_id)) {
-                toastr['error']('', 'Product is already added!', {
-                    closeButton: true,
-                    tapToDismiss: false,
-                });
-                return; // Exit the method if the product is already added
+            const isProductInWishlist = this.isProductInWishlist(product_id);
+            if (isProductInWishlist) {
+                // Remove the product from the wishlist
+                await this.$store.dispatch('wishlist/removeFromWishlist', this.wishlistId);
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after removing from wishlist
+            } else {
+                // Add the product to the wishlist
+                await this.$store.dispatch('wishlist/addToWishlist', product_id)
+                    .then ((response) => {
+                        this.wishlistId = response.data.wishlist_id;
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.errors)
+                    })
+                this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after adding to wishlist
             }
-            await this.$store.dispatch('wishlist/addToWishlist', product_id);
-            this.$store.dispatch('wishlist/fetchWishlist'); // Rfetch wishlist from DB after adding into wishlist
         },
         // calculate product's discount
         price(price, discount=0){
