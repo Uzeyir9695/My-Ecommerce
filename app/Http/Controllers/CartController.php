@@ -24,7 +24,7 @@ class CartController extends Controller
 
         $cart = $cart->load('product.media');
 
-        return response()->json(['message' => 'Product added to cart!', 'cart' => $cart], 201);
+        return response()->json(['message' => 'Added to cart!', 'cart' => $cart], 201);
     }
 
     public function updateCart(Cart $cart, Request $request)
@@ -55,6 +55,6 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         $cart->delete();
-        return response()->json(['message' => 'Product removed from cart'], 201);
+        return response()->json(['message' => 'Removed from cart'], 201);
     }
 }

@@ -24,12 +24,12 @@ class WishlistController extends Controller
            'product_id' => $request->id
         ]);
         $wishlist_id = $wishlist->id;
-        return response()->json(['message' => 'Product added to wishlist!'], 201);
+        return response()->json(['message' => 'Added to wishlist!', 'wishlist_id' => $wishlist_id], 201);
     }
 
     public function destroy(Wishlist $wishlist)
     {
         $wishlist->delete();
-        return response()->json(['message' => 'Product removed from wishlist'], 200);
+        return response()->json(['message' => 'Removed from wishlist'], 200);
     }
 }
