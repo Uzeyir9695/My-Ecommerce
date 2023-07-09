@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('product_id');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id');
+            $table->foreignUuid('product_id');
             $table->string('status');
             $table->integer('price');
             $table->integer('quantity')->nullable()->default(1);

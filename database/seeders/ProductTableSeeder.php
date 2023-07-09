@@ -9,6 +9,7 @@ use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductTableSeeder extends Seeder
 {
@@ -45,14 +46,17 @@ class ProductTableSeeder extends Seeder
                     ]);
                 }
 
+                $numericId = (int) Str::afterLast($product->id, '-');
                 // assign image to each productsssss
-                if($product->id%2!=0) continue;
+                if($numericId % 2 != 0) continue;
                 $product->addMedia(public_path('/seeder-media/my-product.png'))->preservingOriginal()->toMediaCollection('productImages');
             }
 
             // assign image to each productsssss
             foreach($products as $product){
-                if($product->id%2==0) continue;
+                $numericId = (int) Str::afterLast($product->id, '-');
+
+                if($numericId % 2 == 0) continue;
                 $product->addMedia(public_path('/seeder-media/product.png'))->preservingOriginal()->toMediaCollection('productImages');
             }
         }

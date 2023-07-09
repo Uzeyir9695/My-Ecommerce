@@ -14,8 +14,8 @@ class CreateAttributesTable extends Migration
     public function up()
     {
         Schema::create('attributes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('subcategory_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('subcategory_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('value');
             $table->timestamps();
