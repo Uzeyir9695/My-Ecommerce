@@ -199,6 +199,17 @@ export default {
         },
 
         async deleteProductImage() {
+            if (this.formData.images.length === 1) {
+                // Only one image left, display an alert or handle the error condition as desired
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Product must have at least one image!',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 4000,
+                });
+                return;
+            }
             await axios.delete('/products/'+this.product.id, { data: { media_id: this.checkedImages } })
                 .then((response) => {
                     // Image deleted successfully, remove it from the formData.images array
@@ -228,26 +239,9 @@ export default {
                 })
         },
 
-        handleImageUpload(event) {
+        handleImageUpload() {
             this.uploadImages = this.$refs.imageInput.files;
-         // ***  Temporary comment image preview displaying  ***
-            // const file = event.target.files;
-            // if (file) {
-            //     this.previewImage(file);
-            // }
         },
-
-      // ***  Temporary comment image preview displaying  ***
-        // previewImage(files) {
-        //     for (let i = 0; i < files.length; i++) {
-        //         const file = files[i];
-        //         const reader = new FileReader();
-        //         reader.onload = (event) => {
-        //             this.imagePreviews.push(event.target.result);
-        //         };
-        //         reader.readAsDataURL(file);
-        //     }
-        // }
     },
 }
 </script>
