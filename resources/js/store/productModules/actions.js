@@ -24,6 +24,7 @@ export default {
             const response = await axios.get(url, { params }); // Fetch products from EcommerceController.php
             commit('product/contentLoading', true, { root: true }); // Set contentLoading to true before a slight delay
 
+            // Note: in normal case no need to use settimout callback funcition to show a spinner
             setTimeout(() => {
                 commit('fetchProducts', response.data);
                 commit('paginateProducts', response.data.products);
