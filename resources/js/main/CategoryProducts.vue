@@ -297,12 +297,6 @@ export default {
                 attributeFilters.push(attributeValue);
             }
 
-            // // Update localStorage with the current checkbox state
-            // const key = `${attributeName}_${attributeValue}`;
-            // const isChecked = attributeFilters.includes(attributeValue);
-            // // Store the checkbox state in localStorage
-            // localStorage.setItem(key, JSON.stringify(isChecked));
-
             // Update the selectedFilters object
             this.updateSelectedFilters();
 
@@ -324,21 +318,6 @@ export default {
             // Assign the updated object to selectedFilters
             this.selectedFilters = updatedSelectedFilters;
         },
-
-        // retrieveCheckboxValues() {
-        //     for (const [attributeName, values] of Object.entries(this.attributes)) {
-        //         for (const value of values) {
-        //             const key = `${attributeName}_${value.value}`;
-        //             const isChecked = localStorage.getItem(key);
-        //             if (isChecked !== null && JSON.parse(isChecked)) {
-        //                 if (!this.selectedFilters.hasOwnProperty(attributeName)) {
-        //                     this.selectedFilters[attributeName] = [];
-        //                 }
-        //                 this.selectedFilters[attributeName].push(value.value);
-        //             }
-        //         }
-        //     }
-        // },
 
         isSelected(attributeName, attributeValue) {
             return (
