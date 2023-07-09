@@ -2,7 +2,7 @@
     <!-- BEGIN: Content-->
     <div class="app-content content ecommerce-application">
         <div class="content-wrapper container-xxl p-0">
-            <div class="content-detached content-center">
+            <div class="content-detached content-center overlay">
                 <div class="content-body">
                     <!-- E-commerce Content Section Starts -->
                     <section id="ecommerce-header">
@@ -33,9 +33,12 @@
                     </section>
                     <!-- E-commerce Content Section Starts -->
 
-                    <!-- background Overlay when sidebar is shown  starts-->
-                    <div class="body-content-overlay"></div>
-                    <!-- background Overlay when sidebar is shown  ends-->
+                    <!-- Spinner loading  starts-->
+                    <div v-if="contentLoading" class="d-flex align-items-center loading">
+                        <span class="spinner-border text-primary mr-1"></span>
+                        <span>Loading...</span>
+                    </div>
+                    <!-- Spinner loading  ends-->
 
                     <!-- E-commerce Search Bar Starts -->
                     <section id="ecommerce-searchbar" class="ecommerce-searchbar">
@@ -156,6 +159,7 @@ export default {
             products: [],
             wishlistid: null,
             searchProduct: '',
+            contentLoading: false
         }
     },
 
@@ -191,6 +195,7 @@ export default {
 
     methods: {
         async fetchProducts(page, searchQuery){
+            this.contentLoading = true;
             await axios.get('/all-products', {
                 params: {
                     page: page,
@@ -199,9 +204,11 @@ export default {
             })
             .then((response) => {
                 this.products = response.data.products;
+                this.contentLoading = false;
             })
              .catch((error) => {
-                console.log(error.response.data.errors)
+                 this.contentLoading = false;
+                 console.log(error.response.data.errors)
              })
         },
 
@@ -250,3 +257,21 @@ export default {
     }
 }
 </script>
+<style scoped>
+.loading {
+    position: fixed;
+    top: 12.5%;
+    left: 54%;
+    z-index: 1;
+}
+.spinner-border {
+    height: 30px;
+    width: 30px;
+}
+@media (max-width: 768px) {
+    /* Adjust for mobile phone size */
+    .loading {
+        left: 35%;
+    }
+}
+</style>

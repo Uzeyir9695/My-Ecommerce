@@ -42,9 +42,12 @@
                     </section>
                     <!-- E-commerce Content Section Starts -->
 
-                    <!-- background Overlay when sidebar is shown  starts-->
-                    <div class="body-content-overlay"></div>
-                    <!-- background Overlay when sidebar is shown  ends-->
+                    <!-- Spinner loading  starts-->
+                    <div v-if="contentLoading" class="d-flex align-items-center loading">
+                        <span class="spinner-border text-primary mr-1"></span>
+                        <span>Loading...</span>
+                    </div>
+                    <!-- Spinner loading  ends-->
 
                     <!-- E-commerce Products Starts -->
                     <section id="ecommerce-products" class="grid-view" v-if="products && products.length > 0">
@@ -264,8 +267,8 @@ export default {
     computed: {
         ...mapGetters({
             products: 'product/products',
-            attributes: 'product/attributes',
             contentLoading: 'product/contentLoading',
+            attributes: 'product/attributes',
             paginateProducts: 'product/paginateProducts',
             wishlist: 'wishlist/wishlists',
             cartItems: 'cart/cartItems',
@@ -391,3 +394,22 @@ export default {
     }
 }
 </script>
+<style scoped>
+.loading {
+    position: fixed;
+    display: flex;
+    top: 20%;
+    left: 61%;
+    z-index: 1;
+}
+.spinner-border {
+    height: 30px;
+    width: 30px;
+}
+@media (max-width: 768px) {
+    /* Adjust for mobile phone size */
+    .loading {
+        left: 35%;
+    }
+}
+</style>
