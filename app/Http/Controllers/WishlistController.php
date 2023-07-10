@@ -27,9 +27,10 @@ class WishlistController extends Controller
         return response()->json(['message' => 'Added to wishlist!', 'wishlist_id' => $wishlist_id], 201);
     }
 
-    public function destroy(Wishlist $wishlist)
+    public function destroy($id)
     {
-        $wishlist->delete();
+        Wishlist::where('product_id', $id)->delete();
+
         return response()->json(['message' => 'Removed from wishlist'], 200);
     }
 }

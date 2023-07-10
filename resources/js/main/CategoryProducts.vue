@@ -243,7 +243,6 @@ export default {
             },
             cartLink: '#',
             selectedFilters: {},
-            wishlistId: null,
         }
     },
 
@@ -361,17 +360,11 @@ export default {
             const isProductInWishlist = this.isProductInWishlist(product_id);
             if (isProductInWishlist) {
                 // Remove the product from the wishlist
-                await this.$store.dispatch('wishlist/removeFromWishlist', this.wishlistId);
+                await this.$store.dispatch('wishlist/removeFromWishlist', product_id);
                 this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after removing from wishlist
             } else {
                 // Add the product to the wishlist
-                await this.$store.dispatch('wishlist/addToWishlist', product_id)
-                    .then ((response) => {
-                        this.wishlistId = response.data.wishlist_id;
-                    })
-                    .catch((error) => {
-                        console.log(error.response.data.errors)
-                    })
+                await this.$store.dispatch('wishlist/addToWishlist', product_id);
                 this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after adding to wishlist
             }
         },

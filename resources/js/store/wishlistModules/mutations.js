@@ -13,7 +13,7 @@ export default {
     },
 
     removeFromWishlist(state, id) {
-        const index = state.wishlist.findIndex(item => item.id === id);
+        const index = state.wishlist.findIndex(item => item.product_id === id);
         if (index !== -1) {
             state.wishlist.splice(index, 1);
             state.wishlistCounter = state.wishlistCounter-1;
