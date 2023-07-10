@@ -155,17 +155,11 @@
                             </div>
 
                             <div class="auth-footer-btn d-flex justify-content-center">
-                                <a href="javascript:void(0)" class="btn btn-facebook">
-                                    <i data-feather="facebook"></i>
+                                <a href="{{ route('social.redirect', 'facebook') }}" class="btn bg-primary">
+                                    <i data-feather="facebook" class="text-white"></i>
                                 </a>
-                                <a href="javascript:void(0)" class="btn btn-twitter white">
-                                    <i data-feather="twitter"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="btn btn-google">
+                                <a href="{{ route('social.redirect', 'google') }}" class="btn btn-google">
                                     <i data-feather="mail"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="btn btn-github">
-                                    <i data-feather="github"></i>
                                 </a>
                             </div>
                         </div>

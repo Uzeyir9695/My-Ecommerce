@@ -139,14 +139,8 @@
                                 <a href="{{ route('social.redirect', 'facebook') }}" class="btn bg-primary">
                                     <i data-feather="facebook" class="text-white"></i>
                                 </a>
-                                <a href="{{ route('social.redirect', 'linkedin') }}" class="btn bg-primary">
-                                    <i data-feather="linkedin" class="text-white"></i>
-                                </a>
-                                <a href="" class="btn btn-google">
+                                <a href="{{ route('social.redirect', 'google') }}" class="btn btn-google">
                                     <i data-feather="mail"></i>
-                                </a>
-                                <a href="{{ route('social.redirect', 'github') }}" class="btn btn-github">
-                                    <i data-feather="github"></i>
                                 </a>
                             </div>
                         </div>

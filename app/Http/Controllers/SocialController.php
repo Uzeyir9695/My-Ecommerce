@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use PHPUnit\Exception;
+use Illuminate\Support\Facades\Hash;
 
 class SocialController extends Controller
 {
@@ -31,8 +32,8 @@ class SocialController extends Controller
                 $gitUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'google_id'=> $user->id,
-                    'password' => encrypt('123456')
+                    'social_id'=> $user->id,
+                    'password' => Hash::make('12345678')
                 ]);
 
                 Auth::login($gitUser);
