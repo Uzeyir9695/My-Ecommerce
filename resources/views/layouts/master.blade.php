@@ -234,11 +234,7 @@
 <!-- END: Add product to cart adn remove JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="/app-assets/vendors/js/extensions/wNumb.min.js"></script>
-<script src="/app-assets/vendors/js/extensions/nouislider.min.js"></script>
 <script src="/app-assets/vendors/js/extensions/toastr.min.js"></script>
-<script src="/app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
-<script src="/app-assets/vendors/js/extensions/swiper.min.js"></script>
 <script src="/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
 
 <!-- :Sweet alert Page Vendor JS below-->
@@ -250,21 +246,11 @@
 <script src="/app-assets/js/core/app.js"></script>
 <!-- END: Theme JS-->
 
-<!-- BEGIN: Page JS-->
-<script src="/app-assets/js/scripts/pages/app-ecommerce.js"></script>
+<!-- BEGIN: Pages JS-->
 <script src="/app-assets/js/scripts/extensions/ext-component-sweet-alerts.js"></script>
-<script src="/app-assets/js/scripts/pages/app-ecommerce-wishlist.js"></script>
-
-<!-- BEGIN: Page JS-->
 <script src="/app-assets/js/scripts/extensions/ext-component-toastr.js"></script>
-<!-- END: Page JS-->
-<!-- BEGIN: Details Page JS-->
-<script src="/app-assets/js/scripts/pages/app-ecommerce-details.js"></script>
-<script src="/app-assets/js/scripts/forms/form-number-input.js"></script>
-<!-- END: Details Page JS-->
-<!-- BEGIN: Checkout Page JS-->
 <script src="/app-assets/js/scripts/pages/app-ecommerce-checkout.js"></script>
-<!-- END: Checkout Page JS-->
+<!-- END: Pages JS-->
 
 <script>
     $(window).on('load', function() {
