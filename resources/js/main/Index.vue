@@ -15,18 +15,6 @@
                                         </button>
                                         <div class="search-results">{{ products.total }} results found</div>
                                     </div>
-                                    <div class="view-options d-flex">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn">
-                                                <input type="radio" name="radio_options" id="radio_option1" checked />
-                                                <i data-feather="grid" class="font-medium-3"></i>
-                                            </label>
-                                            <label class="btn btn-icon btn-outline-primary view-btn list-view-btn">
-                                                <input type="radio" name="radio_options" id="radio_option2" />
-                                                <i data-feather="list" class="font-medium-3"></i>
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
