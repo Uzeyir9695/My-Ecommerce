@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
 // Laravel socialite routes
 Route::controller(\App\Http\Controllers\SocialController::class)->group(function () {
-    Route::get('{social}/redirect', 'redirect')->name('social.redirect');
+    Route::get('auth/{social}/redirect', 'redirect')->name('social.redirect');
     Route::get('auth/{social}/callback', 'callback')->name('social.callback');
 });
 
