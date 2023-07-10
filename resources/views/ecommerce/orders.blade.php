@@ -46,23 +46,7 @@
                                         <td>{{ $order->quantity }}</td>
                                         <td>{{ $order->discount }}%</td>
                                         <td><span class="badge badge-pill badge-light-primary mr-1">Paid</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                                                    <i data-feather="more-vertical"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i data-feather="edit-2" class="mr-50"></i>
-                                                        <span>Edit</span>
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i data-feather="trash" class="mr-50"></i>
-                                                        <span>Delete</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><a href="{{ route('coming-soon') }}">Details</a></td>
                                     </tr>
                                     @endforeach
                                     </tbody>

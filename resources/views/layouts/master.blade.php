@@ -106,12 +106,12 @@
                     <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">{{ Auth::user()->name }}</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="#"><i class="mr-50" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="{{ route('coming-soon') }}"><i class="mr-50" data-feather="user"></i> Profile</a>
                     <a class="dropdown-item" href="{{ route('stores.index') }}"><i class="mr-50" data-feather="shopping-cart"></i>My Stores</a>
                     <a class="dropdown-item" href="{{ route('products.index') }}"><i class="mr-50" data-feather="box"></i> My Products</a>
                     <a class="dropdown-item" href="{{ route('my-orders') }}"><i class="mr-50" data-feather="shopping-bag"></i> My Orders</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="mr-50" data-feather="settings"></i> Settings</a>
+                    <a class="dropdown-item" href="{{ route('coming-soon') }}"><i class="mr-50" data-feather="settings"></i> Settings</a>
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();

@@ -62,6 +62,8 @@ Route::controller(\App\Http\Controllers\SocialController::class)->group(function
     Route::get('auth/{social}/callback', 'callback')->name('social.callback');
 });
 
+Route::view('coming-999ac779-3b4c-49d8-8c77-d352bb3d52a3-soon', 'coming-soon')->name('coming-soon');
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
