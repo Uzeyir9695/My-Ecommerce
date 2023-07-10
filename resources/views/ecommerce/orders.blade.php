@@ -46,7 +46,7 @@
                                         <td>{{ $order->quantity }}</td>
                                         <td>{{ $order->discount }}%</td>
                                         <td><span class="badge badge-pill badge-light-primary mr-1">Paid</span></td>
-                                        <td><a href="{{ route('coming-soon') }}">Details</a></td>
+                                        <td><a class="text-primary font-weight-bold" href="{{ route('coming-soon') }}">Details</a></td>
                                     </tr>
                                     @endforeach
                                     </tbody>
