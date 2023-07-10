@@ -13,6 +13,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row  d-flex justify-content-center" :class="{'d-none': !isCartEmpty}">
+                <div>
+                    <div class="text-center"><h1 class="mt-2">Your Cart Is Empty</h1></div>
+                </div>
+            </div>
             <!--  Start checkout steps          -->
             <div class="content-body" v-show="carts.length > 0">
                 <div class="bs-stepper checkout-tab-steps">
@@ -154,9 +159,6 @@
 
                                 <!-- E-commerce Pagination Starts -->
 <!--                                <section id="ecommerce-pagination">-->
-<!--                                    <div class="row d-flex justify-content-center">-->
-<!--                                        {!! cart.links() !!}-->
-<!--                                    </div>-->
 <!--                                </section>-->
                                 <!-- E-commerce Pagination Ends -->
                             </div>
@@ -304,6 +306,7 @@ export default {
             elements: '',
             card: '',
             wishlistId: null,
+            isCartEmpty: false
         }
     },
 
@@ -318,6 +321,12 @@ export default {
             return function(productId) {
                 return this.wishlist.some(wishlist => wishlist.product_id === productId); // Check if a product already exists in wishlist to avoid duplication
             }
+        }
+    },
+
+    updated(){
+        if(this.carts.length < 1) {
+            this.isCartEmpty = true
         }
     },
 
