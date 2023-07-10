@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <div class="row empty-wishlist d-flex justify-content-center" :class="{'d-none': !isWishlistEmpty}">
-                    <div>
+                <div class="row empty-wishlist d-flex justify-content-center">
+                    <div :class="{'d-none': !isWishlistEmpty}">
                         <img class="rounded d-block mx-auto ml-sm-0" src="/cart-media/wishlist.png" alt="donuts">
                         <div class="text-center"><h1 class="mt-2">Your Wishlist Is Empty</h1></div>
                     </div>

@@ -13,8 +13,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row  d-flex justify-content-center" :class="{'d-none': !isCartEmpty}">
-                <div>
+            <div class="row  d-flex justify-content-center">
+                <div :class="{'d-none': !isCartEmpty}">
                     <div class="text-center"><h1 class="mt-2">Your Cart Is Empty</h1></div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                                                 <h6 class="mb-0"><a :href="productShowRoute+'/'+cart.product_id" class="text-body">{{ cart.product.name }}</a></h6>
                                                 <span class="item-company">By <a href="javascript:void(0)" class="company-name">E-Commerce</a></span>
                                                 <div class="item-rating">
-                                                    <ul class="unstyled-list list-inline">
+                                                    <ul class="unstyled-list list-inline mb-1">
                                                         <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
                                                         <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
                                                         <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
@@ -91,7 +91,6 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <span class="text-success mb-1">In Stock</span>
                                             <div class="item-quantity">
                                                 <span class="quantity-title">Qty:</span>
                                                 <div class="checkout-quantity-wrapper d-flex justify-content-center" style="width: 100px;">
@@ -116,7 +115,7 @@
                                             </button>
                                             <button type="button" class="btn btn-primary btn-cart" @click="addToWishlist(cart.product_id)">
                                                 <font-awesome-icon icon="heart" class="align-middle mr-25"  :class="{ 'text-danger': isProductInWishlist(cart.product_id), 'text-muted': !isProductInWishlist(cart.product_id) }"/>
-                                                <span class="text-truncate">Add to Wishlist</span>
+                                                <span class="text-truncate">Wishlist</span>
                                             </button>
                                         </div>
                                     </div>
