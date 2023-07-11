@@ -32,14 +32,7 @@ return [
 
         'store' => [
             'driver' => 'local',
-            'root' => public_path('medias'),
-            'url' => env('APP_URL').'/medias',
-            'visibility' => 'public',
-        ],
-
-        'seed' => [
-            'driver' => 'local',
-            'root' => public_path('seeded-medias'),
+            'root' => storage_path('app/private/medias'),
             'url' => env('APP_URL').'/medias',
             'visibility' => 'public',
         ],
