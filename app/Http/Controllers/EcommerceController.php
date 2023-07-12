@@ -26,7 +26,7 @@ class EcommerceController extends Controller
 
         $searchQuery = request('search');
         if (!empty($searchQuery)) {
-            $query->where('name', 'like', '%' . $searchQuery . '%');
+            $query->where('name', 'like', $searchQuery . '%');
         }
 
         $products = $query->paginate(21);
