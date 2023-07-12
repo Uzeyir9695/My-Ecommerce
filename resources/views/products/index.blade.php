@@ -93,7 +93,14 @@
                         @endforeach
                     </section>
                     <!-- E-commerce Products Ends -->
-
+                    <!--  display if product not found-->
+                    @if($products->total() < 1)
+                        <div class="row  d-flex justify-content-center">
+                            <div>
+                                <div class="text-center"><h1 class="mt-2">Product not found!</h1></div>
+                            </div>
+                        </div>
+                @endif
                     <!-- E-commerce Pagination Starts -->
                     <section id="ecommerce-pagination">
                         <div class="row d-flex justify-content-center">
