@@ -44,7 +44,7 @@
                     <!-- E-commerce Search Bar Ends -->
 
                     <!-- E-commerce Products Starts -->
-                    <section id="ecommerce-products" class="grid-view" v-if="products && products.total > 0">
+                    <section id="ecommerce-products" class="grid-view" :class="{ 'products-opacity': contentLoading }" v-if="products && products.total > 0">
                         <div class="card ecommerce-card" v-for="product in products.data">
                             <div class="item-img text-center">
                                 <a :href="routes.productShow+'/'+product.id">
@@ -87,8 +87,10 @@
                     </section>
                     <!-- E-commerce Products Ends -->
                     <!--  display if product not found-->
-                    <div class="row col-12"  v-if="!products && products.total < 1">
-                        <h3 class="float-right mt-3 text-danger">Product not found!</h3>
+                    <div class="row  d-flex justify-content-center">
+                        <div :class="{'d-none': isProduct}">
+                            <div class="text-center"><h1 class="mt-2">Product not found!</h1></div>
+                        </div>
                     </div>
                     <!-- E-commerce Pagination Products -->
                     <section id="ecommerce-pagination" v-if="products && products.total > 21">
@@ -146,7 +148,8 @@ export default {
             cartLink: '#',
             products: [],
             searchProduct: '',
-            contentLoading: false
+            contentLoading: false,
+            isProduct: true
         }
     },
 
@@ -190,8 +193,17 @@ export default {
                 }
             })
             .then((response) => {
-                this.products = response.data.products;
-                this.contentLoading = false;
+
+                if(response.data.products.data.length < 1) {
+                    this.isProduct = false;
+                    this.contentLoading = false;
+                    this.products = response.data.products;
+                }
+                    if(response.data.products.data.length > 0) {
+                    this.products = response.data.products;
+                    this.contentLoading = false;
+                    this.isProduct = true;
+                }
             })
              .catch((error) => {
                  this.contentLoading = false;
@@ -239,9 +251,12 @@ export default {
 }
 </script>
 <style scoped>
+.products-opacity {
+    opacity: 0.1;
+}
 .loading {
     position: fixed;
-    top: 12.5%;
+    top: 50%;
     left: 54%;
     z-index: 1;
 }

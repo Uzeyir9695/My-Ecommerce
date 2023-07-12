@@ -38,7 +38,7 @@
                     <!-- Spinner loading  ends-->
 
                     <!-- E-commerce Products Starts -->
-                    <section id="ecommerce-products" class="grid-view" v-if="products && products.length > 0">
+                    <section id="ecommerce-products" :class="{ 'products-opacity': contentLoading }" class="grid-view" v-if="products && products.length > 0">
                         <div class="card ecommerce-card" v-for="product in products">
                             <div class="item-img text-center">
                                 <a :href="routes.productShow+'/'+product.id">
@@ -77,13 +77,14 @@
                                 </a>
                             </div>
                         </div>
-
                     </section>
                     <!-- E-commerce Products Ends -->
                     <!--  display if product not found-->
-                    <div class="row col-12"  v-if="!products && products.length === 0">
-                        <h3 class="float-right mt-3 text-danger">Product not found!</h3>
-                    </div>
+                        <div class="d-flex justify-content-center" :class="{'d-none': isProduct}">
+                            <div class="text-center">
+                                <h1 class="mt-2">Product not found!</h1>
+                            </div>
+                        </div>
                     <!-- E-commerce Pagination Products -->
                     <section id="ecommerce-pagination" v-if="paginateProducts && paginateProducts.total > 21">
                         <div class="row d-flex justify-content-center">
@@ -250,11 +251,11 @@ export default {
         this.$store.dispatch('product/fetchProducts', this.routes.paginateRoute);
     },
 
-
     computed: {
         ...mapGetters({
             products: 'product/products',
             contentLoading: 'product/contentLoading',
+            isProduct: 'product/isProduct',
             attributes: 'product/attributes',
             paginateProducts: 'product/paginateProducts',
             wishlist: 'wishlist/wishlists',
@@ -376,10 +377,13 @@ export default {
 }
 </script>
 <style scoped>
+.products-opacity {
+    opacity: 0.1;
+}
 .loading {
     position: fixed;
     display: flex;
-    top: 20%;
+    top: 50%;
     left: 61%;
     z-index: 1;
 }

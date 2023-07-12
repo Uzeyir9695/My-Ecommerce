@@ -11,4 +11,7 @@ export default {
     contentLoading(state) {
         return state.contentLoading;
     },
+    isProduct(state) {
+        return state.isProduct;
+    },
 }

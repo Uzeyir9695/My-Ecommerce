@@ -10,7 +10,8 @@ export default {
             products: [],
             attributes: [],
             paginateProducts: null,
-            contentLoading: false
+            contentLoading: false,
+            isProduct: true,
         }
     },
     mutations: mutations,

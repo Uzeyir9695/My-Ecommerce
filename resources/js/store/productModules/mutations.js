@@ -6,6 +6,11 @@ export default {
    fetchProducts(state, data) {
        state.products = data.products.data;
        state.attributes = data.attributes
+       if(data.products.data.length < 1) {
+           state.isProduct = false
+       } else {
+           state.isProduct = true
+       }
     },
 
     paginateProducts(state, products) {
