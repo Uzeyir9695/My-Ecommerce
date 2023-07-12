@@ -250,11 +250,18 @@
                                             {{ cardError ? cardError: orderAddressError? 'Oops, in the previous step ' + orderAddressError + ' Please go back and fill all the necessery info as required.': '' }}
                                         </div>
                                         <div class="form-group mt-3">
-                                            <a type="button" href="javascript:void(0)" class="btn btn-success">Amount Payable: <span id="checkout-total-price">{{ totalPrice }} USD</span></a>
-                                            <button @click.prevent="processPayment" class="btn btn-primary pay-now ml-1" :disabled="isPaying">
-                                                <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
-                                                {{ isPaying ? 'Processing...' : 'Pay now'}}
-                                            </button>
+                                            <div class="row d-flex justify-content-start">
+                                                <div class="col-12">
+
+                                                    <button class="btn btn-success mr-1">Amount Payable: <span id="checkout-total-price">{{ totalPrice }} USD</span></button>
+<!--                                                </div>-->
+<!--                                                <div class="col-12">-->
+                                                    <button @click.prevent="processPayment" class="btn btn-primary pay-now" :disabled="isPaying">
+                                                        <span v-if="isPaying" class="spinner-border spinner-border-sm"></span>
+                                                        {{ isPaying ? 'Processing...' : 'Pay now'}}
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
