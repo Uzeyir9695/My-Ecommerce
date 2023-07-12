@@ -37,7 +37,7 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-356d9c04.css",
+    "file": "assets/app-8a270c0c.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -52,9 +52,9 @@
       "assets/fa-v4compatibility-0515a423.ttf"
     ],
     "css": [
-      "assets/app-356d9c04.css"
+      "assets/app-8a270c0c.css"
     ],
-    "file": "assets/app-7a06a47a.js",
+    "file": "assets/app-df39c416.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
