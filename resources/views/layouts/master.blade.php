@@ -55,7 +55,6 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/product-images-slide.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/stripe.css') }}">
     @yield('styles')
