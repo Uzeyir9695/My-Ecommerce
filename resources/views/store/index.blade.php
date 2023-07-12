@@ -28,9 +28,6 @@
                             <div class="col-sm-12">
                                 <div class="ecommerce-header-items">
                                     <div class="result-toggler">
-                                        <button class="navbar-toggler shop-sidebar-toggler" type="button" data-toggle="collapse">
-                                            <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
-                                        </button>
                                         <div class="search-results">{{ $stores->total() }} results found</div>
                                     </div>
                                 </div>

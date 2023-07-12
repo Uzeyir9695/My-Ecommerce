@@ -10,9 +10,6 @@
                             <div class="col-sm-12">
                                 <div class="ecommerce-header-items">
                                     <div class="result-toggler">
-                                        <button class="navbar-toggler shop-sidebar-toggler" type="button" data-toggle="collapse">
-                                            <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
-                                        </button>
                                         <div class="search-results">{{ products.total }} results found</div>
                                     </div>
                                 </div>
@@ -77,7 +74,7 @@
                                     <font-awesome-icon icon="heart"  :class="{ 'text-danger': isProductInWishlist(product.id), 'text-muted': !isProductInWishlist(product.id) }"/>
                                     <span>Wishlist</span>
                                 </a>
-                                <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: '#'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
+                                <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: 'javascript:void(0)'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
                                     <font-awesome-icon icon="cart-shopping" />
                                     <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View' : 'Add to cart' }}</span>
                                 </a>
@@ -87,26 +84,27 @@
                     </section>
                     <!-- E-commerce Products Ends -->
                     <!--  display if product not found-->
-                    <div class="row  d-flex justify-content-center">
-                        <div :class="{'d-none': isProduct}">
+                    <div :class="{'d-none': isProduct}">
+                        <div class="row  d-flex justify-content-center">
                             <div class="text-center"><h1 class="mt-2">Product not found!</h1></div>
                         </div>
                     </div>
+
                     <!-- E-commerce Pagination Products -->
                     <section id="ecommerce-pagination" v-if="products && products.total > 21">
                         <div class="row d-flex justify-content-center">
                             <nav>
                                 <ul class="pagination">
                                     <li class="page-item" :class="{ 'disabled': products.current_page === 1 }">
-                                        <a class="page-link" href="#" @click.prevent="paginate(products.current_page - 1)" aria-label="Previous">
+                                        <a class="page-link" href="javascript:void(0)" @click.prevent="paginate(products.current_page - 1)" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
                                     <li class="page-item" :class="{ 'active': page === products.current_page }" v-for="page in products.last_page" :key="page">
-                                        <a class="page-link" href="#" @click.prevent="fetchProducts(page)">{{ page }}</a>
+                                        <a class="page-link" href="javascript:void(0)" @click.prevent="fetchProducts(page)">{{ page }}</a>
                                     </li>
                                     <li class="page-item" :class="{ 'disabled': products.current_page === products.last_page }">
-                                        <a class="page-link" href="#" @click.prevent="paginate(products.current_page + 1)" aria-label="Next">
+                                        <a class="page-link" href="javascript:void(0)" @click.prevent="paginate(products.current_page + 1)" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
