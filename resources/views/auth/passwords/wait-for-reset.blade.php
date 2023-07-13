@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Forgot Password Page</title>
+    <title>Email Check</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
@@ -29,8 +29,7 @@
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/form-validation.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/page-auth.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/page-misc.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -51,35 +50,16 @@
         <div class="content-header row">
         </div>
         <div class="content-body">
-            <div class="auth-wrapper auth-v1 px-2">
-                <div class="auth-inner py-2">
-                    <!-- Forgot Password v1 -->
-                    <div class="card mb-0">
-                        <div class="card-body">
-                            <h4 class="card-title mb-1">Forgot Password? 🔒</h4>
-                            <p class="card-text mb-2">Enter your email and we'll send you instructions to reset your password</p>
-
-                            <form class="auth-forgot-password-form mt-2" action="{{ route('forget.password.post') }}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="john@example.com" aria-describedby="email" tabindex="1" autofocus />
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <button class="btn btn-primary btn-block" tabindex="2">Send reset link</button>
-                            </form>
-
-                            <p class="text-center mt-2">
-                                <a href="{{ route('login') }}"> <i data-feather="chevron-left"></i> Back to login </a>
-                            </p>
-                        </div>
+            <!-- Not authorized-->
+            <div class="misc-wrapper">
+                <div class="misc-inner p-2 p-sm-3">
+                    <div class="w-100 text-center">
+                        <h2 class="mb-1">Please check your email to reset your password! 🔐</h2>
+                        <img class="img-fluid" src="../../../app-assets/images/pages/not-authorized.svg" alt="Not authorized page" />
                     </div>
-                    <!-- /Forgot Password v1 -->
                 </div>
             </div>
-
+            <!-- / Not authorized-->
         </div>
     </div>
 </div>
@@ -91,7 +71,6 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="../../../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -100,7 +79,6 @@
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
-<script src="../../../app-assets/js/scripts/pages/page-auth-forgot-password.js"></script>
 <!-- END: Page JS-->
 
 <script>

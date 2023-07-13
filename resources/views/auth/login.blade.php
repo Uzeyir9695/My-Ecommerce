@@ -91,26 +91,27 @@
                                     <label for="login-email" class="form-label">Email</label>
                                     <input type="text" class="form-control @error('email') is-invalid @enderror" id="login-email" name="email" value="{{ old('email') }}" placeholder="john@example.com" aria-describedby="login-email" tabindex="1" autofocus />
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        <span class="invalid-feedback" role="alert">
+                                           <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <label for="login-password">Password</label>
-                                        <a href="page-auth-forgot-password-v1.html">
+                                        <a href="{{ route('forget.password.get') }}">
                                             <small class="font-weight-bold">Forgot Password?</small>
                                         </a>
                                     </div>
-                                    <div class="input-group input-group-merge form-password-toggle">
-                                        <input type="password" class="form-control form-control-merge @error('password') is-invalid @enderror" id="login-password" name="password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
-                                        </div>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control rounded-top rounded-bottom @error('password') is-invalid @enderror" id="login-password" name="password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                    @enderror
                                 </div>
 
                                 <div class="form-group">
