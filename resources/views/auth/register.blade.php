@@ -113,13 +113,7 @@
                                     <label for="register-password" class="form-label">Repeat Password</label>
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input type="password" class="form-control form-control-merge @error('password_confirmation') is-invalid @enderror" id="register-password" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="register-password" tabindex="3" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
-                                        </div>
                                     </div>
-                                    @error('password_confirmation')
-                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                    @enderror
                                 </div>
 
                                 <div class="form-group">
