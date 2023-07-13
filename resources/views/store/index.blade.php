@@ -82,7 +82,7 @@
                     @if($stores->total() < 1)
                         <div class="row  d-flex justify-content-center">
                             <div>
-                                <div class="text-center"><h1 class="mt-2">Product not found!</h1></div>
+                                <div class="text-center"><h1 class="mt-2">Store not found!</h1></div>
                             </div>
                         </div>
                     @endif
