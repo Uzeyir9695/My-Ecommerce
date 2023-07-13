@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware('guest')->controller(ForgotPasswordController::class)->group(function () {
+    Route::get('forget-password', 'showForgetPasswordForm')->name('forget.password.get');
+    Route::post('forget-password', 'submitForgetPasswordForm')->name('forget.password.post');
+    Route::get('reset-password/{token}', 'showResetPasswordForm')->name('reset.password.get');
+    Route::post('reset-password', 'submitResetPasswordForm')->name('reset.password.post');
+});
+
 Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\EcommerceController::class)->group(function () {
         Route::get('/dashboard', 'index');
