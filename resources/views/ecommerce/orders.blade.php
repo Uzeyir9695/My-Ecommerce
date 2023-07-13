@@ -17,6 +17,11 @@
                                 <h4 class="card-title">My Orders</h4>
                             </div>
                             <div class="table-responsive">
+                                @if($orders->isEmpty())
+                                    <div class="d-flex justify-content-center">
+                                        <h4>Oops, you have not any order yet.</h4>
+                                    </div>
+                                @else
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -43,6 +48,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                @endif
                             </div>
                         </div>
                     </div>
