@@ -50,7 +50,7 @@
                             <p class="card-text item-description">{{ wishlist.product.description }}</p>
                         </div>
                         <div class="item-options text-center">
-                            <button @click="removeFromWishlist(wishlist.id)" type="button" class="btn btn-light btn-wishlist remove-wishlist">
+                            <button @click="removeFromWishlist(wishlist.product.id)" type="button" class="btn btn-light btn-wishlist remove-wishlist">
                                 <font-awesome-icon icon="trash" />
                                 <span>Remove</span>
                             </button>
