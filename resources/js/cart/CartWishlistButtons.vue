@@ -57,7 +57,7 @@ export default {
             const isProductInWishlist = this.isProductInWishlist(product_id);
             if (isProductInWishlist) {
                 // Remove the product from the wishlist
-                await this.$store.dispatch('wishlist/removeFromWishlist', this.wishlistId);
+                await this.$store.dispatch('wishlist/removeFromWishlist', product_id);
                 this.$store.dispatch('wishlist/fetchWishlist'); // Refetch wishlist from DB after removing from wishlist
             } else {
                 // Add the product to the wishlist
