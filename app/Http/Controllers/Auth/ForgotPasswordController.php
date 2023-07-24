@@ -34,10 +34,10 @@ class ForgotPasswordController extends Controller
      *
      * @return response()
      */
-    public function showForgetPasswordForm()
-    {
-        return view('auth.passwords.email');
-    }
+//    public function showForgetPasswordForm()
+//    {
+//        return view('auth.passwords.email');
+//    }
 
     /**
      * Write code on Method
@@ -60,16 +60,17 @@ class ForgotPasswordController extends Controller
 
         Mail::to($request->email)->send(new PasswordReset($token));
 
-        return view('auth.passwords.wait-for-reset');
+        return response()->json(['message' => 'Link sent to your email!'], 200);
+//        return view('auth.passwords.wait-for-reset');
     }
     /**
      * Write code on Method
      *
      * @return response()
      */
-    public function showResetPasswordForm($token) {
-        return view('auth.passwords.reset', ['token' => $token]);
-    }
+//    public function showResetPasswordForm($token) {
+//        return view('auth.passwords.reset', ['token' => $token]);
+//    }
 
     /**
      * Write code on Method
@@ -101,6 +102,7 @@ class ForgotPasswordController extends Controller
 
         DB::table('password_resets')->where(['email'=> $request->email])->delete();
 
-        return to_route('login')->with('message', 'Your password has been changed!');
+        return response()->json(['message' => 'Your password has been changed!'], 200);
+//        return to_route('login')->with('message', 'Your password has been changed!');
     }
 }

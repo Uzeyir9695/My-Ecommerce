@@ -14,18 +14,8 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::where('user_id', auth()->id())->paginate(21);
-        return view('store.index', compact('stores'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('store.create');
+        $stores = Store::with('media')->where('user_id', auth()->id())->paginate(21);
+        return response()->json(['stores' => $stores], 200);
     }
 
     /**
@@ -57,8 +47,9 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
+        $store->load('media');
         $products = $store->products()->paginate(12);
-        return view('store.show', compact('store', 'products'));
+        return response()->json(['store' => $store, 'products' => $products], 200);
     }
 
     /**
@@ -70,18 +61,9 @@ class StoreController extends Controller
     public function edit(Store $store)
     {
         $store->load('media');
-        if (request()->ajax()) {
-            return response()->json(['store' => $store], 200);
-        }
-        return view('store.edit', compact('store'));
-    }
-
-    // Method to fetch the store using Vue axios
-    public function storeEditor($id)
-    {
-        $store = Store::with('media')->findOrFail($id);
         return response()->json(['store' => $store], 200);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -114,11 +96,9 @@ class StoreController extends Controller
      */
     public function destroy(Store $store)
     {
-
         if(request('word') == 'Delete'){
             $store->delete();
-            return redirect()->route('stores.index')->with('success','Store named '.$store->name.' deleted successfully.');
+            return response()->json(['success' => 'Store named '.$store->name.' deleted successfully.'], 201);
         }
-        return redirect()->back();
     }
 }

@@ -24,7 +24,6 @@ class StoreRequest extends FormRequest
     public function rules()
     {
 //        $inputs =implode(',', ['name', 'type', 'org_name', 'identification', 'phone', 'country', 'city', 'street', 'website', 'description']);
-
         return [
             'name' => 'required|min:2|max:255',
             'type' => 'required',
@@ -59,7 +58,7 @@ class StoreRequest extends FormRequest
     protected function update()
     {
         return [
-            'email' => 'required|email|unique:stores,email,'.(int) request()->segment(2),
+            'email' => 'required|email|unique:stores,email,'.request()->segment(3),
             'logoImage' => 'bail|sometimes|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048|dimensions:min_width=100,min_height=100,max_width=2000,max_height=2000',
             'coverImage' => 'bail|sometimes|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048|dimensions:min_width=100,min_height=100,max_width=2000,max_height=2000',
         ];

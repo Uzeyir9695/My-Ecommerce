@@ -22,10 +22,10 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::where('user_id', auth()->id())
-            ->with('productAttributes')
+            ->with('media')
             ->select('id', 'price', 'discount', 'description')
             ->paginate(21);
-        return view('products.index', compact('products'));
+        return response()->json(['products' => $products], 200);
     }
 
     /**
@@ -34,12 +34,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::get();
-
-        if (request()->ajax()) {
-            return response()->json(['categories' => $categories], 200);
-        }
-
-        return view('products.create', compact('categories'));
+        return response()->json(['categories' => $categories], 200);
     }
 
 
@@ -99,7 +94,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        $product->load('media');
+//        dd($product->getMedia('productImages'));
+//        dd($product->getOriginalUrl('productImages'));
+        return response()->json(['product' => $product], 200);
     }
 
     /**
@@ -108,15 +106,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      *
      */
-    public function edit()
+    public function edit(Product $product)
     {
-        return view('products.edit');
-    }
-
-    // Method to fetch the product using Vue axios
-    public function productEditor($id)
-    {
-        $product = Product::with('media')->findOrFail($id);
+        $product->load('media');
         return response()->json(['product' => $product], 200);
     }
 
@@ -152,7 +144,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product, Request $request)
     {
-        // Note: this deletes only product image(s) not product
+        // Note: this deletes only product image(s) not product itself
         if($request->media_id) {
             $collection = collect($product->getMedia('productImages'));
             $collect = [];
@@ -160,11 +152,9 @@ class ProductController extends Controller
                 if(in_array($media->id, \request('media_id'))) continue;
                 $collect[] = $media;
             }
-
             $product->clearMediaCollectionExcept('productImages', $collect);
 
             return response()->json(['message' => 'Deleted Successfully!']);
         }
-            return redirect()->back();
     }
 }

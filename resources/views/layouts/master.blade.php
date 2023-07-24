@@ -13,7 +13,8 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Shop | {{ (request()->segment(1) == 'category'? collect(request()->segments())->last() : request()->segment(1))}}</title>
+    <title>All-On-My-Web</title>
+{{--    <title>Shop | {{ (request()->segment(1) == 'category'? collect(request()->segments())->last() : request()->segment(1))}}</title>--}}
     {{--    <title>Shop | {{ request()->path() }}</title>--}}
     <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
@@ -45,6 +46,7 @@
     <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-ecommerce-details.css">
     <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-number-input.css">
     <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-wizard.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/page-auth.css">
 
     {{--    store profile css--}}
     <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/page-profile.css">
@@ -65,144 +67,105 @@
 <!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+<noscript>
+    <strong>We're sorry but All-On-My-Web doesn't work properly without
+        JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
+
 <div id="app">
-<!-- BEGIN: Header-->
-<nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
-    <div class="navbar-container d-flex content">
-        <div class="bookmark-wrapper d-flex align-items-center">
-            <ul class="nav navbar-nav d-xl-none">
-                <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                    <div class="bookmark-input search-input">
-                        <div class="bookmark-input-icon"><i data-feather="search"></i></div>
-                        <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
-                        <ul class="search-list search-list-bookmark"></ul>
-                    </div>
-            </ul>
-        </div>
-        <ul class="nav navbar-nav align-items-center ml-auto">
-            {{--            Temporary comment out language bar --}}
-{{--            <li class="nav-item dropdown dropdown-language">--}}
-{{--                <a class="nav-link dropdown-toggle" id="dropdown-flag" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                    <i class="flag-icon flag-icon-us"></i>--}}
-{{--                    <span class="selected-language">English</span>--}}
-{{--                </a>--}}
-{{--                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-flag">--}}
-{{--                    <a class="dropdown-item" href="javascript:void(0);" data-language="en"><i class="flag-icon flag-icon-us"></i> English</a>--}}
-{{--                    <a class="dropdown-item" href="javascript:void(0);" data-language="fr"><i class="flag-icon flag-icon-fr"></i> French</a>--}}
-{{--                    <a class="dropdown-item" href="javascript:void(0);" data-language="de"><i class="flag-icon flag-icon-de"></i> German</a>--}}
-{{--                    <a class="dropdown-item" href="javascript:void(0);" data-language="pt"><i class="flag-icon flag-icon-pt"></i> Portuguese</a>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-            {{--   Vue component --}}
-            <cart-list
-                :product-show-route="'{{ route('products.show', "") }}'"
-                :checkout-route="'{{ route('carts.checkout') }}'"
-                :wishlist-route="'{{ route('wishlists.index') }}'"
-            ></cart-list>
+{{--    <!-- BEGIN: Header-->--}}
+{{--    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">--}}
+{{--        <div class="navbar-container d-flex content">--}}
+{{--            <div class="bookmark-wrapper d-flex align-items-center">--}}
+{{--                <ul class="nav navbar-nav d-xl-none">--}}
+{{--                    <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>--}}
+{{--                </ul>--}}
+{{--                <ul class="nav navbar-nav">--}}
+{{--                    <div class="bookmark-input search-input">--}}
+{{--                        <div class="bookmark-input-icon"><i data-feather="search"></i></div>--}}
+{{--                        <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">--}}
+{{--                        <ul class="search-list search-list-bookmark"></ul>--}}
+{{--                    </div>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--            <ul class="nav navbar-nav align-items-center ml-auto">--}}
+{{--                <cart-list></cart-list>--}}
+{{--                <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder"></span><span class="user-status">Customer</span></div><span class="avatar"><img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>--}}
+{{--                    </a>--}}
+{{--                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">--}}
+{{--                        <router-link :to="{name: 'stores.index'}" class="dropdown-item"><i class="mr-50" data-feather="user"></i> Profile</router-link>--}}
+{{--                        <router-link :to="{name: 'stores.index'}" class="dropdown-item"><i class="mr-50" data-feather="shopping-cart"></i>My Stores</router-link>--}}
+{{--                        <router-link :to="{name: 'products.index'}" class="dropdown-item"><i class="mr-50" data-feather="box"></i> My Products</router-link>--}}
+{{--                        <router-link :to="{name: 'my-orders'}" class="dropdown-item"><i class="mr-50" data-feather="shopping-bag"></i> My Orders</router-link>--}}
+{{--                        <div class="dropdown-divider"></div>--}}
+{{--                        <router-link :to="{name: 'stores.index'}" class="dropdown-item"><i class="mr-50" data-feather="settings"></i> Settings</router-link>--}}
 
-            <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">{{ Auth::user()->name }}</span><span class="user-status">Customer</span></div><span class="avatar"><img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="{{ route('coming-soon') }}"><i class="mr-50" data-feather="user"></i> Profile</a>
-                    <a class="dropdown-item" href="{{ route('stores.index') }}"><i class="mr-50" data-feather="shopping-cart"></i>My Stores</a>
-                    <a class="dropdown-item" href="{{ route('products.index') }}"><i class="mr-50" data-feather="box"></i> My Products</a>
-                    <a class="dropdown-item" href="{{ route('my-orders') }}"><i class="mr-50" data-feather="shopping-bag"></i> My Orders</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('coming-soon') }}"><i class="mr-50" data-feather="settings"></i> Settings</a>
+{{--                        <a class="dropdown-item" href="#" @click.prevent="logout">--}}
+{{--                            <i class="mr-50" data-feather="power"></i>--}}
+{{--                            Logout--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    </nav>--}}
+{{--    <!-- END: Header-->--}}
+{{--    --}}
+{{--    <!-- BEGIN: Main Menu-->--}}
+{{--    <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">--}}
+{{--        <div class="navbar-header">--}}
+{{--            <ul class="nav navbar-nav flex-row">--}}
+{{--                <li class="nav-item mr-auto"><a class="navbar-brand" href="/html/ltr/vertical-menu-template-semi-dark/index.html">--}}
+{{--                        <img src="/app-assets/images/logo/favicon.ico" alt="logo">--}}
+{{--                        <h2 class="brand-text">Ecommerce</h2>--}}
+{{--                    </a></li>--}}
+{{--                <li class="nav-item nav-toggle">--}}
+{{--                    <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">--}}
+{{--                        <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>--}}
+{{--                        <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--        <div class="shadow-bottom"></div>--}}
+{{--        <div class="main-menu-content">--}}
+{{--            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">--}}
+{{--                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Categories</span><i data-feather="more-horizontal"></i>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item mb-2" :class="this.$route.name === 'all-products' ? 'active' : ''">--}}
+{{--                    <router-link :to="{ name: 'all-products' }">--}}
+{{--                        <i data-feather="grid"></i>--}}
+{{--                        <span class="menu-title text-truncate" data-i18n="Kanban">All Categories</span>--}}
+{{--                    </router-link>--}}
 
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        <i class="mr-50" data-feather="power"></i>
-                        {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- END: Header-->
-
-
-<!-- BEGIN: Main Menu-->
-<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="navbar-header">
-        <ul class="nav navbar-nav flex-row">
-            <li class="nav-item mr-auto"><a class="navbar-brand" href="/html/ltr/vertical-menu-template-semi-dark/index.html"><span class="brand-logo">
-                            <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
-                                <defs>
-                                    <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%">
-                                        <stop stop-color="#000000" offset="0%"></stop>
-                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                    </lineargradient>
-                                    <lineargradient id="linearGradient-2" x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%">
-                                        <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
-                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                    </lineargradient>
-                                </defs>
-                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Artboard" transform="translate(-400.000000, -178.000000)">
-                                        <g id="Group" transform="translate(400.000000, 178.000000)">
-                                            <path class="text-primary" id="Path" d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z" style="fill:currentColor"></path>
-                                            <path id="Path1" d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z" fill="url(#linearGradient-1)" opacity="0.2"></path>
-                                            <polygon id="Path-2" fill="#000000" opacity="0.049999997" points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"></polygon>
-                                            <polygon id="Path-21" fill="#000000" opacity="0.099999994" points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"></polygon>
-                                            <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994" points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg></span>
-                    <h2 class="brand-text">Ecommerce</h2>
-                </a></li>
-            <li class="nav-item nav-toggle">
-                <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
-                    <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
-                    <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="shadow-bottom"></div>
-    <div class="main-menu-content">
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Categories</span><i data-feather="more-horizontal"></i>
-            </li>
-            <li class="nav-item mb-2 @if(route('all-products-view') == \request()->url()) active @endif">
-                <a class="d-flex align-items-center" href="{{ route('all-products-view') }}">
-                    <i data-feather="grid"></i>
-                    <span class="menu-title text-truncate" data-i18n="Kanban">All Categories</span>
-                </a>
-            </li>
-            @foreach($categories as $category)
-            <li class=" nav-item">
-                <a class="d-flex align-items-center" href="#">
-                    <img src="{{ asset($category->icon) }} " alt="" style="width: 25px; height: 25px; background-color: floralwhite; padding: 3px; border-radius: 50px; " class="mr-1">
-                    <span class="menu-title text-truncate" data-i18n="Invoice">{{ $category->name }}</span>
-                </a>
-                <ul class="menu-content">
-                    @foreach($category->subcategories as $subcategory)
-                        <li class="@if(route('subcategories.index', [$subcategory->id, $subcategory->slug] ) == \request()->url()) active @endif">
-                            <a class="d-flex align-items-center" href="{{ route('subcategories.index', [$subcategory->id, $subcategory->slug] ) }}">
-                                <img src="{{ asset($subcategory->icon) }} " alt="" style="width: 28px; height: 28px; border-radius: 50px; padding: 3px; background-color: floralwhite" class="mr-1">
-                                <span class="menu-item text-truncate" data-i18n="List">{{ $subcategory->name }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-</div>
-<!-- END: Main Menu-->
-    @yield('content')
+{{--                </li>--}}
+{{--                @foreach($categories as $category)--}}
+{{--                    <li class=" nav-item">--}}
+{{--                        <a class="d-flex align-items-center" href="#">--}}
+{{--                            <img src="{{ asset($category->icon) }} " alt="" style="width: 25px; height: 25px; background-color: floralwhite; padding: 3px; border-radius: 50px; " class="mr-1">--}}
+{{--                            <span class="menu-title text-truncate" data-i18n="Invoice">{{ $category->name }}</span>--}}
+{{--                        </a>--}}
+{{--                        <ul class="menu-content">--}}
+{{--                            @foreach($category->subcategories as $subcategory)--}}
+{{--                                <li >--}}
+{{--                                    <router-link :to="{name: 'subcategory.products', params: { id: '{{$subcategory->id}}', slug: '{{$subcategory->slug}}' }}">--}}
+{{--                                    <img src="{{ asset($subcategory->icon) }} " alt="" style="width: 28px; height: 28px; border-radius: 50px; padding: 3px; background-color: floralwhite" class="mr-1">--}}
+{{--                                        <span class="menu-item text-truncate" data-i18n="List">{{ $subcategory->name }}</span>--}}
+{{--                                    </router-link>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                @endforeach--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    --}}
+    <!-- END: Main Menu-->
+{{--    <router-view name="login"></router-view>--}}
+{{--<app></app>--}}
+{{--    <router-view name="app"></router-view>--}}
 </div>
 @vite('resources/js/app.js')
 
@@ -218,7 +181,7 @@
 <!-- BEGIN: Vendor JS-->
 <script src="/app-assets/vendors/js/vendors.min.js"></script>
 <!-- BEGIN Vendor JS-->
-@yield('scripts')
+{{--@yield('scripts')--}}
 <!-- BEGIN: Add product to cart adn remove JS-->
 <script type=text/javascript>
 
@@ -229,17 +192,13 @@
         },
     };
 </script>
-<script src="{{ asset('js/product-details-image-carousel.js') }}"></script>
+{{--<script src="{{ asset('js/product-details-image-carousel.js') }}"></script>--}}
 
 <!-- END: Add product to cart adn remove JS-->
 
 <!-- BEGIN: Page Vendor JS-->
 <script src="/app-assets/vendors/js/extensions/toastr.min.js"></script>
 <script src="/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
-
-<!-- :Sweet alert Page Vendor JS below-->
-<script src="/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
-<script src="/app-assets/vendors/js/extensions/polyfill.min.js"></script>
 
 <!-- BEGIN: Theme JS-->
 <script src="/app-assets/js/core/app-menu.js"></script>
@@ -251,6 +210,10 @@
 <script src="/app-assets/js/scripts/extensions/ext-component-toastr.js"></script>
 <script src="/app-assets/js/scripts/pages/app-ecommerce-checkout.js"></script>
 <!-- END: Pages JS-->
+
+<!-- :Sweet alert Page Vendor JS below-->
+<script src="/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="/app-assets/vendors/js/extensions/polyfill.min.js"></script>
 
 <script>
     $(window).on('load', function() {

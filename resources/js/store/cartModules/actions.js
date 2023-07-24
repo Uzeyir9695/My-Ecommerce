@@ -1,9 +1,9 @@
-import axios from 'axios';
+import baseApi from '@/auth/api'
 
 export default {
     async addToCart(context, product) {
         try {
-            const response = await axios.post('/carts', product);
+            const response = await baseApi.post('/api/carts', product);
             context.commit('addToCart', response.data.cart);
             toastr['success']('', response.data.message+' 🛒', {
                 closeButton: true,
@@ -18,7 +18,7 @@ export default {
 
     async updateCart(context, cart) {
         try {
-            const response = await axios.put('/carts/'+cart.id, cart);
+            const response = await baseApi.put('/api/carts/'+cart.id, cart);
             context.commit('updateCart', response.data.cart);
             return response;
         } catch (error) {
@@ -29,7 +29,7 @@ export default {
 
     async fetchCarts(context) {
         try {
-            const response = await axios.get('/navbar-carts');
+            const response = await baseApi.get('/api/navbar-carts');
             context.commit('pushCarts', response.data.carts);
             return response;
         } catch (error) {
@@ -40,7 +40,7 @@ export default {
 
     async removeFromCart(context, id) {
         try {
-            const response = await axios.delete('/carts/'+id);
+            const response = await baseApi.delete('/api/carts/'+id);
             context.commit('removeFromCart', id);
             toastr['error']('', response.data.message+' 🛒', {
                 closeButton: true,

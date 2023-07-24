@@ -14,7 +14,7 @@
                 <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
                         <div class="dropdown">
-                            <a :href="routes.stores" class="btn btn-primary mr-1" type="button">View stores</a>
+                            <router-link :to="{name: 'stores.index'}" class="btn btn-primary mr-1">Stores</router-link>
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="app-todo.html"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="mr-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="mr-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
@@ -167,6 +167,7 @@
 
 </template>
 <script>
+import baseApi from '@/auth/api'
 export default {
     props: ['storeIndexRoute'],
     data() {
@@ -225,7 +226,7 @@ export default {
             const coverFile = this.formData.coverImage;
             formData.append('coverImage', coverFile);
 
-            await axios.post('/stores', formData)
+            await baseApi.post('/api/stores', formData)
                 .then((response) => {
                     // After successful submission clear form data
                     const logoInput = this.$refs.logoImageInput;

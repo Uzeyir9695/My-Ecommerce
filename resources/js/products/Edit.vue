@@ -18,7 +18,7 @@
                 <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
                         <div class="dropdown">
-                            <a :href="routes.products" class="btn btn-primary mr-1" type="button">View Products</a>
+                            <router-link :to="{name: 'products.index'}" class="btn btn-primary mr-1">Products</router-link>
                         </div>
                     </div>
                 </div>
@@ -112,6 +112,7 @@
     <!-- END: Content-->
 </template>
 <script>
+import baseApi from '@/auth/api'
 export default {
     props: ['productIndexRoute', 'productId'],
     data() {
@@ -162,7 +163,7 @@ export default {
                     formData.append('images[]', file);
                 }
             }
-            await axios.post('/products/'+this.product.id,  formData )
+            await baseApi.post('/api/products/'+this.product.id,  formData )
                 .then((response) => {
                     // Set this.isCreating to false after a 2-second delay
                     setTimeout(() => {
@@ -208,7 +209,7 @@ export default {
                 });
                 return;
             }
-            await axios.delete('/products/'+this.product.id, { data: { media_id: this.checkedImages } })
+            await baseApi.delete('/api/products/'+this.product.id, { data: { media_id: this.checkedImages } })
                 .then((response) => {
                     // Image deleted successfully, remove it from the formData.images array
                     this.formData.images = this.formData.images.filter(
@@ -222,7 +223,7 @@ export default {
         },
 
         async fetchProduct(){
-            await axios.get('/product-editor/'+this.routes.productID)
+            await baseApi.get('/api/products/'+this.$route.params.id+'/edit')
                 .then((response) => {
                     this.product = response.data.product;
                     this.formData.name = this.product.name;

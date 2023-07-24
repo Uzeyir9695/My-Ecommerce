@@ -44,8 +44,9 @@
                     <section id="ecommerce-products" class="grid-view" :class="{ 'products-opacity': contentLoading }" v-if="products && products.total > 0">
                         <div class="card ecommerce-card" v-for="product in products.data">
                             <div class="item-img text-center">
-                                <a :href="routes.productShow+'/'+product.id">
-                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 450px; height: 290px;"  alt="img-placeholder" /></a>
+                                <router-link :to="{ name: 'products.show', params: {id: product.id}}">
+                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 450px; height: 290px;"  alt="img-placeholder" />
+                                </router-link>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">
@@ -64,7 +65,7 @@
                                     </div>
                                 </div>
                                 <h6 class="item-name">
-                                    <a class="text-body" :href="routes.productShow+'/'+product.id">{{ product.name }}</a>
+                                    <router-link :to="{ name: 'products.show', params: {id: product.id}}"> {{ product.name }}</router-link>
                                     <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">E-Commerce</a></span>
                                 </h6>
                                 <p class="card-text item-description">{{ product.description }}</p>
@@ -74,9 +75,9 @@
                                     <font-awesome-icon icon="heart"  :class="{ 'text-danger': isProductInWishlist(product.id), 'text-muted': !isProductInWishlist(product.id) }"/>
                                     <span>Wishlist</span>
                                 </a>
-                                <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: 'javascript:void(0)'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
+                                <a href="javascript:void(0)" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
                                     <font-awesome-icon icon="cart-shopping" />
-                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View' : 'Add to cart' }}</span>
+                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'Added' : 'Add to cart' }}</span>
                                 </a>
                             </div>
                         </div>
@@ -123,26 +124,12 @@
 
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import axios from 'axios'
+
 export default {
-    props: {
-        productShowRoute: {
-            type: String
-        },
-        addWishlistRoute: {
-            type: String
-        },
-        productsIndexRoute: {
-            type: String
-        },
-    },
     data() {
         return {
-            routes: {
-                productShow: this.productShowRoute,
-                wishlistCreate: this.addWishlistRoute,
-                productsIndex: this.productsIndexRoute,
-            },
             cartLink: '#',
             products: [],
             searchProduct: '',
@@ -184,7 +171,7 @@ export default {
     methods: {
         async fetchProducts(page, searchQuery){
             this.contentLoading = true;
-            await axios.get('/all-products', {
+            await axios.get('/api/all-products', {
                 params: {
                     page: page,
                     search: searchQuery
@@ -219,14 +206,7 @@ export default {
                 price: this.price(product.price, product.discount),
                 discount: product.discount
             }
-           await this.$store.dispatch('cart/addToCart', item)
-                .then(response => {
-                    const refElement = this.$refs['pathToProduct-' + product.id]; // Access the ref element and manipulate it
-                    refElement[0].href = this.routes.productShow+'/'+product.id; // Modify the href attribute of the anchor element
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+           await this.$store.dispatch('cart/addToCart', item);
         },
 
         async addToWishlist(product_id) {

@@ -14,7 +14,7 @@
                 <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
                         <div class="dropdown">
-                            <a :href="routes.products" class="btn btn-primary mr-1" type="button">View Products</a>
+                            <router-link :to="{name: 'products.index'}" class="btn btn-primary text-white mr-1">View Products</router-link>
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="app-todo.html"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="mr-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="mr-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
@@ -135,6 +135,7 @@
 
 </template>
 <script>
+import baseApi from '@/auth/api'
     export default {
         props: ['productIndexRoute', 'storeId'],
         data() {
@@ -198,7 +199,7 @@
                     }
                 }
 
-               await axios.post('/products', formData)
+               await baseApi.post('/api/products', formData)
                     .then((response) => {
                         // After successful submission clear form data
                         const input = this.$refs.imageInput;
@@ -230,11 +231,11 @@
                             console.log(error);
                         }
                     })
-                    // End of the axios call
+                    // End of the baseApi call
            },
 
             async fetchCategories(){
-                await axios.get('/products/create?store_id='+this.storeId)
+                await baseApi.get('/api/products/create?store_id='+this.storeId)
                 .then((response) => {
                     this.categories = response.data.categories
                 })
@@ -248,7 +249,7 @@
                     try {
                         this.subcategories = null;
                         this.attributes = null;
-                        const response = await axios.get('/subcategories?category_id='+this.formData.selectedCategory);
+                        const response = await baseApi.get('/api/subcategories?category_id='+this.formData.selectedCategory);
                         this.subcategories = response.data.subcategories;
                         this.formData.selectedSubcategory = '';
                     } catch (error) {
@@ -260,7 +261,7 @@
             async onSubcategoryChange() {
                 if (this.formData.selectedSubcategory) {
                     try {
-                        const response = await axios.get('/attributes-values?subcategory_id='+this.formData.selectedSubcategory);
+                        const response = await baseApi.get('/api/attributes-values?subcategory_id='+this.formData.selectedSubcategory);
                         this.attributes = response.data.attributes;
                         // Clear previously selected attribute values
                         this.formData.selectedAttributes = {};

@@ -54,7 +54,7 @@ class HouseholdSeeder extends Seeder
                     'Dishwashers' => [
                         'icon' => 'images/dishwasher.jpg',
                         'attributes' => [
-                            'Brand'  => ['BEKO', 'VESTEL', 'BOSCH', 'LG', 'ELECTROLUX', 'INDESIT', 'HOTPOINT-ARTISON', 'BOSCH', 'HANSA'],
+                            'Brand'  => ['BEKO', 'VESTEL', 'BOSCH', 'LG', 'ELECTROLUX', 'INDESIT', 'HOTPOINT-ARTISON', 'HANSA'],
                             'Type' => ['Built-in'],
                             'Color' => $color,
                             'Energy Efficiency Class' => $energy_efficiency,

@@ -6,18 +6,15 @@ use App\Models\Product;
 use App\Models\OrderDetail;
 use App\Models\ProductAttribute;
 use App\Models\Subcategory;
+use App\Models\Category;
 use http\Client\Request;
 
 class EcommerceController extends Controller
 {
     public function index()
     {
-        return redirect()->route('all-products-view');
-    }
-
-    public function allProductsView()
-    {
-        return view('ecommerce.all-products');
+        $categories = Category::with('subcategories')->get();
+        return response()->json(['categories' => $categories], 200);
     }
 
     public function allProducts()
@@ -34,14 +31,6 @@ class EcommerceController extends Controller
         return response()->json(['products' => $products], 200);
     }
 
-    public function ecommerceIndex(Subcategory $subcategory)
-    {
-        if(route('subcategories.index', [$subcategory->id, $subcategory->slug]) !== \request()->url()) {
-            return view('error.404');
-        }
-
-        return view('ecommerce.index');
-    }
 
     public function getAttributes(Subcategory $subcategory)
     {
@@ -81,13 +70,13 @@ class EcommerceController extends Controller
             return $data->name;
         });
 
-        return response()->json(['products' => $products, 'attributes' => $attributes], 200); // Note: No need to check ajax request if we use api routes
+        return response()->json(['products' => $products, 'attributes' => $attributes], 200);
     }
 
     public function myOrders()
     {
         $orders = OrderDetail::where('user_id', auth()->id())->get();
-        return view('ecommerce.orders', compact('orders'));
+        return response()->json(['orders' => $orders], 200);
     }
 
 }

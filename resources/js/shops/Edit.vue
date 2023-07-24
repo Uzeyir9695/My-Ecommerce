@@ -14,7 +14,7 @@
                 <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
                         <div class="dropdown">
-                            <a :href="routes.stores" class="btn btn-primary m-1" type="button">View stores</a>
+                            <router-link :to="{name: 'stores.index'}" class="btn btn-primary mr-1">Stores</router-link>
                         </div>
                     </div>
                 </div>
@@ -174,14 +174,10 @@
 
 </template>
 <script>
+import baseApi from '@/auth/api'
 export default {
-    props: ['storeIndexRoute', 'storeId'],
     data() {
         return {
-            routes: {
-                stores: this.storeIndexRoute,
-                storeID: this.storeId,
-            },
             formData: {
                 name: '',
                 city: '',
@@ -238,7 +234,7 @@ export default {
                 formData.append('logoImage', this.logoMedia);
             }
 
-            await axios.post('/stores/'+this.store.id, formData)
+            await baseApi.post('/api/stores/'+this.$route.params.id, formData)
                 .then((response) => {
                     // After successful submission clear form data
                     const logoInput = this.$refs.logoImageInput;
@@ -277,7 +273,7 @@ export default {
 
 
         async fetchStore(){
-            await axios.get('/store-editor/'+this.routes.storeID)
+            await baseApi.get('/api/stores/'+this.$route.params.id+'/edit')
                 .then((response) => {
                     this.store = response.data.store;
                     this.formData.name = this.store.name;

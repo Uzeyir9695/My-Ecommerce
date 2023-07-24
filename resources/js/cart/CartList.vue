@@ -1,6 +1,7 @@
 <template>
    <div>
-       <li class="nav-item dropdown dropdown-cart mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="shopping-cart"></i><span v-if="carts.length > 0" class="badge badge-pill badge-primary badge-up cart-item-count">{{ carts.length }}</span></a>
+       <li class="nav-item dropdown dropdown-cart mr-25">
+           <a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="fa-solid fa-cart-shopping" style="font-size: 22px; color: grey;"></i><span v-if="carts.length > 0" class="badge badge-pill badge-primary badge-up cart-item-count">{{ carts.length }}</span></a>
            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                <li class="dropdown-menu-header">
                    <div class="dropdown-header d-flex">
@@ -10,14 +11,15 @@
                </li>
                <li class="scrollable-container media-list">
                    <div class="media align-items-center" v-for="cart in carts" :key="cart.id">
-                           <img class="d-block rounded mr-1" :src="cart.product.media[0].original_url" alt="donuts" width="62">
-                           <div class="media-body" >
-                               <span class="remove-cart" @click="removeFromCart(cart.id)"><font-awesome-icon icon="trash" /></span>
-                               <div class="media-heading">
-                                   <h6 class="cart-item-title"><a class="text-body" :href="productShowRoute+'/'+cart.product.id"> {{ cart.product.name }}</a></h6><small class="cart-item-by">By E-commerce</small>
-                               </div>
-                               <h5 class="cart-item-price">{{ cart.price }}$</h5>
+                       <img class="d-block rounded mr-1" :src="cart.product.media[0].original_url" alt="donuts" width="62">
+                       <div class="media-body" >
+                           <span class="remove-cart" @click="removeFromCart(cart.id)"><font-awesome-icon icon="trash" /></span>
+                           <div class="media-heading">
+
+                               <h6 class="cart-item-title"><router-link class="text-body" :to="{ name: 'products.show', params: {id: cart.product.id} }"> {{ cart.product.name }}</router-link></h6><small class="cart-item-by">By E-commerce</small>
                            </div>
+                           <h5 class="cart-item-price">{{ cart.price }}$</h5>
+                       </div>
                    </div>
                </li>
             <!--    Show if cart is emtpy   -->
@@ -36,7 +38,8 @@
                    <div class="d-flex justify-content-between mb-1">
                        <h6 class="font-weight-bolder mb-0">Total:</h6>
                        <h6 class="text-primary font-weight-bolder mb-0">{{ totalPrice }} USD</h6>
-                   </div><a v-if="carts.length > 0" class="btn btn-primary btn-block" :href="routes.cartCheckoutRoute">Checkout</a>
+                   </div>
+                   <router-link v-if="carts.length > 0" class="btn btn-primary btn-block" :to="{ name: 'checkout.index'}">Checkout</router-link>
                </li>
            </ul>
        </li>
@@ -44,10 +47,10 @@
     <div>
         <!-- Wishlist -->
         <li class="nav-item dropdown dropdown-notification mr-25">
-            <a class="nav-link" :href="routes.wishlistRoute">
-                <i class="ficon" data-feather="heart"></i>
+            <router-link :to="{name: 'wishlists.index'}" class="nav-link">
+                <i class="fa-regular fa-heart" style="font-size: 22px; color: grey;"></i>
                 <span v-if="wishlistCounter > 0" class="badge badge-pill badge-danger badge-up wishlist-count-badge">{{ wishlistCounter }}</span>
-            </a>
+            </router-link>
         </li>
     </div>
 </template>
@@ -55,26 +58,20 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    props: ['productShowRoute','checkoutRoute', 'wishlistRoute'],
     data() {
         return {
-            routes: {
-                productShowRoute: this.productShowRoute,
-                cartCheckoutRoute: this.checkoutRoute,
-                wishlistRoute: this.wishlistRoute,
-            },
+        //
         }
     },
 
     created(){
-         this.$store.dispatch('cart/fetchCarts');
          this.$store.dispatch('wishlist/fetchWishlist');
     },
 
     methods: {
         removeFromCart(id) {
           this.$store.dispatch('cart/removeFromCart', id);
-      }
+      },
     },
 
     computed: {

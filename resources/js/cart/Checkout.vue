@@ -73,13 +73,17 @@
                                 <div class="checkout-items">
                                     <div v-for="cart in carts" :key="cart.id" class="card ecommerce-card" id="cart-item-wrapper-{{ cart.id }}">
                                         <div class="item-img">
-                                            <a :href="productShowRoute+'/'+cart.product_id">
+                                            <router-link :to="{ name: 'products.show', params: {id: cart.product_id} }">
                                                 <img :src="cart.product.media[0].original_url" class="rounded" alt="img-placeholder" />
-                                            </a>
+                                            </router-link>
                                         </div>
                                         <div class="card-body">
                                             <div class="item-name">
-                                                <h6 class="mb-0"><a :href="productShowRoute+'/'+cart.product_id" class="text-body">{{ cart.product.name }}</a></h6>
+                                                <h6 class="mb-0">
+                                                    <router-link class="text-body" :to="{ name: 'products.show', params: {id: cart.product_id} }">
+                                                        {{ cart.product.name }}
+                                                    </router-link>
+                                                </h6>
                                                 <span class="item-company">By <a href="javascript:void(0)" class="company-name">E-Commerce</a></span>
                                                 <div class="item-rating">
                                                     <ul class="unstyled-list list-inline mb-1">
@@ -178,49 +182,49 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-name">Full Name <span class="text-danger">*</span>:</label>
-                                                    <input v-model="fullname" name="fullname" type="text" class="form-control" placeholder="John Doe" />
+                                                    <input v-model="fullname" name="fullname" id="checkout-name" type="text" class="form-control" placeholder="John Doe" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-email">E-Mail <span class="text-danger">*</span>:</label>
-                                                    <input v-model="email" name="email" type="email" class="form-control" placeholder="example@gmail.com" />
+                                                    <input v-model="email" name="email" id="checkout-email" type="email" class="form-control" placeholder="example@gmail.com" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-mobile">Mobile Number <span class="text-danger">*</span>:</label>
-                                                    <input v-model="mobile" name="mobile" type="text" class="form-control" placeholder="+995555444333" />
+                                                    <input v-model="mobile" name="mobile" id="checkout-mobile" type="text" class="form-control" placeholder="+995555444333" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-country">Country <span class="text-danger">*</span>:</label>
-                                                    <input v-model="country" name="country" type="text" class="form-control" placeholder="Georgia" />
+                                                    <input v-model="country" name="country" id="checkout-country" type="text" class="form-control" placeholder="Georgia" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-zipcode">ZIP-Code <span class="text-danger">*</span>:</label>
-                                                    <input v-model="zipcode" name="zipcode" type="number" class="form-control" placeholder="201301" />
+                                                    <input v-model="zipcode" name="zipcode" id="checkout-zipcode" type="number" class="form-control" placeholder="201301" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-city">City <span class="text-danger">*</span>:</label>
-                                                    <input v-model="city" name="city" type="text" class="form-control" placeholder="Tbilisi" />
+                                                    <input v-model="city" name="city" id="checkout-city" type="text" class="form-control" placeholder="Tbilisi" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-apt-number">Flat, House No <span class="text-danger">*</span>:</label>
-                                                    <input v-model="aptnumber" name="aptnumber" type="number" class="form-control" placeholder="9447 Glen Eagles Drive" />
+                                                    <input v-model="aptnumber" name="aptnumber" id="checkout-apt-number" type="number" class="form-control" placeholder="9447 Glen Eagles Drive" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group mb-2">
                                                     <label for="checkout-landmark">Landmark e.g. near apollo hospital:</label>
-                                                    <input v-model="landmark" name="landmark" type="text" class="form-control" placeholder="Near Apollo Hospital" />
+                                                    <input v-model="landmark" name="landmark" id="checkout-landmark" type="text" class="form-control" placeholder="Near Apollo Hospital" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -277,23 +281,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import baseApi from '@/auth/api'
+
 
 export default {
-    props: {
-        productShowRoute: {
-            type: String
-        },
-        paymentRoute: {
-            type: String
-        },
-    },
     data() {
         return {
-            routes: {
-                productShow: this.productShowRoute,
-                paymentRoute: this.paymentRoute,
-            },
             isPaying: false,
             cardError: null,
             orderAddressError: null,
@@ -329,12 +323,6 @@ export default {
         }
     },
 
-    updated(){
-        if(this.carts.length < 1) {
-            this.isCartEmpty = true
-        }
-    },
-
     mounted() {
         // Load Stripe.js library
         const script = document.createElement('script');
@@ -343,6 +331,12 @@ export default {
             this.initializeStripe();
         };
         document.head.appendChild(script);
+    },
+
+    updated(){
+        if(this.carts.length < 1) {
+            this.isCartEmpty = true
+        }
     },
 
     methods: {
@@ -360,7 +354,7 @@ export default {
 
         processPayment() {
             // Before payment valdiate order address info and display the error messages
-            axios.post('/orders/address/validate',
+            baseApi.post('/api/orders/address/validate',
                 {
                     fullname: this.fullname,
                     email: this.email,
@@ -420,7 +414,7 @@ export default {
 
         processPaymentOnServer(paymentMethod) {
             // Send the payment method to your server for processing
-            axios.post('/payment', {
+            baseApi.post('/api/payment', {
                     payment_method: paymentMethod,
                     amount: this.totalPrice,
                 })
@@ -463,14 +457,14 @@ export default {
                 };
             });
 
-            await axios.post('/orders/detail', {'orderedItems': this.orderedItems})
+            await baseApi.post('/api/orders/detail', {'orderedItems': this.orderedItems})
                 .then((response) => {
                     return response;
                 }).catch((error) => {
                     console.error(error); // Log the error
                 });
 
-            await axios.post('/orders/address', addressInfo)
+            await baseApi.post('/api/orders/address', addressInfo)
                 .then((response) => {
                     return response;
                 }).catch((error) => {

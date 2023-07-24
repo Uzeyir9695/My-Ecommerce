@@ -24,9 +24,9 @@
                 <section id="wishlist" class="grid-view wishlist-items">
                     <div class="card ecommerce-card wishlist-remove" v-for="wishlist in wishlists" :key="wishlist.id">
                         <div class="item-img text-center">
-                            <a :href="productShowRoute+'/'+wishlist.product.id">
+                            <router-link :to="{ name: 'products.show', params: {id: wishlist.product.id} }">
                                 <img :src="wishlist.product.media[0].original_url" class="img-fluid" style="width: 350px; height: 250px;"  alt="img-placeholder" />
-                            </a>
+                            </router-link>
                         </div>
                         <div class="card-body">
                             <div class="item-wrapper">
@@ -45,12 +45,12 @@
                                 </div>
                             </div>
                             <div class="item-name">
-                                <a :href="productShowRoute+'/'+wishlist.product.id">{{ wishlist.product.name }}</a>
+                                <router-link :to="{ name: 'products.show', params: {id: wishlist.product.id} }">{{ wishlist.product.name }}</router-link>
                             </div>
                             <p class="card-text item-description">{{ wishlist.product.description }}</p>
                         </div>
                         <div class="item-options text-center">
-                            <button @click="removeFromWishlist(wishlist.id)" type="button" class="btn btn-light btn-wishlist remove-wishlist">
+                            <button @click="removeFromWishlist(wishlist.product.id)" type="button" class="btn btn-light btn-wishlist remove-wishlist">
                                 <font-awesome-icon icon="trash" />
                                 <span>Remove</span>
                             </button>
@@ -95,13 +95,8 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-    props: ['productShowRoute'],
-
     data() {
         return {
-            routes: {
-                productShowRoute: this.productShowRoute,
-            },
             isWishlistEmpty: false
         }
     },

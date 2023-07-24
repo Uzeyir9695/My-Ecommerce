@@ -6,7 +6,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">{{ breadcrumb}} | Shop</h2>
+                            <h2 class="content-header-title float-left mb-0">Breadcrumb | Shop</h2>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,9 @@
                     <section id="ecommerce-products" :class="{ 'products-opacity': contentLoading }" class="grid-view" v-if="products && products.length > 0">
                         <div class="card ecommerce-card" v-for="product in products">
                             <div class="item-img text-center">
-                                <a :href="routes.productShow+'/'+product.id">
-                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 500px; height: 250px;"  alt="img-placeholder" /></a>
+                                <router-link :to="{ name: 'products.show', params: {id: product.id}}">
+                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 500px; height: 250px;"  alt="img-placeholder" />
+                                </router-link>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">
@@ -58,7 +59,7 @@
                                     </div>
                                 </div>
                                 <h6 class="item-name">
-                                    <a class="text-body" :href="routes.productShow+'/'+product.id">{{ product.name }}</a>
+                                    <router-link :to="{ name: 'products.show', params: {id: product.id}}"> {{ product.name }}</router-link>
                                     <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">E-Commerce</a></span>
                                 </h6>
                                 <p class="card-text item-description">{{ product.description }}</p>
@@ -68,9 +69,9 @@
                                     <font-awesome-icon icon="heart"  :class="{ 'text-danger': isProductInWishlist(product.id), 'text-muted': !isProductInWishlist(product.id) }"/>
                                     <span>Wishlist</span>
                                 </a>
-                                <a :href="isProductInCart(product.id) ? this.routes.productShow+'/'+product.id: 'javascript:void(0)'" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
+                                <a href="javascript:void(0)" :ref="'pathToProduct-'+product.id" @click="addToCart(product)" class="btn btn-primary btn-cart">
                                     <font-awesome-icon icon="cart-shopping" />
-                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'View' : 'Add to cart' }}</span>
+                                    <span  class="add-to-cart">{{ isProductInCart(product.id)? 'Added' : 'Add to cart' }}</span>
                                 </a>
                             </div>
                         </div>
@@ -219,7 +220,7 @@
 
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 export default {
     props: {
         subCatRoute: {
@@ -231,24 +232,25 @@ export default {
         addWishlistRoute: {
             type: String
         },
-        breadcrumb: {
-            type: String
-        }
     },
     data() {
         return {
-            routes: {
-                paginateRoute: this.subCatRoute,
-                productShow: this.productShowRoute,
-                wishlistCreate: this.addWishlistRoute,
-            },
             cartLink: '#',
             selectedFilters: {},
         }
     },
+    watch: {
+        $route(to, from) {
+            // Check if the route parameters have changed
+            if (to.params.id !== from.params.id) {
+                // Call the action or method to update the content
+                this.$store.dispatch('product/fetchProducts', this.$route.fullPath);
+            }
+        },
+    },
 
     created() {
-        this.$store.dispatch('product/fetchProducts', this.routes.paginateRoute);
+        this.$store.dispatch('product/fetchProducts', this.$route.fullPath);
     },
 
     computed: {
@@ -292,7 +294,7 @@ export default {
             this.updateSelectedFilters();
 
             // Send AJAX request or perform any necessary operations with the selected filters
-            const payload = { paginateRoute: this.routes.paginateRoute, filters: this.selectedFilters };
+            const payload = { paginateRoute: this.$route.fullPath, filters: this.selectedFilters };
             this.$store.dispatch('product/fetchProducts', payload);
         },
 
@@ -328,13 +330,13 @@ export default {
             this.selectedFilters = {};
 
             // Send AJAX request or perform any necessary operations to clear the filters
-            const payload = { paginateRoute: this.routes.paginateRoute, filters: this.selectedFilters };
+            const payload = { paginateRoute: this.$route.fullPath, filters: this.selectedFilters };
             this.$store.dispatch('product/fetchProducts', payload);
         },
 
         async paginate(page) {
             // Call your Vuex action to fetch data for the specified page
-            await this.$store.dispatch('product/fetchProducts', this.routes.paginateRoute+'?page='+page);
+            await this.$store.dispatch('product/fetchProducts', this.$route.fullPath+'?page='+page);
         },
 
         addToCart(product) {
@@ -347,14 +349,7 @@ export default {
                 price: this.price(product.price, product.discount),
                 discount: product.discount
             }
-            this.$store.dispatch('cart/addToCart', item)
-                .then(response => {
-                    const refElement = this.$refs['pathToProduct-' + product.id]; // Access the ref element and manipulate it
-                    refElement[0].href = this.routes.productShow+'/'+product.id; // Modify the href attribute of the anchor element
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            this.$store.dispatch('cart/addToCart', item);
         },
 
         async addToWishlist(product_id) {

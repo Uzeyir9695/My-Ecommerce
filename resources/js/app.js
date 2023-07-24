@@ -1,6 +1,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import store from './store';
+import store from '@/store';
+import router from '@/router';
 // Packages
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
@@ -19,23 +20,12 @@ import CartList from './cart/CartList.vue';
 import CartWishlistButtons from './cart/CartWishlistButtons.vue';
 import Checkout from './cart/Checkout.vue';
 import Wishlist from './wishlist/Wishlist.vue';
+import App from './App.vue';
 
-const app = createApp({
-    components: {
-        CategoryProducts,
-        Index,
-        ProductCreate,
-        ProductEdit,
-        CartList,
-        CartWishlistButtons,
-        Wishlist,
-        Checkout,
-        ShopCreate,
-        ShopEdit
-    }
-});
+const app = createApp(App);
 // Register FontAwesomeIcon component globally
 app.use(store);
+app.use(router);
 app.use(VueSweetalert2);
 app.component('font-awesome-icon', FontAwesomeIcon);
 window.Swal =  app.config.globalProperties.$swal;

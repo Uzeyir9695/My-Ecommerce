@@ -14,12 +14,12 @@
                 <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                     <div class="form-group breadcrumb-right">
                         <div class="dropdown">
-                            <router-link :to="{name: 'products.create'}" class="btn btn-primary text-white">Add Product</router-link>
+                            <router-link :to="{name: 'stores.create'}" class="btn btn-primary">Create store</router-link>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="content-detached content-center">
+            <div class="content-detached content-center" v-if="stores && stores.length > 0">
                 <div class="content-body">
                     <!-- E-commerce Content Section Starts -->
                     <section id="ecommerce-header">
@@ -27,7 +27,7 @@
                             <div class="col-sm-12">
                                 <div class="ecommerce-header-items">
                                     <div class="result-toggler">
-                                        <div class="search-results">{{ products.length }} | results found</div>
+                                        <div class="search-results">{{ stores.length }} results found</div>
                                     </div>
                                 </div>
                             </div>
@@ -40,11 +40,11 @@
                     <!-- background Overlay when sidebar is shown  ends-->
 
                     <!-- E-commerce Products Starts -->
-                    <section id="ecommerce-products" class="grid-view" v-if="products && products.length > 0">
-                        <div class="card ecommerce-card" v-for="product in products">
+                    <section id="ecommerce-products" class="grid-view">
+                        <div class="card ecommerce-card" v-for="store in stores">
                             <div class="item-img text-center">
                                 <a href="javascript:void(0);">
-                                    <img class="img-fluid card-img-top" :src="product.media[0].original_url" style="width: 450px; height: 290px;" alt="img-placeholder" />
+                                    <img class="img-fluid card-img-top" :src="store.media[1].original_url" style="width: 450px; height: 290px;" alt="img-placeholder" />
                                 </a>
                             </div>
                             <div class="card-body">
@@ -58,43 +58,32 @@
                                             <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
                                         </ul>
                                     </div>
-                                    <div>
-                                        <h6 class="item-price">{{ price(product.price, product.discount) }} USD</h6>
-                                    </div>
                                 </div>
                                 <h6 class="item-name">
-                                    <a class="text-body" href="javascript:void(0)">{{ product.name }}</a>
+                                    <a class="text-body" href="app-ecommerce-details.html">{{ store.name }}</a>
                                     <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">Apple</a></span>
                                 </h6>
-                                <p class="card-text item-description">{{ product.description }}
+                                <p class="card-text item-description">{{ store.description }}
                                 </p>
                             </div>
-                            <div class="item-options text-center">
-                                <div class="item-wrapper">
-                                    <div class="item-cost">
-                                        <h4 class="item-price">{{ price(product.price, product.discount) }} USD</h4>
-                                    </div>
-                                </div>
-                                    <router-link class="text-black btn btn-light col-6" :to="{ name: 'products.show', params: {id: product.id} }">
-                                        <i class="fa-solid fa-eye"></i>View
-                                    </router-link>
-
-                                    <router-link class="text-white btn btn-primary col-6" :to="{ name: 'products.edit', params: {id: product.id} }">
-                                        <i class="fa-regular fa-pen-to-square"></i>Edit
-                                    </router-link>
+                            <div class="text-center my-auto">
+                                <router-link class="text-black btn btn-primary col-12" :to="{ name: 'stores.show', params: {id: store.id} }">
+                                    <i class="fa-solid fa-eye"></i>View
+                                </router-link>
                             </div>
                         </div>
                     </section>
                     <!-- E-commerce Products Ends -->
                     <!--  display if product not found-->
-                    <div class="row  d-flex justify-content-center" v-if="products && products.length < 1">
+                    <div class="row  d-flex justify-content-center" v-if="stores.length < 1">
                         <div>
-                            <div class="text-center"><h1 class="mt-2">Product not found!</h1></div>
+                            <div class="text-center"><h1 class="mt-2">Store not found!</h1></div>
                         </div>
                     </div>
                     <!-- E-commerce Pagination Starts -->
                     <section id="ecommerce-pagination">
                         <div class="row d-flex justify-content-center">
+
                         </div>
                     </section>
                     <!-- E-commerce Pagination Ends -->
@@ -106,40 +95,33 @@
     <!-- END: Content -->
 
 </template>
-
 <script>
-import axios from 'axios'
-import baseApi from '@/auth/api'
 
+import baseApi from '@/auth/api'
 export default {
     components: {
     },
 
     data(){
         return {
-            products: {},
+            stores: {},
         }
     },
 
     created(){
-        this.fetchProducts();
+        this.fetchStores();
     },
 
 
     methods:{
-        async fetchProducts(){
-            await baseApi.get('/api/products')
-                .then(({data}) => {
-                    this.products = data.products.data
-                })
-                .catch(({errors}) => {
-                    console.log(errors)
-                })
-        },
-
-        // calculate product's discount
-        price(price, discount=0){
-            return price - (price*discount/100);
+        async fetchStores(){
+            await baseApi.get('/api/stores')
+            .then(({data}) => {
+                this.stores = data.stores.data
+            })
+            .catch(({errors}) => {
+                console.log(errors)
+            })
         },
     }
 }

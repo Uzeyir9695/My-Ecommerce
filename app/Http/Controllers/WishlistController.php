@@ -11,10 +11,7 @@ class WishlistController extends Controller
     {
         $wishlists = Wishlist::with('product.media')->where('user_id', auth()->id())->latest()->paginate(21);
 
-        if (request()->ajax()) {
-            return response()->json(['wishlists' => $wishlists], 200);
-        }
-        return view('ecommerce.wishlist', compact('wishlists'));
+        return response()->json(['wishlists' => $wishlists], 200);
     }
 
     public function addToWishlist(Request $request)

@@ -1,9 +1,9 @@
+import baseApi from '@/auth/api'
 import axios from 'axios';
-
 export default {
     async addProduct(context, product_id) {
         try {
-            const response = await axios.post('/products', {'id': product_id});
+            const response = await baseApi.post('/api/products', {'id': product_id});
             context.commit('addProduct');
             return response;
         } catch (error) {
@@ -14,6 +14,7 @@ export default {
 
      async fetchProducts({ commit }, payload) {
         try {
+
             const url = payload.paginateRoute ? payload.paginateRoute : payload;
             const params = {}; // Create an empty object for the params
 
@@ -21,7 +22,7 @@ export default {
                 params.filters = payload.filters; // Assign filters to params only if it's not an empty object
             }
 
-            const response = await axios.get(url, { params }); // Fetch products from EcommerceController.php
+            const response = await axios.get('/api'+url, { params }); // Fetch products from EcommerceController.php
             commit('product/contentLoading', true, { root: true }); // Set contentLoading to true before a slight delay
 
             // Note: in normal case no need to use settimout callback funcition to show a spinner
@@ -40,7 +41,7 @@ export default {
 
     async removeProduct(context, id) {
         try {
-            const response = await axios.delete('/products/'+id);
+            const response = await baseApi.delete('/api/products/'+id);
             context.commit('removeProduct', id);
             toastr['error']('', 'Removed Item 🗑️', {
                 closeButton: true,

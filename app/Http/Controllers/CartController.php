@@ -41,10 +41,10 @@ class CartController extends Controller
         return response()->json(['cart' => $cart], 200);
     }
 
-    public function checkout()
-    {
-        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
-    }
+//    public function checkout()
+//    {
+//        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
+//    }
 
     public function navbarCart()
     {
