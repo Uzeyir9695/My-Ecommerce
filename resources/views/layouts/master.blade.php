@@ -59,7 +59,6 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/product-images-slide.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/stripe.css') }}">
-    @yield('styles')
     {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">--}}
 </head>
 <!-- END: Head-->
