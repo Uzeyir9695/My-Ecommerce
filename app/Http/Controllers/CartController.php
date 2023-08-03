@@ -9,7 +9,11 @@ class CartController extends Controller
 {
     public function index()
     {
-
+        $carts = Cart::with('product.media')->where('user_id', auth()->id())->get();
+        if (request()->ajax()) {
+            return response()->json(['carts' => $carts]);
+        }
+        return view('ecommerce.checkout');
     }
 
     public function addToCart(Request $request)
@@ -39,17 +43,6 @@ class CartController extends Controller
         $cart = $cart->load('product.media');
 
         return response()->json(['cart' => $cart], 200);
-    }
-
-    public function checkout()
-    {
-        return view('ecommerce.checkout'); // Return just view because data gets using callin axios
-    }
-
-    public function navbarCart()
-    {
-        $carts = Cart::with('product.media')->where('user_id', auth()->id())->get();
-        return response()->json(['carts' => $carts]);
     }
 
     public function destroy(Cart $cart)

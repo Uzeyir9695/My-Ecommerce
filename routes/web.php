@@ -21,11 +21,9 @@ Route::middleware('guest')->controller(ForgotPasswordController::class)->group(f
 
 Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\EcommerceController::class)->group(function () {
-        Route::get('/dashboard', 'index');
-        Route::get('/all-categories-products', 'allProductsView')->name('all-products-view');
+        Route::get('/dashboard', 'index')->name('dashboard');
         Route::get('/all-products', 'allProducts')->name('all-products');
-        Route::get('/category/subcategory/{subcategory}/{slug}', 'ecommerceIndex')->name('subcategories.index');
-        Route::get('/subcategory/products/{subcategory}/{slug}', 'getAttributes')->name('subcategories.products');
+        Route::get('/subcategory/products/{subcategory}/{slug}', 'categoryProducts')->name('category.products');
         Route::get('/my-orders', 'myOrders')->name('my-orders');
     });
 
@@ -40,8 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', \App\Http\Controllers\ProductController::class);
 
     Route::controller(\App\Http\Controllers\CartController::class)->group(function () {
-        Route::get('/carts/checkout', 'checkout')->name('carts.checkout');
-        Route::get('/navbar-carts', 'navbarCart')->name('navbar.carts');
+        Route::get('/carts', 'index')->name('carts.checkout');
         Route::delete('/carts/{cart}', 'destroy')->name('navbar.carts.destroy');
         Route::post('/carts', 'addToCart')->name('carts.store');
         Route::put('/carts/{cart}', 'updateCart')->name('carts.update');

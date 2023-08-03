@@ -29,7 +29,7 @@ export default {
 
     async fetchCarts(context) {
         try {
-            const response = await axios.get('/navbar-carts');
+            const response = await axios.get('/carts?page=1');
             context.commit('pushCarts', response.data.carts);
             return response;
         } catch (error) {

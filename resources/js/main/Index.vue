@@ -131,17 +131,13 @@ export default {
         },
         addWishlistRoute: {
             type: String
-        },
-        productsIndexRoute: {
-            type: String
-        },
+        }
     },
     data() {
         return {
             routes: {
                 productShow: this.productShowRoute,
                 wishlistCreate: this.addWishlistRoute,
-                productsIndex: this.productsIndexRoute,
             },
             cartLink: '#',
             products: [],
@@ -184,7 +180,7 @@ export default {
     methods: {
         async fetchProducts(page, searchQuery){
             this.contentLoading = true;
-            await axios.get('/all-products', {
+            await axios.get('/all-products?page=1', {
                 params: {
                     page: page,
                     search: searchQuery
