@@ -174,8 +174,8 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Categories</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class="nav-item mb-2 @if(route('all-products-view') == \request()->url()) active @endif">
-                <a class="d-flex align-items-center" href="{{ route('all-products-view') }}">
+            <li class="nav-item mb-2 @if(route('all-products') == \request()->url()) active @endif">
+                <a class="d-flex align-items-center" href="{{ route('all-products') }}">
                     <i data-feather="grid"></i>
                     <span class="menu-title text-truncate" data-i18n="Kanban">All Categories</span>
                 </a>
@@ -188,8 +188,8 @@
                 </a>
                 <ul class="menu-content">
                     @foreach($category->subcategories as $subcategory)
-                        <li class="@if(route('subcategories.index', [$subcategory->id, $subcategory->slug] ) == \request()->url()) active @endif">
-                            <a class="d-flex align-items-center" href="{{ route('subcategories.index', [$subcategory->id, $subcategory->slug] ) }}">
+                        <li class="@if(route('category.products', [$subcategory->id, $subcategory->slug] ) == \request()->url()) active @endif">
+                            <a class="d-flex align-items-center" href="{{ route('category.products', [$subcategory->id, $subcategory->slug] ) }}">
                                 <img src="{{ asset($subcategory->icon) }} " alt="" style="width: 28px; height: 28px; border-radius: 50px; padding: 3px; background-color: floralwhite" class="mr-1">
                                 <span class="menu-item text-truncate" data-i18n="List">{{ $subcategory->name }}</span>
                             </a>

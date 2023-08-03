@@ -14,7 +14,7 @@ class WishlistController extends Controller
         if (request()->ajax()) {
             return response()->json(['wishlists' => $wishlists], 200);
         }
-        return view('ecommerce.wishlist', compact('wishlists'));
+        return view('ecommerce.wishlist');
     }
 
     public function addToWishlist(Request $request)

@@ -12,12 +12,7 @@ class EcommerceController extends Controller
 {
     public function index()
     {
-        return redirect()->route('all-products-view');
-    }
-
-    public function allProductsView()
-    {
-        return view('ecommerce.all-products');
+        return redirect()->route('all-products');
     }
 
     public function allProducts()
@@ -30,21 +25,19 @@ class EcommerceController extends Controller
         }
 
         $products = $query->paginate(21);
-
-        return response()->json(['products' => $products], 200);
-    }
-
-    public function ecommerceIndex(Subcategory $subcategory)
-    {
-        if(route('subcategories.index', [$subcategory->id, $subcategory->slug]) !== \request()->url()) {
-            return view('error.404');
+        if (request()->ajax()) {
+            return response()->json(['products' => $products], 200);
         }
 
         return view('ecommerce.index');
     }
 
-    public function getAttributes(Subcategory $subcategory)
+    public function categoryProducts(Subcategory $subcategory)
     {
+        if(route('category.products', [$subcategory->id, $subcategory->slug]) !== \request()->url()) {
+            return view('error.404');
+        }
+
         // Filter according to the attribute-values
         if(\request()->has('filters')) {
             // convert filtered data to an array
@@ -81,7 +74,12 @@ class EcommerceController extends Controller
             return $data->name;
         });
 
-        return response()->json(['products' => $products, 'attributes' => $attributes], 200); // Note: No need to check ajax request if we use api routes
+        if (request()->ajax()) {
+            return response()->json(['products' => $products, 'attributes' => $attributes], 200); // Note: No need to check ajax request if we use api routes
+        }
+
+        return view('ecommerce.category-products');
+
     }
 
     public function myOrders()
