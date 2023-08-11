@@ -59,6 +59,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/stripe.css') }}">
     @yield('styles')
     {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">--}}
+    @vite('resources/js/app.js')
 </head>
 <!-- END: Head-->
 
@@ -204,7 +205,6 @@
 <!-- END: Main Menu-->
     @yield('content')
 </div>
-@vite('resources/js/app.js')
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
