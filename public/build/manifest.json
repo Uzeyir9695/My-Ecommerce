@@ -54,11 +54,7 @@
     "css": [
       "assets/app-515bbd5f.css"
     ],
-<<<<<<< HEAD
-    "file": "assets/app-3bec1d56.js",
-=======
     "file": "assets/app-0ea5e1d8.js",
->>>>>>> feature
     "isEntry": true,
     "src": "resources/js/app.js"
   }
