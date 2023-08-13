@@ -433,7 +433,8 @@ export default {
                     }, 1000);
 
                     // Redirect to the specified URL
-                    window.location.href = 'http://127.0.0.1:8000/payment-success';
+                    console.log(import.meta.env.APP_URL)
+                    window.location.href = '/payment-success';
                 })
                 .catch((error) => {
                     // Handle error
